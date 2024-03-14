@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{layout/admin/fragments/head :: headFragment}"></th:block>
+<body>
+
+<div class="container">
+    <div class="row">
+        <!-- ===============================================-->
+        <!--    Main Content-->
+        <!-- ===============================================-->
+        <main class="">
+            <!-- contents -->
+            <th:block layout:fragment="content"></th:block>
+        </main>
+        <!-- ===============================================-->
+        <!--    End of Main Content-->
+        <!-- ===============================================-->
+    </div>
+</div>
+<!-- 공통 스크립트-->
+<th:block th:replace="~{layout/admin/fragments/script :: scriptFragment}"></th:block>
+
+</body>
+</html>

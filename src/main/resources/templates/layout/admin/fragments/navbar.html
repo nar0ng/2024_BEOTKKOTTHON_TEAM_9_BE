@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Navbar -->
+<th:block th:fragment="navbarFragment">
+    <nav class="navbar navbar-light navbar-vertical navbar-expand-xl z-index-3">
+        <script>
+            var navbarStyle = localStorage.getItem("navbarStyle");
+            if (navbarStyle && navbarStyle !== 'transparent') {
+                document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+            }
+        </script>
+        <div class="d-flex align-items-center">
+            <div class="toggle-icon-wrapper">
+                <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Toggle Navigation">
+                    <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
+                </button>
+            </div>
+            <a class="navbar-brand" href="/">
+                <div class="d-flex align-items-start py-3">
+                    <img class="me-2" th:src="@{/assets/img/logo.png}" alt="" width="40" height="40"><span class="font-sans-serif ">NO:ONE</span>
+                </div>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+            <div class="navbar-vertical-content scrollbar">
+                <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
+                    <a class="btn btn-primary" href="/cms/user" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-question-circle"></span></span><span class="nav-link-text ps-1 text-nowrap">유저 관리</span>
+                        </div>
+                    </a>
+                    <div class="col ps-0"> <hr class="mb-0 navbar-vertical-divider" style="border-color:transparent;"/> </div>
+                    <a class="btn btn-primary" href="/cms/content" role="button" data-bs-toggle="" aria-expanded="false">
+                        <div class="d-flex align-items-center">
+                            <span class="nav-link-icon"><span class="fas fa-door-open"></span></span><span class="nav-link-text ps-1 text-nowrap">게시글 관리</span>
+                        </div>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</th:block>
+
+</html>

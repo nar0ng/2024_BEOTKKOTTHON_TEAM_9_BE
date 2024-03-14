@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{layout/admin/fragments/head :: headFragment}"></th:block>
+
+<body>
+        <!-- ===============================================-->
+        <!--    Main Content-->
+        <!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container" data-layout="container">
+        <script>
+            var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+            if (isFluid) {
+                var container = document.querySelector('[data-layout]');
+                container.classList.remove('container');
+                container.classList.add('container-fluid');
+            }
+        </script>
+        <!-- navbar -->
+        <!-- ===============================================-->
+        <th:block th:replace="~{layout/admin/fragments/navbar :: navbarFragment}"></th:block>
+        <div class="content">
+            <!-- headers -->
+            <th:block th:replace="~{layout/admin/fragments/header :: headerFragment}"></th:block>
+            <!-- contents -->
+            <div class="container h-100 g-3 mb-3">
+                <div class="col-md-12">
+                    <div class="card h-md-100 ecommerce-card-min-width">
+                        <th:block layout:fragment="content"></th:block>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 공통 하단-->
+        <th:block th:replace="~{layout/admin/fragments/footer :: footerFragment}"></th:block>
+    </div>
+</main>
+        <!-- ===============================================-->
+        <!--    End of Main Content-->
+        <!-- ===============================================-->
+
+<!-- 공통 스크립트-->
+<th:block th:replace="~{layout/admin/fragments/script :: scriptFragment}"></th:block>
+
+</body>
+</html>

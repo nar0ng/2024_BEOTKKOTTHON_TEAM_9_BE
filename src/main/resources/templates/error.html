@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin/layout}">
+
+<th:block layout:fragment="content">
+    <div class="container-fluid">
+        <h1>에러</h1>
+        <p th:text="${errorMessage}"></p>
+
+    </div>
+</th:block>
+
+</html>
+
+<script type="text/javascript">
+
+</script>

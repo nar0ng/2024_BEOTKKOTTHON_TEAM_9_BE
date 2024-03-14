@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Head -->
+<th:block th:fragment="headerFragment" >
+<header class="navbar navbar-light sticky-top navbar-glass navbar-top navbar-expand align-items-end ms-1 z-index-2">
+    <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+    <a class="navbar-brand me-1 me-sm-3" href="/">
+        <div class="d-flex align-items-center">
+            <img class="me-2" th:src="@{/assets/img/logo.png}" alt="" width="40" height="40"><span class="font-sans-serif">BomMung</span>
+        </div>
+    </a>
+    <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center pe-2 d-md-flex">
+
+        <span class="mx-2 text-nowrap">USER </span>
+        <li class="nav-item">
+            <a role="button" class="btn btn-sm btn-outline-secondary text-nowrap" href="/cms/login">로그아웃</a>
+        </li>
+    </ul>
+</header>
+</th:block>
+</html>

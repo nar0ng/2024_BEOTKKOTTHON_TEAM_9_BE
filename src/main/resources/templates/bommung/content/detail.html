@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin/layout}">
+
+<th:block layout:fragment="content">
+  <div class="container-fluid">
+    <h1>콘텐츠 관리 - 상세 정보</h1>
+    <div class="row" id="contentDetail">
+      <main>
+        <div class="card-body bg-light">
+          <button class="btn btn-primary" th:onclick="|setViewAndAddPoint('${contentDetail.contentId}')|">컨텐츠 노출 및 포인트 지급</button>
+          <form class="row g-3" th:action="@{/cms/content/modify}" th:object="${contentDetail}" th:field="*{contentId}" method="POST">
+            <input type="hidden" th:field="*{contentId}" id="contentId">
+            <input type="hidden" th:field="*{viewCount}" id="viewCount">
+            <input type="hidden" th:field="*{companyImg}" id="companyImg">
+            <input type="hidden" th:field="*{companyImgName}" id="companyImgName">
+            <input type="hidden" th:field="*{contentPageList}" id="contentPageList">
+            <div class="col-12 d-flex justify-content-end">
+<!--              <button class="btn btn-primary" type="submit">수정하기 </button>-->
+            </div>
+            <div class="col-lg-8">
+              <div class="row g-3">
+                <div class="col-lg-3">
+                  <label class="form-label" for="user-id">사용자 ID</label>
+                  <input readonly class="form-control" id="user-id" type="text" th:field="*{userId}" />
+                </div>
+                <div class="col-lg-4">
+                  <label class="form-label" for="user-name">사용자 이름</label>
+                  <input readonly class="form-control" id="user-name" type="text" th:field="*{userName}" />
+                </div>
+                <div class="col-lg-5">
+                  <label class="form-label" for="company-name">회사 이름</label>
+                  <input class="form-control" id="company-name" type="text" th:field="*{companyName}" />
+                </div>
+                <div class="col-lg-2">
+                  <label class="form-label" for="category">카테고리</label>
+                  <input class="form-control" id="category" type="text" th:field="*{category}" />
+                </div>
+                <div class="col-lg-10">
+                  <label class="form-label" for="title">컨텐츠 제목</label>
+                  <input class="form-control" id="title" type="text" th:field="*{title}" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <label for="com-img">회사 이미지</label>
+              <img class="img-fluid" id="com-img" th:src="${contentDetail.getCompanyImg()}" alt="기업 이미지">
+            </div>
+            <div class="col-lg-12">
+              <label class="form-label" for="description">컨텐츠 설명</label>
+              <input class="form-control" id="description" type="text" th:field="*{description}" />
+            </div>
+            <div class="col-lg-2">
+              <label class="form-label" for="short-yn">단기 컨텐츠 여부</label>
+              <select class="form-control" id="short-yn" th:field="*{shortYn}">
+                <option th:each="ynCd : ${ynMap}"
+                        th:value="${ynCd.key}"
+                        th:text="${ynCd.value}"
+                        th:selected="${ynCd.key} == ${contentDetail.shortYn} ? true : false">
+
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-2">
+              <label class="form-label" for="view-yn">콘텐츠 활성화 여부</label>
+              <select class="form-control" id="view-yn" th:field="*{viewYn}">
+                <option th:each="ynCd : ${ynMap}"
+                        th:value="${ynCd.key}"
+                        th:text="${ynCd.value}"
+                        th:selected="${ynCd.key} == ${contentDetail.viewYn} ? true : false">
+
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-5">
+              <label class="form-label" for="dead-line">마감 기한</label>
+              <div class="input-group date">
+                <input type="datetime-local" class="form-control" id="dead-line" autocomplete="off" th:field="*{deadLine}"/>
+              </div>
+              </select>
+            </div>
+
+          </form>
+          <div class="col-lg-12 g-3" th:each="page : ${contentDetail.contentPageList}">
+            <label th:text="${page.getPageOrder()}"></label> 페이지 || pageId : <span th:text="${page.getPageId()}"></span>
+            <p th:text="${page.getDescription()}"></p>
+            <img class="img-fluid" th:src="${page.getUrl()}" th:alt="${page.getOriginalName()}">
+            tagList : <span th:text="${page.getTagList()}"></span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</th:block>
+
+</html>
+
+<script type="text/javascript">
+    function setViewAndAddPoint(contentId) {
+        alert(contentId);
+        fetch("https://www.example.store:8080/api/v1/point/new-content/" + contentId, {method: "POST"})
+            .then((res) => {console.log(res)});
+    }
+</script>

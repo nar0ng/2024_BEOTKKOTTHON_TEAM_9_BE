@@ -1,0 +1,40 @@
+spring:
+  profiles:
+    active: dev
+
+  output:
+    ansi:
+      enabled: always #콘솔 색상
+
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+  jpa.hibernate:
+    naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+  security:
+    user:
+      name: user
+      password: 1234
+  servlet:
+    multipart:
+      max-file-size: 256MB
+      max-request-size: 256MB
+
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 60m
+  tomcat:
+    remoteip:
+      remote-ip-header: "x-real-ip"
+      protocol-header: "x-forwarded-proto"
+
+logging:
+  level:
+    root: INFO
+  file:
+    name: ${spring.application.name}
+    path: ./logs
