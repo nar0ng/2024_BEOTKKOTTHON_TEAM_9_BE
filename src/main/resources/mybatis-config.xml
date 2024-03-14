@@ -8,6 +8,6 @@
         <setting name="jdbcTypeForNull" value="NULL"/>
     </settings>
     <typeHandlers>
-        <typeHandler jdbcType="CHAR" javaType="java.lang.Boolean" handler="com.example.bommung.common.utils.YnBooleanTypeHandler"/>
+        <typeHandler jdbcType="CHAR" javaType="java.lang.Boolean" handler="com.example.bommeong.common.utils.YnBooleanTypeHandler"/>
     </typeHandlers>
 </configuration>

@@ -1,1 +1,1 @@
-# BomMung BACKEND Spring Boot Project
+# BomMeong BACKEND Spring Boot Project
