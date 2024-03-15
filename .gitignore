@@ -28,7 +28,7 @@ out/
 
 
 ### yml ###
-src/**/application-dev.yml
+
 
 ### NetBeans ###
 /nbproject/private/
