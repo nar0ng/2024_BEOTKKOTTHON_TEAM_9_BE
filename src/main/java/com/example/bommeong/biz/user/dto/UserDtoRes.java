@@ -14,7 +14,8 @@ public class UserDtoRes {
         private String refresh_token;
         private String name;
         private String email;
-        private Long userId;
+        private Long memberId;
+        private String memberType;
     }
 
     @Getter
@@ -26,13 +27,14 @@ public class UserDtoRes {
         private String phone;
 
         private Integer point;
+        private String memberType;
 
         @Builder
         public UserRes(User user) {
             this.email = user.getEmail();
             this.name = user.getName();
             this.phone = user.getPhone();
-            this.point = user.getPoint();
+            this.memberType = user.getMemberType();
         }
     }
 }

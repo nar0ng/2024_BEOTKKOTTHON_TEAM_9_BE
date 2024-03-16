@@ -4,8 +4,12 @@ import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +41,19 @@ public class User {
 
     private String refreshToken;
 
-    private DateTime created_at;
+    @CreationTimestamp
+    @Column(name="created_at")
+    private LocalDateTime createdAT;
 
-    private DateTime updated_at;
+   @UpdateTimestamp
+    @Column(name="updated_at")
+    private LocalDateTime updatedAT;
 
-    @Column(nullable = false)
-    private Integer point;
+    @Column(name = "member_status", nullable = false)
+    private String memberStatus;
 
-    @Column(nullable = false)
-    private boolean userType;
+    @Column(name = "member_type", nullable = false)
+    private String memberType;
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -87,9 +95,8 @@ public class User {
                 .name(signUpDto.getName())
                 .phone(signUpDto.getPhone())
                 .refreshToken(null)
-                .updated_at(null)
-                .point(0)
-                .userType(true)
+                .memberStatus("Y")
+                .memberType(signUpDto.getMemberType())
                 .build();
         return user;
     }

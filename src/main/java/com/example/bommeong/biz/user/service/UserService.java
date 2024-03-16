@@ -90,7 +90,8 @@ public class UserService {
                     .refresh_token(refreshToken)
                     .name(user.getName())
                     .email(user.getEmail())
-                    .userId(user.getId())
+                    .memberId(user.getId())
+                    .memberType(user.getMemberType())
                     .build();
         }
 
@@ -170,11 +171,11 @@ public class UserService {
     public void deleteUser() throws Exception {
         Optional<User> user = SecurityUtil.getCurrentUsername().flatMap(userRepository::findByEmail);
 
-        if (user == null){
+        if (user.isEmpty()){
             throw new RuntimeException("유저가 존재하지 않습니다");
         }
 
-        user.get().setUserType(false);
+        user.get().setMemberType("N");
 
         userRepository.save(user.get());
     }
@@ -182,7 +183,7 @@ public class UserService {
     public UserDtoRes.UserRes getUser() {
         Optional<User> user = SecurityUtil.getCurrentUsername().flatMap(userRepository::findByEmail);
 
-        if (user == null){
+        if (user.isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "유저가 존재하지 않습니다");
         }
 
