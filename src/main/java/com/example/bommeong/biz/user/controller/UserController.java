@@ -24,7 +24,7 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     public ResponseEntity<BaseApiDto<?>> signup(@RequestBody UserDtoReq.SignUpDto signUpDto) throws Exception {
         try {
             userService.signUp(signUpDto);
-            return ResponseEntityUtil.ok();
+            return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
             e.printStackTrace();
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "회원가입 실패 : " + e.getMessage());
