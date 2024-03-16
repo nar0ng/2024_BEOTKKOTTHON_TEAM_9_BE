@@ -14,7 +14,8 @@ public class UserDtoRes {
         private String refresh_token;
         private String name;
         private String email;
-        private Long userId;
+        private Long memberId;
+        private String memberType;
     }
 
     @Getter

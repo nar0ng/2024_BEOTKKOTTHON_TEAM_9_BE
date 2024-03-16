@@ -90,7 +90,8 @@ public class UserService {
                     .refresh_token(refreshToken)
                     .name(user.getName())
                     .email(user.getEmail())
-                    .userId(user.getId())
+                    .memberId(user.getId())
+                    .memberType(user.getMemberType())
                     .build();
         }
 
