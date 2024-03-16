@@ -26,13 +26,14 @@ public class UserDtoRes {
         private String phone;
 
         private Integer point;
+        private String memberType;
 
         @Builder
         public UserRes(User user) {
             this.email = user.getEmail();
             this.name = user.getName();
             this.phone = user.getPhone();
-            this.point = user.getPoint();
+            this.memberType = user.getMemberType();
         }
     }
 }
