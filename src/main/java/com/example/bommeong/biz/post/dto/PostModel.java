@@ -28,8 +28,37 @@ public class PostModel extends BaseModel {
 
     public BomInfoModel bomInfo;
 
-    public PostModel(PostEntity entity) {
+    @Data
+    @NoArgsConstructor
+    public static class PostList {
+        private Long postId;
+        private Long shelterId;
+        private String shelterName;
+        private String imageUrl;
+        private String status;
+        protected LocalDateTime createdAt;
+        public BomInfoModel bomInfo;
 
+        public PostList(PostEntity entity) {
+            this.postId = entity.getPostId();
+            this.shelterId = entity.getShelterId().getId();
+            this.shelterName = entity.getShelterName();
+            this.imageUrl = entity.getImageUrl();
+            this.status = entity.getStatus();
+            this.createdAt = entity.getCreatedAt();
+            this.bomInfo = entity.getBomInfoEntity().toModel();
+
+        }
+    }
+
+    public PostModel(PostEntity entity) {
+        this.postId = entity.getPostId();
+        this.imageUrl = entity.getImageUrl();
+        this.shelterId = entity.getShelterId().getId();
+        this.shelterName = entity.getShelterName();
+        this.createdAt = entity.getCreatedAt();
+        this.status = entity.getStatus();
+        this.bomInfo = entity.getBomInfoEntity().toModel();
     }
 
     @Override

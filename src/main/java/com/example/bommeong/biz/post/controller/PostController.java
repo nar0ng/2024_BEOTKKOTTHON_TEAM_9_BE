@@ -31,7 +31,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
     @GetMapping(path = {"", "/"})
     public ResponseEntity<BaseApiDto<?>> findAll() throws Exception {
         try {
-            List<PostModel> list = postService.getList(10);
+            List<PostModel.PostList> list = postService.findAll();
             return super.ok(new BaseApiDto<>(list));
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "조회 실패 : " + e.getMessage());

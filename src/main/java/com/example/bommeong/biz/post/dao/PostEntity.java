@@ -24,11 +24,11 @@ public class PostEntity extends BaseEntity {
     @Column(name = "post_id")
     private Long postId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shelter_id", referencedColumnName = "id")
     private User shelterId;
 
-    @Transient
+
     @Formula("(SELECT u.name FROM user u WHERE u.id = shelter_id)")
     private String shelterName;
 

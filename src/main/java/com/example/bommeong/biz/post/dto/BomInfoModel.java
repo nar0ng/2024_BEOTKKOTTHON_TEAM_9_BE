@@ -21,7 +21,16 @@ public class BomInfoModel extends BaseModel {
     private String gender;
     private String personality;
     private String extra;
-    public BomInfoModel(BomInfoEntity entity) {}
+    public BomInfoModel(BomInfoEntity entity) {
+        this.infoId = entity.getInfoId();
+        this.postId = entity.getPostEntity().getPostId();
+        this.name = entity.getName();
+        this.age = entity.getAge();
+        this.breed = entity.getBreed();
+        this.gender = entity.getGender();
+        this.personality = entity.getPersonality();
+        this.extra = entity.getExtra();
+    }
 
     @Override
     public BomInfoEntity toEntity() { return new BomInfoEntity(this);}

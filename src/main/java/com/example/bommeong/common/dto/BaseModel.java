@@ -7,11 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter @Setter
 public abstract class BaseModel {
-    protected String link;
+//    protected String link;
 
-    public void addLink(String link) {
-        this.link = link;
-    }
+//    public void addLink(String link) {
+//        this.link = link;
+//    }
 
     public abstract <E extends BaseEntity> E toEntity();
 
