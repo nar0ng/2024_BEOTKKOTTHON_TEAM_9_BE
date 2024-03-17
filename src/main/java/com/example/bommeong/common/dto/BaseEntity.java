@@ -54,11 +54,11 @@ public abstract class BaseEntity  {
     public abstract <M extends BaseModel> M toModel();
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="CREATED_AT", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name="created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     protected LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="UPDATED_AT", columnDefinition = "TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP")
+    @Column(name="updated_at", columnDefinition = "TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP")
     protected LocalDateTime updatedAt;
 
 
@@ -69,6 +69,22 @@ public abstract class BaseEntity  {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public void setCreatedAt(final LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(final LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 }
