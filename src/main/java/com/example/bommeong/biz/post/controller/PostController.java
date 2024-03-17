@@ -7,6 +7,7 @@ import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
 import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.utils.ResponseEntityUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,10 +20,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/post")
+@Tag(name = "Post", description = "공고 API")
 public class PostController extends BaseApiController<BaseApiDto<?>> {
 
     private final PostService postService;
