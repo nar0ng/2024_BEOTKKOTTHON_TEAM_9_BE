@@ -34,7 +34,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             List<PostModel.PostList> list = postService.findAll();
             return super.ok(new BaseApiDto<>(list));
         } catch (Exception e) {
-            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "조회 실패 : " + e.getMessage());
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 리스트 조회 실패 : " + e.getMessage());
         }
     }
 
@@ -50,7 +50,17 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
             e.printStackTrace();
-            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고작성 실패 : " + e.getMessage());
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 작성 실패 : " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<BaseApiDto<?>> remove(@PathVariable Long postId) {
+        try {
+             postService.remove(postId);
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 삭제 실패 : " + e.getMessage());
         }
     }
 }

@@ -6,6 +6,8 @@ import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
+import com.example.bommeong.common.code.ResultCode;
+import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.service.BaseServiceImplWithJpa;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     public void add(PostModel model, String dirName) throws Exception {
         PostEntity postEntity = model.toEntity();
         
-        // Post entity 설정
+        // S3 업로드 후 Post entity 설정
         AwsS3Dto awsS3Dto = awsS3Service.upload(model.getUploadFile(), dirName);
         postEntity.setImageUrl(awsS3Dto.getPath());
         postEntity.setImageName(awsS3Dto.getKey());
@@ -51,5 +53,16 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
         bomInfoEntity.setPostEntity(postEntity);
 
         repository.save(postEntity);
+    }
+
+    @Override
+    @Transactional
+    public void remove(Long pk) throws Exception {
+        PostEntity postEntity = repository.findById(pk)
+                .orElseThrow(() -> new BizException(ResultCode.DATA_NOT_FOUND));
+        // S3 오브젝트 삭제
+        AwsS3Dto awsS3Dto = new AwsS3Dto(postEntity.getImageName(), "");
+        awsS3Service.remove(awsS3Dto);
+        super.remove(pk);
     }
 }
