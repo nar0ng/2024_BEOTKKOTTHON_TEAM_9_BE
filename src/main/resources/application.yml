@@ -35,6 +35,12 @@ server:
 logging:
   level:
     root: INFO
+    org:
+      springframework.web: DEBUG
+      springframework.security: DEBUG
+    com:
+      fasterxml.jackson: DEBUG
+
   file:
     name: ${spring.application.name}
     path: ./logs
