@@ -39,7 +39,7 @@ public class ChatService {
 
             List<Chat> existingChats = chatRepository.findByUserAndPost(user, post);
 
-            if (!existingChats.isEmpty()){
+            if (existingChats.isEmpty()){
                 Chat newChat = createNewChat(chat);
                 System.out.println("create new chat");
                 chatRepository.save(newChat);

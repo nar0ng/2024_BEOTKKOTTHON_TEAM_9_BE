@@ -92,7 +92,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
             log.error("Error communicating with Flask server", e);
             throw new RuntimeException(e);
         }
-        //
+
 
 
         return null;
