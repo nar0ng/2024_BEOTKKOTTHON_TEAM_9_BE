@@ -11,8 +11,8 @@ public class UserDtoReq {
         private String password;
         private String name;
         private String phone;
-        private String passwordConfirm;
-        private String verificationCode;
+//        private String passwordConfirm;
+//        private String verificationCode;
         private String memberType;
 
 
