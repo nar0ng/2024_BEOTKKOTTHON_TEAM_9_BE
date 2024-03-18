@@ -6,6 +6,7 @@ import com.example.bommeong.biz.user.service.UserService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
 import com.example.bommeong.common.utils.ResponseEntityUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "유저 API")
 public class UserController extends BaseApiController<BaseApiDto<?>> {
 
     private final UserService userService;
