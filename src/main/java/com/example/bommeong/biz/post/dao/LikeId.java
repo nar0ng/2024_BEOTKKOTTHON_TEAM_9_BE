@@ -24,4 +24,8 @@ public class LikeId implements Serializable {
         this.memberId = memberId;
         this.postId = postId;
     }
+
+    public LikeId(Long memberId) {
+        this.memberId = memberId;
+    }
 }

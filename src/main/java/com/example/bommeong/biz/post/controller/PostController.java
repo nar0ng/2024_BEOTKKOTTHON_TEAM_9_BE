@@ -47,6 +47,17 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @GetMapping("/like/{memberId}")
+    public ResponseEntity<BaseApiDto<?>> memberLikeList(@PathVariable Long memberId) throws Exception {
+        try {
+            List<PostModel.PostList> list = postService.findLikeList(memberId);
+            return super.ok(new BaseApiDto<>(list));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 리스트 조회 실패 : " + e.getMessage());
+        }
+    }
+
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "공고 등록하기", description = "보호소로 로그인한 사용자가 등록할 수 있다.")
     @Parameters({

@@ -62,6 +62,10 @@ public class PostEntity extends BaseEntity {
         this.status = model.getStatus();
     }
 
+    public PostEntity(LikeEntity entity) {
+        this.postId = entity.getPost().getPostId();
+    }
+
     @Override
     public PostModel toModel() { return new PostModel(this); }
 }

@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +41,21 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     public List<PostModel.PostList> findAll() throws Exception {
         return repository.findAll().stream().map(PostModel.PostList::new).collect(Collectors.toList());
 
+    }
+
+    public List<PostModel.PostList> findLikeList(Long memberId) throws Exception {
+        // memberId 로 검색할 likeId 객체 생성
+        LikeId likeId = new LikeId(memberId);
+        // likes 테이블에서 memberId 값으로 검색
+//        Optional<List<LikeEntity>> list = likeRepository.findByLikeId(likeId);
+        Optional<List<LikeEntity>> list = likeRepository.findAllPostIdByMemberId(memberId);
+        if (list.isEmpty()) return new ArrayList<>();
+        // 검색한 likeList 에서 postId 리스트로 뽑아내기
+//        List<PostEntity> postEntityList= list.get().stream().map(PostEntity::new).toList();
+        List<Long> postEntityList = list.get().stream().map(entity -> entity.getPost().getPostId()).toList();
+
+        return repository.findByPostIdIn(postEntityList).stream().map(PostModel.PostList::new).collect(Collectors.toList());
+        
     }
 
     @Transactional
