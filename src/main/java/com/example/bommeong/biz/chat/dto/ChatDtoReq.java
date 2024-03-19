@@ -13,6 +13,4 @@ import lombok.NoArgsConstructor;
 public class ChatDtoReq {
     private String input;
     private BomInfoModel bomInfo;
-
-
 }
