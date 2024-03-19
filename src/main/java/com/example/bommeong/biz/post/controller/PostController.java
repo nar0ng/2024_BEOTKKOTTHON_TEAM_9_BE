@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.post.controller;
 
 import com.example.bommeong.biz.content.dto.ContentModel;
+import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.service.PostService;
 import com.example.bommeong.common.controller.BaseApiController;
@@ -81,6 +82,21 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 삭제 실패 : " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<BaseApiDto<?>> setLike(@RequestBody LikeModel likeModel) throws Exception {
+        try {
+            String flag = likeModel.getFlag();
+            switch (flag) {
+                case "register" -> postService.likePost(likeModel.getMemberId(), likeModel.getPostId());
+                case "remove" -> postService.unLikePost(likeModel.getMemberId(), likeModel.getPostId());
+                default -> throw new RuntimeException("no flag");
+            }
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "좋아요 등록/삭제 실패 : " + e.getMessage());
         }
     }
 }

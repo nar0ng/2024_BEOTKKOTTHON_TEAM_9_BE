@@ -11,6 +11,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Formula;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "post")
 @Getter
@@ -46,6 +49,9 @@ public class PostEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "postEntity", cascade = CascadeType.ALL)
     private BomInfoEntity bomInfoEntity;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LikeEntity> likes = new HashSet<>();
 
     public PostEntity(PostModel model) {
         this.postId = model.getPostId();
