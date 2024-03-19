@@ -1,24 +1,19 @@
 package com.example.bommeong.biz.post.controller;
 
-import com.example.bommeong.biz.content.dto.ContentModel;
+
 import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.service.PostService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
-import com.example.bommeong.common.exception.BizException;
-import com.example.bommeong.common.utils.ResponseEntityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
