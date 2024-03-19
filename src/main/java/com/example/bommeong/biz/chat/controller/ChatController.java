@@ -56,6 +56,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
         BomInfoModel bomInfo = postEntity.toModel().getBomInfo();
         chatDtoReq.setBomInfo(bomInfo);
 
+
         String flaskUrl = "http://127.0.0.1:5001/api/chat";
         RestTemplate restTemplate = new RestTemplate();
 
