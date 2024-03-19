@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface LikeRepository extends BaseRepository<LikeEntity, LikeEntity> {
-    boolean existsAllByUserIsAndPost(User user, PostEntity post);
+    Optional<LikeEntity> findAllByUserIsAndPost(User user, PostEntity post);
 
-    Optional<LikeEntity> findByUserAndPost(User user, PostEntity post);
+//    Optional<LikeEntity> findByUserAndPost(User user, PostEntity post);
 }

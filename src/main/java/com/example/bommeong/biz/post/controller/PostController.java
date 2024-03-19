@@ -90,8 +90,8 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
         try {
             String flag = likeModel.getFlag();
             switch (flag) {
-                case "register" -> postService.likePost(likeModel.getMemberId(), likeModel.getPostId());
-                case "remove" -> postService.unLikePost(likeModel.getMemberId(), likeModel.getPostId());
+                case "register" -> postService.likePost(likeModel);
+                case "remove" -> postService.unLikePost(likeModel);
                 default -> throw new RuntimeException("no flag");
             }
             return super.ok(BaseApiDto.newBaseApiDto());

@@ -4,6 +4,8 @@ import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.LikeEntity;
+import com.example.bommeong.biz.post.dao.LikeId;
+import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.LikeRepository;
@@ -14,12 +16,9 @@ import com.example.bommeong.common.code.ResultCode;
 import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.service.BaseServiceImplWithJpa;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -77,33 +76,36 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     }
 
     @Transactional
-    public void likePost(Long memberId, Long postId) throws Exception {
-        User user = userRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Member not found"));
-        PostEntity post = repository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+    public void likePost(LikeModel likeModel) throws Exception {
+        User user = userRepository.findById(likeModel.getMemberId()).orElseThrow(() -> new RuntimeException("Member not found"));
+        PostEntity post = repository.findById(likeModel.getPostId()).orElseThrow(() -> new RuntimeException("Post not found"));
 
-        LikeEntity like = new LikeEntity();
-        like.setUser(user);
-        like.setPost(post);
 
-        // 좋아요 존재하는지 체크
-        if (likeRepository.existsAllByUserIsAndPost(user, post)) return;
+        LikeEntity entity = new LikeEntity(user, post);
+//        Optional<LikeEntity> likeEntity = likeRepository.findById(entity);
+//        if (likeEntity.isPresent()) System.out.println("있음");
+//        if (likeEntity.isEmpty()) System.out.println("없음");
 
-        likeRepository.save(like);
+        likeRepository.save(entity);
     }
 
     @Transactional
-    public void unLikePost(Long memberId, Long postId) throws Exception {
-        User user = userRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Member not found"));
-        PostEntity post = repository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+    public void unLikePost(LikeModel likeModel) throws Exception {
+        User user = userRepository.findById(likeModel.getMemberId()).orElseThrow(() -> new RuntimeException("Member not found"));
+        PostEntity post = repository.findById(likeModel.getPostId()).orElseThrow(() -> new RuntimeException("Post not found"));
 
-        Optional<LikeEntity> like = likeRepository.findByUserAndPost(user, post);
-        System.out.println("---- 좋아요 제거 ----");
-        // 좋아요 존재하는지 체크
-        if (like.isEmpty()) {
-            System.out.println(" --- 좋아요 테이블에 없음;;");
-            return;
-        }
+        LikeEntity entity = new LikeEntity(user, post);
 
-        likeRepository.delete(like.get());
+//        Optional<LikeEntity> like = likeRepository.findByUserAndPost(user, post);
+//        System.out.println("---- 좋아요 제거 ----");
+//
+//        // 좋아요 존재하는지 체크
+//        if (like.isEmpty()) {
+//            System.out.println(" --- 좋아요 테이블에 없음;;");
+//            return;
+//        }
+//
+        likeRepository.delete(entity);
+
     }
 }

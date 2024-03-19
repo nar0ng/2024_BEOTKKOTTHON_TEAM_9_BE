@@ -9,27 +9,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name = "likes")
 @Getter
-@Setter
-@DynamicInsert
 @NoArgsConstructor
-@IdClass(LikeEntity.class)
-public class LikeEntity extends BaseEntity implements Serializable {
+public class LikeEntity extends BaseEntity {
 
-    @Id
+    @EmbeddedId
+    private LikeId likeId;
+
+    @MapsId("memberId")
     @ManyToOne
     @JoinColumn(name = "member_id")
     private User user;
-    @Id
+
+    @MapsId("postId")
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostEntity post;
 
     public LikeEntity(LikeModel model) {
+
+    }
+
+    // embeddedId 도 설정해줘야 entity 구성이 됨
+    public LikeEntity(User user, PostEntity post) {
+        this.likeId = new LikeId(user.getId(), post.getPostId());
+        this.user = user;
+        this.post = post;
     }
 
     @Override
