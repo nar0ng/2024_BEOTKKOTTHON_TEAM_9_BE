@@ -37,7 +37,7 @@ public class ContentController {
         PageEntity<ContentModel> pageEntity = contentService.getList(new PageEntity<>(pageable));
         log.info("# pageEntity = {}", pageEntity);
         model.addAttribute("contentList", pageEntity);
-        return "bommeong/content/index";
+        return "cms/content/index";
     }
 
     @GetMapping("/{contentId}")
@@ -45,7 +45,7 @@ public class ContentController {
         ContentModel contentModel = contentService.getDetailAdmin(id);
         log.info("# content detail page = {}", contentModel);
         model.addAttribute("contentDetail", contentModel);
-        return "bommeong/content/detail";
+        return "cms/content/detail";
     }
 
     @PostMapping(path = "/modify", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})

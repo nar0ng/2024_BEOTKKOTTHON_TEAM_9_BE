@@ -13,26 +13,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController extends BaseController {
 
 
-    @GetMapping("/")
+    @GetMapping(path = {"/", ""})
     public String root() {
         log.debug("# IN IndexController.root()");
-        return "redirect:/index";
+        return "redirect:/cms/index";
     }
 
     @GetMapping("/index")
     public String index() {
-        return "index";
+        return "cms/index";
     }
-
 
     @GetMapping("/error")
     public String error() {
-        return "error";
+        return "cms/error";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "cms/login";
     }
 
 //    @PostMapping("login-process")
