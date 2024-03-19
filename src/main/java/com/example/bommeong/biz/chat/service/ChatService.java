@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -20,6 +21,9 @@ import java.util.List;
 @Transactional
 public class ChatService {
     private final ChatRepository chatRepository;
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
+
 
 
     private Chat createNewChat(Chat chat){
@@ -42,4 +46,26 @@ public class ChatService {
             throw new RuntimeException("Error occurred while saving chat", e);
         }
     }
+
+    public List<Chat> getChatRecords(Long userId, Long postId){
+
+        Optional<User> user = userRepository.findUserById(userId);
+        if (user.isEmpty()) {
+            return null;
+        }
+
+        Optional<PostEntity> postEntityOptional = postRepository.findPostEntityByPostId(postId);
+        if (postEntityOptional.isEmpty()) {
+            return null;
+        }
+
+        List<Chat> chatRecords = chatRepository.findByUserAndPost(user, postEntityOptional);
+        if (!chatRecords.isEmpty()) {
+            return chatRecords;
+        } else {
+            return null;
+        }
+    }
+
+    public List<Chat> getAllRecords;
 }

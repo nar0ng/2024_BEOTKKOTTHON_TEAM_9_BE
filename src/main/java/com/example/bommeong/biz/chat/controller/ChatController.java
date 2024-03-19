@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -33,7 +34,6 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     private final ChatService chatService;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-
 
     @PostMapping("/{postId}/{userId}")
     ResponseEntity<BaseApiDto<?>> Chat(@RequestBody ChatDtoReq chatDtoReq,
@@ -95,6 +95,18 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
         }
 
         return null;
+    }
+
+    @GetMapping("/{postId}/{userId}")
+    ResponseEntity<BaseApiDto<?>> getChatRecords( @PathVariable Long postId, @PathVariable Long userId){
+        List<Chat> chatRecords = chatService.getChatRecords(userId, postId);
+
+        if (!(chatRecords == null)){
+            return super.ok(new BaseApiDto<>(chatRecords));
+        }
+        else {
+            return super.fail(new BaseApiDto<>(null));
+        }
     }
 
 }
