@@ -34,17 +34,9 @@ public class ChatService {
 
     public void saveChat(Chat chat){
         try{
-            User user = chat.getUser();
-            PostEntity post = chat.getPost();
-
-            List<Chat> existingChats = chatRepository.findByUserAndPost(user, post);
-
-            if (existingChats.isEmpty()){
                 Chat newChat = createNewChat(chat);
                 System.out.println("create new chat");
                 chatRepository.save(newChat);
-            }
-
         } catch (Exception e) {
             log.error("Error occurred while saving chat", e);
             throw new RuntimeException("Error occurred while saving chat", e);

@@ -94,8 +94,6 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
             throw new RuntimeException(e);
         }
 
-
-
         return null;
     }
 
