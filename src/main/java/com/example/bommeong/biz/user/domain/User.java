@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.user.domain;
 
+import com.example.bommeong.biz.post.dao.LikeEntity;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -11,7 +12,9 @@ import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -54,6 +57,9 @@ public class User {
 
     @Column(name = "member_type", nullable = false)
     private String memberType;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LikeEntity> likes = new HashSet<>();
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

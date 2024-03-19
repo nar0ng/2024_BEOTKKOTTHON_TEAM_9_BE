@@ -1,23 +1,19 @@
 package com.example.bommeong.biz.post.controller;
 
-import com.example.bommeong.biz.content.dto.ContentModel;
+
+import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.service.PostService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
-import com.example.bommeong.common.exception.BizException;
-import com.example.bommeong.common.utils.ResponseEntityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -42,6 +38,17 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             List<PostModel.PostList> list = postService.findAll();
             return super.ok(new BaseApiDto<>(list));
         } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 리스트 조회 실패 : " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/like/{memberId}")
+    public ResponseEntity<BaseApiDto<?>> memberLikeList(@PathVariable Long memberId) throws Exception {
+        try {
+            List<PostModel.PostList> list = postService.findLikeList(memberId);
+            return super.ok(new BaseApiDto<>(list));
+        } catch (Exception e) {
+            e.printStackTrace();
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 리스트 조회 실패 : " + e.getMessage());
         }
     }
@@ -81,6 +88,21 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 삭제 실패 : " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<BaseApiDto<?>> setLike(@RequestBody LikeModel likeModel) throws Exception {
+        try {
+            String flag = likeModel.getFlag();
+            switch (flag) {
+                case "register" -> postService.likePost(likeModel);
+                case "remove" -> postService.unLikePost(likeModel);
+                default -> throw new RuntimeException("no flag");
+            }
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "좋아요 등록/삭제 실패 : " + e.getMessage());
         }
     }
 }

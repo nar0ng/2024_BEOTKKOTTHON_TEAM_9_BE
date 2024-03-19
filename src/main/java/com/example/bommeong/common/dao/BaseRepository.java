@@ -24,6 +24,6 @@ public interface BaseRepository<Entity extends BaseEntity, PkType> extends JpaRe
      * delete 기능은 제공하지 않음.
      * @param entity
      */
-    @Override
-    void delete(Entity entity);
+//    @Override
+//    void delete(Entity entity);
 }
