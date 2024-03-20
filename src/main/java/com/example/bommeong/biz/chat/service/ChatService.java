@@ -77,9 +77,16 @@ public class ChatService {
         User user = userOptional.get();
         List<PostEntity> posts = chatRepository.findPostsByUser(user);
 
-        return posts.stream()
-                .map(this::mapToDto)
-                .collect(Collectors.toList());
+        if (!posts.isEmpty()){
+            return posts.stream()
+                    .map(this::mapToDto)
+                    .collect(Collectors.toList());
+        }
+        else {
+            return null;
+        }
+
+
     }
 
     private ChatPostListDtoRes mapToDto(PostEntity postEntity) {

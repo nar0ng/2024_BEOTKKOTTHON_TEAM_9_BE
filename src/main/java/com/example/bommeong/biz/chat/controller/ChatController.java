@@ -116,7 +116,14 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     @GetMapping("/{userId}")
     public ResponseEntity<BaseApiDto<?>> getPostListByChat(@PathVariable Long userId){
         List<ChatPostListDtoRes> postList = chatService.getPostsByUserIds(userId);
-        return super.ok(new BaseApiDto<>(postList));
+
+        if (!postList.isEmpty()){
+            return super.ok(new BaseApiDto<>(postList));
+        }
+        else {
+            return super.fail(new BaseApiDto<>(null));
+        }
+
     }
 
 
