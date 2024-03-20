@@ -6,6 +6,13 @@ import com.example.bommeong.biz.user.service.UserService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
 import com.example.bommeong.common.utils.ResponseEntityUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,24 +23,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "유저 API")
 public class UserController extends BaseApiController<BaseApiDto<?>> {
 
-    private final UserService userService;
-
     @PostMapping("/signup")
+    @Operation(summary = "회원가입", description = "반려인, 보호소 통합 회원가입")
+    @ApiResponse(responseCode = "0000", description = "가입 성공", content = @Content(mediaType = "application/json"))
+    @Parameters({
+            @Parameter(name = "email", description = "이메일", example = "test@naver.com"),
+            @Parameter(name = "password", description = "패스워드", example = "1234"),
+            @Parameter(name = "name", description = "표기 이름", example = "@@보호소"),
+            @Parameter(name = "phone", description = "연락처", example = "01012345678"),
+            @Parameter(name = "memberType", description = "S: 보호소, B: 반려인, A: 어드민", example = "B")
+    })
     public ResponseEntity<BaseApiDto<?>> signup(@RequestBody UserDtoReq.SignUpDto signUpDto) throws Exception {
         try {
             userService.signUp(signUpDto);
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "회원가입 실패 : " + e.getMessage());
         }
 
     }
 
+    private final UserService userService;
+
     @PostMapping("/login")
-    //@ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "로그인", description = "통합 로그인")
+    @ApiResponse(responseCode = "0000", description = "로그인 성공", content = @Content(mediaType = "application/json"))
+    @Parameters({
+            @Parameter(name = "email", description = "이메일", example = "test@naver.com"),
+            @Parameter(name = "password", description = "패스워드", example = "1234")
+    })
     public ResponseEntity<BaseApiDto<?>> login(@RequestBody UserDtoReq.LoginDto loginDto) throws Exception {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
