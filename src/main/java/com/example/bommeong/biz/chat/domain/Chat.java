@@ -31,6 +31,7 @@ public class Chat {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
 

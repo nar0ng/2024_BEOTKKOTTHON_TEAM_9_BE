@@ -3,10 +3,13 @@ package com.example.bommeong.biz.chat.controller;
 import com.example.bommeong.biz.chat.domain.Chat;
 import com.example.bommeong.biz.chat.dto.ChatDtoReq;
 import com.example.bommeong.biz.chat.dto.ChatDtoRes;
+import com.example.bommeong.biz.chat.dto.ChatPostListDtoRes;
 import com.example.bommeong.biz.chat.service.ChatService;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.dto.BomInfoModel;
+import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.repository.PostRepository;
+import com.example.bommeong.biz.post.service.PostService;
 import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.common.controller.BaseApiController;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -94,9 +98,34 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
             throw new RuntimeException(e);
         }
 
-
-
         return null;
     }
+
+    @GetMapping("/{postId}/{userId}")
+    ResponseEntity<BaseApiDto<?>> getChatRecords( @PathVariable Long postId, @PathVariable Long userId){
+        List<Chat> chatRecords = chatService.getChatRecords(userId, postId);
+
+        if (!(chatRecords == null)){
+            return super.ok(new BaseApiDto<>(chatRecords));
+        }
+        else {
+            return super.fail(new BaseApiDto<>(null));
+        }
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<BaseApiDto<?>> getPostListByChat(@PathVariable Long userId){
+        List<ChatPostListDtoRes> postList = chatService.getPostsByUserIds(userId);
+
+        if (!postList.isEmpty()){
+            return super.ok(new BaseApiDto<>(postList));
+        }
+        else {
+            return super.fail(new BaseApiDto<>(null));
+        }
+
+    }
+
+
 
 }

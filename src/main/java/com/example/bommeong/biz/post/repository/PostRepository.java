@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.post.repository;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.common.dao.BaseRepository;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends BaseRepository<PostEntity, Long> {
-
     Optional<PostEntity> findPostEntityByPostId(Long postId);
 
     @Query(nativeQuery = true, value = "SELECT *, shelter FROM post p WHERE p.post_id IN (:ids)")
