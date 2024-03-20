@@ -4,7 +4,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop # DB 설계 완료 될 시 update 로 변경
+      ddl-auto: update # DB 설계 완료 될 시 update 로 변경
     show-sql: true
     properties:
       hibernate:

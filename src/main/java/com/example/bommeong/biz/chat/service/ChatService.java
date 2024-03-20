@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.chat.service;
 
 import com.example.bommeong.biz.chat.domain.Chat;
+import com.example.bommeong.biz.chat.dto.ChatPostListDtoRes;
 import com.example.bommeong.biz.chat.repository.ChatRepository;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -23,7 +25,6 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-
 
 
     private Chat createNewChat(Chat chat){
@@ -67,5 +68,29 @@ public class ChatService {
         }
     }
 
-    public List<Chat> getAllRecords;
+    public List<ChatPostListDtoRes> getPostsByUserIds(Long userId) {
+        Optional<User> userOptional = userRepository.findUserById(userId);
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
+
+        User user = userOptional.get();
+        List<PostEntity> posts = chatRepository.findPostsByUser(user);
+
+        return posts.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    private ChatPostListDtoRes mapToDto(PostEntity postEntity) {
+        return ChatPostListDtoRes.builder()
+                .postId(postEntity.getPostId())
+                .name(postEntity.getBomInfoEntity().getName())
+                .imageName(postEntity.getImageName())
+                .imageUrl(postEntity.getImageUrl())
+                .status(postEntity.getStatus())
+                .build();
+    }
+
+
 }

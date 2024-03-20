@@ -10,18 +10,15 @@ import com.example.bommeong.common.code.ResultCode;
 import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.service.BaseServiceImplWithJpa;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, Long, PostRepository> {
-
     private final AwsS3Service awsS3Service;
     public PostService(PostRepository postRepository, AwsS3Service awsS3Service) {
         this.repository = postRepository;
@@ -65,4 +62,5 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
         awsS3Service.remove(awsS3Dto);
         super.remove(pk);
     }
+
 }

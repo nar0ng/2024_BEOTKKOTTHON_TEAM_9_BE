@@ -3,10 +3,13 @@ package com.example.bommeong.biz.chat.controller;
 import com.example.bommeong.biz.chat.domain.Chat;
 import com.example.bommeong.biz.chat.dto.ChatDtoReq;
 import com.example.bommeong.biz.chat.dto.ChatDtoRes;
+import com.example.bommeong.biz.chat.dto.ChatPostListDtoRes;
 import com.example.bommeong.biz.chat.service.ChatService;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.dto.BomInfoModel;
+import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.repository.PostRepository;
+import com.example.bommeong.biz.post.service.PostService;
 import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.common.controller.BaseApiController;
@@ -34,6 +37,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     private final ChatService chatService;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+
 
     @PostMapping("/{postId}/{userId}")
     ResponseEntity<BaseApiDto<?>> Chat(@RequestBody ChatDtoReq chatDtoReq,
@@ -108,5 +112,13 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
             return super.fail(new BaseApiDto<>(null));
         }
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<BaseApiDto<?>> getPostListByChat(@PathVariable Long userId){
+        List<ChatPostListDtoRes> postList = chatService.getPostsByUserIds(userId);
+        return super.ok(new BaseApiDto<>(postList));
+    }
+
+
 
 }

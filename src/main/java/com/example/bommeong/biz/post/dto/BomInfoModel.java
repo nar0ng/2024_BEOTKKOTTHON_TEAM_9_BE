@@ -21,6 +21,7 @@ public class BomInfoModel extends BaseModel {
     private String gender;
     private String personality;
     private String extra;
+
     public BomInfoModel(BomInfoEntity entity) {
         this.infoId = entity.getInfoId();
         this.postId = entity.getPostEntity().getPostId();
