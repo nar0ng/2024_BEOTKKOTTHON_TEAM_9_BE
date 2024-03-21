@@ -96,7 +96,7 @@ public class ChatService {
                 .imageName(postEntity.getImageName())
                 .imageUrl(postEntity.getImageUrl())
                 .status(postEntity.getStatus())
-                .createAt(postEntity.getCreatedAt())
+                .createdAt(postEntity.getCreatedAt())
                 .build();
     }
 

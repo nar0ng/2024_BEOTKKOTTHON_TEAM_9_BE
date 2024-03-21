@@ -17,5 +17,5 @@ public class ChatPostListDtoRes {
     private String imageName;
     private String imageUrl;
     private String status;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 }
