@@ -85,7 +85,6 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
                         .response(chatResponse)
                         .user(user.get())
                         .post(postEntityOptional.get())
-                        .createdAt(LocalDateTime.now())
                         .build();
 
                 chatService.saveChat(chat);

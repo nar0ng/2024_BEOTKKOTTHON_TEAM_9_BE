@@ -33,7 +33,6 @@ public class ChatService {
                 .input(chat.getInput())
                 .response(chat.getResponse())
                 .post(chat.getPost())
-                .createdAt(chat.getCreatedAt())
                 .build();
     }
 
@@ -97,6 +96,7 @@ public class ChatService {
                 .imageName(postEntity.getImageName())
                 .imageUrl(postEntity.getImageUrl())
                 .status(postEntity.getStatus())
+                .createAt(postEntity.getCreatedAt())
                 .build();
     }
 

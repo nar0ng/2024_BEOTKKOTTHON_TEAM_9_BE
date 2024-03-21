@@ -37,7 +37,5 @@ public class Chat {
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
 
-    @Column(name="createdAt")
-    private LocalDateTime createdAt;
 
 }
