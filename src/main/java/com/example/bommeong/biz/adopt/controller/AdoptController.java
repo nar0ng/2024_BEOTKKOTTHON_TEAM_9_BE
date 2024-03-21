@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/adopt")
@@ -37,7 +37,7 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
             e.printStackTrace();
-            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 작성 실패 : " + e.getMessage());
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청 실패 : " + e.getMessage());
         }
     }
 

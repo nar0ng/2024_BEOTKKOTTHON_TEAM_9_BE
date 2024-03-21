@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @EqualsAndHashCode(callSuper = false)
 public class AdoptModel{
     private Long adoptId;
+    private Long postId;
     private String imageUrl;
     private String imageName;
     private MultipartFile uploadFile;
@@ -23,10 +24,10 @@ public class AdoptModel{
 
     public AdoptModel(AdoptEntity entity) {
         this.adoptId = entity.getAdoptId();
+        this.postId = entity.getPostEntity().getPostId();
         this.imageUrl = entity.getImageUrl();
         this.status = entity.getStatus();
         this.imageName = entity.getImageName();
-        this.uploadFile = entity.getUploadFile();
         this.adoptApplication = entity.getAdoptApplicationEntity().toModel();
     }
 

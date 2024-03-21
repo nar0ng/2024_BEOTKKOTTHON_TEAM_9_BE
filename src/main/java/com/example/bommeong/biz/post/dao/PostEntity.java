@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.post.dao;
 
+import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.common.dto.BaseEntity;
@@ -49,6 +50,9 @@ public class PostEntity extends BaseEntity {
 
     @OneToOne(mappedBy = "postEntity", cascade = CascadeType.ALL)
     private BomInfoEntity bomInfoEntity;
+
+    @OneToOne(mappedBy = "postEntity", cascade = CascadeType.ALL)
+    private AdoptEntity adoptEntity;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes = new HashSet<>();

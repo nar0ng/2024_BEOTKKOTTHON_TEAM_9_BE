@@ -21,9 +21,7 @@ public class AdoptApplicationEntity {
     @Column(name = "application_id")
     private Long applicationId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "post_id", unique = true, nullable = false)
-    private PostEntity postEntity;
+
 
     @Column(name = "first_consent")
     private String firstConsent;
@@ -46,20 +44,21 @@ public class AdoptApplicationEntity {
     @Column(name = "second_adoption_response")
     private String secondAdoptionResponse;
 
-    @OneToOne(mappedBy = "adoptEntity", cascade = CascadeType.ALL)
-    private AdoptApplicationEntity adoptApplicationEntity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "adopt_id", referencedColumnName = "adopt_id")
+    private AdoptEntity adoptEntity;
 
     public AdoptApplicationEntity(AdoptApplicationModel model) {}
 
     public AdoptApplicationEntity(AdoptModel model) {
-        this.applicationId=model.getAdoptApplication().toEntity().getApplicationId();
-        this.firstConsent=model.getAdoptApplication().toEntity().getFirstConsent();
-        this.firstResponse=model.getAdoptApplication().toEntity().getFirstResponse();
-        this.secondResponse=model.getAdoptApplication().toEntity().getSecondResponse();
-        this.thirdResponse=model.getAdoptApplication().toEntity().getThirdResponse();
-        this.fourthResponse=model.getAdoptApplication().toEntity().getFourthResponse();
-        this.firstAdoptionResponse=model.getAdoptApplication().toEntity().getFirstAdoptionResponse();
-        this.secondAdoptionResponse=model.getAdoptApplication().toEntity().getSecondAdoptionResponse();
+//        this.applicationId=model.getAdoptApplication().get();
+        this.firstConsent=model.getAdoptApplication().getFirstConsent();
+        this.firstResponse=model.getAdoptApplication().getFirstResponse();
+        this.secondResponse=model.getAdoptApplication().getSecondResponse();
+        this.thirdResponse=model.getAdoptApplication().getThirdResponse();
+        this.fourthResponse=model.getAdoptApplication().getFourthResponse();
+        this.firstAdoptionResponse=model.getAdoptApplication().getFirstAdoptionResponse();
+        this.secondAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
     }
 
     public AdoptApplicationModel toModel() { return new AdoptApplicationModel(this);}

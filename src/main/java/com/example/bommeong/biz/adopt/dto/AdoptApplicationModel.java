@@ -1,7 +1,16 @@
 package com.example.bommeong.biz.adopt.dto;
 
 import com.example.bommeong.biz.adopt.dao.AdoptApplicationEntity;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class AdoptApplicationModel {
     private String firstConsent;
     private String firstResponse;

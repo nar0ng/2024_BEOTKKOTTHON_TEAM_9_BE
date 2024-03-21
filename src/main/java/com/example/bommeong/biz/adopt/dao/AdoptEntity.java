@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.adopt.dao;
 
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
+import com.example.bommeong.biz.post.dao.PostEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,10 @@ public class AdoptEntity {
     @Column(name = "adopt_id")
     private Long adoptId;
 
+    @OneToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", unique = true, nullable = false)
+    private PostEntity postEntity;
+
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -30,18 +35,15 @@ public class AdoptEntity {
     @Column(name = "status")
     private String status;
 
-    @Transient
-    private MultipartFile uploadFile;
-
     @OneToOne(mappedBy = "adoptEntity", cascade = CascadeType.ALL)
     private AdoptApplicationEntity AdoptApplicationEntity;
 
     public AdoptEntity(AdoptModel model) {
         this.adoptId = model.getAdoptId();
-        this.imageName = model.getImageName();
-        this.imageUrl = model.getImageUrl();
+        PostEntity post = new PostEntity();
+        post.setPostId(model.getPostId());
+        this.postEntity = post;
         this.status = model.getStatus();
-        this.uploadFile = model.getUploadFile();
     }
 
     public AdoptModel toModel() { return new AdoptModel(this); }
