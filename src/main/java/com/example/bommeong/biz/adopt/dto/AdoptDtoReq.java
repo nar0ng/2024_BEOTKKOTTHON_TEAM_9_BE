@@ -44,4 +44,10 @@ public class AdoptDtoReq {
 
     @Column(name="second_adoption_response")
     private String secondAdoptionResponse;
+
+    @Column(name="third_adoption_response")
+    private String thirdAdoptionResponse;
+
+    @Column(name="fourth_adoption_response")
+    private String fourthAdoptionResponse;
 }

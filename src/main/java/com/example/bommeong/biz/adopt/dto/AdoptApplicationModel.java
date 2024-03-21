@@ -19,6 +19,8 @@ public class AdoptApplicationModel {
     private String fourthResponse;
     private String firstAdoptionResponse;
     private String secondAdoptionResponse;
+    private String thirdAdoptionResponse;
+    private String fourthAdoptionResponse;
 
     public AdoptApplicationModel(AdoptApplicationEntity entity) {
         this.firstConsent=entity.getFirstConsent();
@@ -28,6 +30,8 @@ public class AdoptApplicationModel {
         this.fourthResponse=entity.getFourthResponse();
         this.firstAdoptionResponse=entity.getFirstAdoptionResponse();
         this.secondAdoptionResponse=entity.getSecondAdoptionResponse();
+        this.thirdAdoptionResponse=entity.getThirdAdoptionResponse();
+        this.fourthAdoptionResponse=entity.getFourthAdoptionResponse();
     }
 
     public AdoptApplicationEntity toEntity() { return new AdoptApplicationEntity(this);}
