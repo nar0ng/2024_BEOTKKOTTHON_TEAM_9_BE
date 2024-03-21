@@ -44,6 +44,12 @@ public class AdoptApplicationEntity {
     @Column(name = "second_adoption_response")
     private String secondAdoptionResponse;
 
+    @Column(name = "third_adoption_response")
+    private String thirdAdoptionResponse;
+
+    @Column(name = "fourth_adoption_response")
+    private String fourthAdoptionResponse;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adopt_id", referencedColumnName = "adopt_id")
     private AdoptEntity adoptEntity;
@@ -59,6 +65,8 @@ public class AdoptApplicationEntity {
         this.fourthResponse=model.getAdoptApplication().getFourthResponse();
         this.firstAdoptionResponse=model.getAdoptApplication().getFirstAdoptionResponse();
         this.secondAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
+        this.thirdAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
+        this.fourthAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
     }
 
     public AdoptApplicationModel toModel() { return new AdoptApplicationModel(this);}
