@@ -33,6 +33,7 @@ public class ChatService {
                 .input(chat.getInput())
                 .response(chat.getResponse())
                 .post(chat.getPost())
+                .createdAt(chat.getCreatedAt())
                 .build();
     }
 

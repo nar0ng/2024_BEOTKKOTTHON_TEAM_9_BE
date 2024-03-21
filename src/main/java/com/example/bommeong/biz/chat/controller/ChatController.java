@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +85,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
                         .response(chatResponse)
                         .user(user.get())
                         .post(postEntityOptional.get())
+                        .createdAt(LocalDateTime.now())
                         .build();
 
                 chatService.saveChat(chat);

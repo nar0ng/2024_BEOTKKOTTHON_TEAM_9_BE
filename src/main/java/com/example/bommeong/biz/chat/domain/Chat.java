@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,5 +36,8 @@ public class Chat {
     @JsonBackReference
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity post;
+
+    @Column(name="createdAt")
+    private LocalDateTime createdAt;
 
 }
