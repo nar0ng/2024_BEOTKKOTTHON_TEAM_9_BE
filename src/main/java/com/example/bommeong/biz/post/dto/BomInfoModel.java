@@ -20,6 +20,9 @@ public class BomInfoModel extends BaseModel {
     private String breed;
     private String gender;
     private String personality;
+    private String likes;
+    private String hates;
+    private String findingLocation;
     private String extra;
 
     public BomInfoModel(BomInfoEntity entity) {
@@ -30,6 +33,9 @@ public class BomInfoModel extends BaseModel {
         this.breed = entity.getBreed();
         this.gender = entity.getGender();
         this.personality = entity.getPersonality();
+        this.likes = entity.getLikes();
+        this.hates = entity.getHates();
+        this.findingLocation = entity.getFindingLocation();
         this.extra = entity.getExtra();
     }
 

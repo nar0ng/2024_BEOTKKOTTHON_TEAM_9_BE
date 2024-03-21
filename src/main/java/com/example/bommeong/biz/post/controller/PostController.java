@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.post.controller;
 
 
+import com.example.bommeong.biz.post.dto.BomInfoModel;
 import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.service.PostService;
@@ -42,6 +43,16 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @GetMapping("/{postId}")
+    public ResponseEntity<BaseApiDto<?>> postDetail(@PathVariable Long postId) throws Exception {
+        try {
+            PostModel.PostList model = postService.findDetail(postId);
+            return super.ok(new BaseApiDto<>(model));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 상세 조회 실패 : " + e.getMessage());
+        }
+    }
+
     @GetMapping("/like/{memberId}")
     public ResponseEntity<BaseApiDto<?>> memberLikeList(@PathVariable Long memberId) throws Exception {
         try {
@@ -52,6 +63,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 리스트 조회 실패 : " + e.getMessage());
         }
     }
+
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "공고 등록하기", description = "보호소로 로그인한 사용자가 등록할 수 있다.")

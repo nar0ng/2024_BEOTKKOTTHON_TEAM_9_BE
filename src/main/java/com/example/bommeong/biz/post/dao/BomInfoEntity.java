@@ -41,6 +41,15 @@ public class BomInfoEntity extends BaseEntity {
     @Column(name = "personality")
     private String personality;
 
+    @Column(name = "likes")
+    private String likes;
+
+    @Column(name = "hates")
+    private String hates;
+
+    @Column(name = "finding_location")
+    private String findingLocation;
+
     @Column(name = "extra")
     private String extra;
 
@@ -52,6 +61,9 @@ public class BomInfoEntity extends BaseEntity {
         this.breed = model.getBomInfo().getBreed();
         this.gender = model.getBomInfo().getGender();
         this.personality = model.getBomInfo().getPersonality();
+        this.likes = model.getBomInfo().getLikes();
+        this.hates = model.getBomInfo().getHates();
+        this.findingLocation = model.getBomInfo().getFindingLocation();
         this.extra = model.getBomInfo().getExtra();
     }
 

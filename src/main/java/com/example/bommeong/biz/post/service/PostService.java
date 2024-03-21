@@ -42,6 +42,13 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
 
     }
 
+    public PostModel.PostList findDetail(Long postId) throws Exception {
+        Optional<PostEntity> detail = repository.findById(postId);
+        if (detail.isEmpty()) throw  new RuntimeException("조회 데이터 없음");
+
+        return new PostModel.PostList(detail.get());
+    }
+
     public List<PostModel.PostList> findLikeList(Long memberId) throws Exception {
         // memberId 로 검색할 likeId 객체 생성
         LikeId likeId = new LikeId(memberId);
