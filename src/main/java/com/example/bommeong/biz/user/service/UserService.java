@@ -1,5 +1,7 @@
 package com.example.bommeong.biz.user.service;
 
+import com.example.bommeong.biz.adopt.dao.AdoptEntity;
+import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.repository.AuthorityRepository;
 import com.example.bommeong.common.security.JwtProvider;
@@ -33,6 +35,8 @@ public class UserService {
     private final TokenRepository tokenRepository;
 
     private final JwtProvider jwtProvider;
+
+    private final AdoptRepository adoptRepository;
 
 
     public Optional<User> test(){
@@ -192,4 +196,16 @@ public class UserService {
                 .build();
     }
 
+    public UserDtoRes.MyPageDto getMyPage(Long memberId) {
+        // 유저 존재 확인
+        Optional<User> user = userRepository.findById(memberId);
+        if (user.isEmpty()) throw new RuntimeException("user not found");
+
+        // 유저 입양 신청 확인
+        Optional<AdoptEntity> adoptEntity = adoptRepository.findByUser(user.get());
+
+
+
+        return new UserDtoRes.MyPageDto(user.get(), adoptEntity);
+    }
 }

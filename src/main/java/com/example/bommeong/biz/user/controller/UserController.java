@@ -107,5 +107,16 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
         return userService.getUser();
     }
 
+    @GetMapping("/info/{memberId}")
+    public ResponseEntity<BaseApiDto<?>> myPageData(@PathVariable Long memberId) throws Exception {
+        try {
+            UserDtoRes.MyPageDto myPageDto = userService.getMyPage(memberId);
+            return super.ok(new BaseApiDto<>(myPageDto));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "마이페이지 조회 실패 : " + e.getMessage());
+        }
+    }
+
+
 }
 

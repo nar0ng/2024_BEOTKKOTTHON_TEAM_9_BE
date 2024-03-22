@@ -1,7 +1,11 @@
 package com.example.bommeong.biz.user.dto;
 
+import com.example.bommeong.biz.adopt.dao.AdoptEntity;
+import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.user.domain.User;
 import lombok.*;
+
+import java.util.Optional;
 
 public class UserDtoRes {
     @Getter
@@ -36,5 +40,24 @@ public class UserDtoRes {
             this.phone = user.getPhone();
             this.memberType = user.getMemberType();
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class MyPageDto {
+        private Long memberId;
+        private String name;
+        private String email;
+        private String memberType;
+        private AdoptModel adoption;
+
+        public MyPageDto(User user, Optional<AdoptEntity> adoptEntity) {
+            this.memberId = user.getId();
+            this.name = user.getName();
+            this.email = user.getEmail();
+            this.memberType = user.getMemberType();
+            adoptEntity.ifPresent(entity -> this.adoption = entity.toModel());
+        }
+
     }
 }
