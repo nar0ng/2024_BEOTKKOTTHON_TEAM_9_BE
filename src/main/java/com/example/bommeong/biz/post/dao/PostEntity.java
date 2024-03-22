@@ -13,6 +13,7 @@ import org.hibernate.annotations.Formula;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -51,8 +52,8 @@ public class PostEntity extends BaseEntity {
     @OneToOne(mappedBy = "postEntity", cascade = CascadeType.ALL)
     private BomInfoEntity bomInfoEntity;
 
-    @OneToOne(mappedBy = "postEntity", cascade = CascadeType.ALL)
-    private AdoptEntity adoptEntity;
+    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL)
+    private List<AdoptEntity> adoptEntity;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes = new HashSet<>();

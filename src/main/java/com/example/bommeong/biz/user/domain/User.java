@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.user.domain;
 
+import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.post.dao.LikeEntity;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -60,6 +61,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AdoptEntity adoptEntity;
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

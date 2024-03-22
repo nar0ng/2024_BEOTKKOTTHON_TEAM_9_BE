@@ -2,6 +2,7 @@ package com.example.bommeong.biz.adopt.dao;
 
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,13 @@ public class AdoptEntity {
     @Column(name = "adopt_id")
     private Long adoptId;
 
-    @OneToOne
-    @JoinColumn(name = "post_id", referencedColumnName = "post_id", unique = true, nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id", nullable = false)
     private PostEntity postEntity;
+
+    @OneToOne
+    @JoinColumn(name = "member_id", referencedColumnName = "id", unique = true, nullable = false)
+    private User user;
 
     @Column(name = "image_url")
     private String imageUrl;
@@ -40,6 +45,7 @@ public class AdoptEntity {
 
     public AdoptEntity(AdoptModel model) {
         this.adoptId = model.getAdoptId();
+        this.user = User.builder().id(model.getMemberId()).build();
         PostEntity post = new PostEntity();
         post.setPostId(model.getPostId());
         this.postEntity = post;

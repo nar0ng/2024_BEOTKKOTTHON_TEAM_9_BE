@@ -8,6 +8,8 @@ import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
+import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,18 +26,22 @@ public class AdoptService {
     private final AwsS3Service awsS3Service;
     private final AdoptRepository adoptRepository;
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void add(AdoptModel model, String dirName) throws Exception {
         AdoptEntity adoptEntity = model.toEntity();
 
+        // 유저 존재 확인
+        Optional<User> user = userRepository.findById(model.getMemberId());
+        if (user.isEmpty()) throw new RuntimeException("user not found");
 
-        Optional<PostEntity> entity = postRepository.findById(model.getPostId());
         // post 존재 확인
+        Optional<PostEntity> entity = postRepository.findById(model.getPostId());
         if (entity.isEmpty()) throw new RuntimeException("공고가 없습니다.");
 
-        // adopt 확인
-        if (adoptRepository.findByPostEntity(entity.get()).isPresent()) throw new RuntimeException("이미 입양신청 된 공고입니다.");;
+        // 유저의 입양신청 확인
+        if (adoptRepository.findByUser(user.get()).isPresent()) throw new RuntimeException("입양 신청 내역이 있습니다.");
 
         // S3 업로드 후 Post entity 설정
         AwsS3Dto awsS3Dto = awsS3Service.upload(model.getUploadFile(), dirName);

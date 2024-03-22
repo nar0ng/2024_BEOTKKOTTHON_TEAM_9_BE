@@ -32,7 +32,7 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
             LocalDate now = LocalDate.now();
             String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-            String dirName = BASE_UPLOAD_DIR + "/" +  model.getAdoptId() +  "/" + today;
+            String dirName = BASE_UPLOAD_DIR + "/" +  model.getPostId() +  "/" + today;
             adoptService.add(model, dirName);
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
