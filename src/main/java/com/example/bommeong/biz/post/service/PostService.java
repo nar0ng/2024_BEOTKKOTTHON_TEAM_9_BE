@@ -13,9 +13,11 @@ import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.common.code.ResultCode;
+import com.example.bommeong.common.dto.PageEntity;
 import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.service.BaseServiceImplWithJpa;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -129,6 +132,15 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
 //
         likeRepository.delete(entity);
 
+    }
+
+    public PageEntity<PostModel> getListForAdmin(PageEntity<PostModel> pageEntity) throws Exception {
+        Page<PostEntity> page = repository.findAll(toPageable(pageEntity));
+        Stream<PostModel> stream = page.getContent().stream().map(PostEntity::toModel);
+
+        pageEntity.setTotalCnt(page.getTotalElements());
+        pageEntity.setDtoList(stream.toList());
+        return pageEntity;
     }
 
 }

@@ -7,10 +7,10 @@
 
 <th:block layout:fragment="content">
   <div class="container-fluid">
-    <h1>콘텐츠 관리</h1>
+    <h1>공고 관리</h1>
     <div class="row" id="contentList">
       <div th:if="${contentList.totalCnt eq 0}" class="alert alert-light" role="alert" id="noMbrAvailable">
-        <span>유저 정보가 없습니다.</span>
+        <span>공고 정보가 없습니다.</span>
       </div>
       <main>
         <div class="row mb-3">
@@ -34,30 +34,28 @@
         <table id="content_list_table" class="table table-hover table-striped table-bordered text-center" style="font-size: 14px">
           <thead>
           <tr>
-            <th>콘텐츠 ID</th>
-            <th>유저 ID</th>
-            <th>콘텐츠 제목</th>
-            <th>카테고리</th>
-            <th>조회수</th>
-            <th>회사명</th>
-            <th>마감 기한</th>
-            <th>단기 콘텐츠 여부</th>
-            <th>콘텐츠 활성화 여부</th>
-<!--            <th>생성 시간</th>-->
-<!--            <th>수정 시간</th>-->
+            <th>공고 ID</th>
+            <th>보호소 ID</th>
+            <th>보호소 이름</th>
+            <th>입양 공고 상태</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>견종</th>
+            <th>성별</th>
+            <th>성격</th>
           </tr>
           </thead>
           <tbody>
-          <tr th:unless="${contentList.totalCnt eq 0}" th:each="content : ${contentList.dtoList}" th:onclick="|location.href='@{/cms/content/{contentId}(contentId = ${content.contentId})}'|">
-            <td th:text="${content.getContentId()}"></td>
-            <td th:text="${content.getUserId()}"></td>
-            <td th:text="${content.getTitle()}"></td>
-            <td th:text="${content.getCategory()}"></td>
-            <td th:text="${content.getViewCount()}"></td>
-            <td th:text="${content.getCompanyName()}"></td>
-            <td th:text="${content.getDeadLine()}"></td>
-            <td th:text="${content.getShortYn()}"></td>
-            <td th:text="${content.getViewYn()}"></td>
+          <tr th:unless="${contentList.totalCnt eq 0}" th:each="content : ${contentList.dtoList}" th:onclick="|location.href='@{/cms/content/{postId}(postId = ${content.postId})}'|">
+            <td th:text="${content.getPostId()}"></td>
+            <td th:text="${content.getShelterId()}"></td>
+            <td th:text="${content.getShelterName()}"></td>
+            <td th:text="${content.getStatus()}"></td>
+            <td th:text="${content.getBomInfo().getName()}"></td>
+            <td th:text="${content.getBomInfo().getAge()}"></td>
+            <td th:text="${content.getBomInfo().getBreed()}"></td>
+            <td th:text="${content.getBomInfo().getGender()}"></td>
+            <td th:text="${content.getBomInfo().getPersonality()}"></td>
           </tr>
           </tbody>
         </table>

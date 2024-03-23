@@ -5,6 +5,7 @@ import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.user.domain.User;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class UserDtoRes {
@@ -58,6 +59,32 @@ public class UserDtoRes {
             this.memberType = user.getMemberType();
             adoptEntity.ifPresent(entity -> this.adoption = entity.toModel());
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class UserListAdmin {
+        private Long memberId;
+        private String name;
+        private String email;
+        private String phone;
+        private String memberType;
+        private String memberStatus;
+        private AdoptModel adoption;
+        private LocalDateTime createdAt;
+
+
+        public UserListAdmin(User user) {
+            this.memberId = user.getId();
+            this.name = user.getName();
+            this.email = user.getEmail();
+            this.phone = user.getPhone();
+            this.memberType = user.getMemberType();
+            this.memberStatus = user.getMemberStatus();
+            this.createdAt = user.getCreatedAT();
+//                adoptEntity.ifPresent(entity -> this.adoption = entity.toModel());
+        }
 
     }
+
 }

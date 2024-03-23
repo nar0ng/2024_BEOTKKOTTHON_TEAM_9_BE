@@ -1,9 +1,13 @@
 package com.example.bommeong.biz.user.service;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
+import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
+import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.repository.AuthorityRepository;
+import com.example.bommeong.common.dto.PageEntity;
 import com.example.bommeong.common.security.JwtProvider;
 import com.example.bommeong.common.security.SecurityUtil;
 import com.example.bommeong.common.security.Token;
@@ -11,7 +15,9 @@ import com.example.bommeong.common.security.TokenRepository;
 import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.biz.user.dto.UserDtoRes;
 import com.example.bommeong.biz.user.repository.UserRepository;
+import com.example.bommeong.common.service.BaseServiceImplWithJpa;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,11 +27,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
 @RequiredArgsConstructor //생성자 주입
-public class UserService {
+public class UserService extends BaseServiceImplWithJpa {
     private final UserRepository userRepository;
 
     private final AuthorityRepository authorityRepository;
@@ -207,5 +214,15 @@ public class UserService {
 
 
         return new UserDtoRes.MyPageDto(user.get(), adoptEntity);
+    }
+
+    public PageEntity<UserDtoRes.UserListAdmin> getAllUserForAdmin(PageEntity<UserDtoRes.UserListAdmin> pageEntity) throws Exception {
+        Optional<AdoptEntity> adoptModel = Optional.of(new AdoptEntity());
+        Page<User> page = userRepository.findAll(toPageable(pageEntity));
+        Stream<UserDtoRes.UserListAdmin> stream = page.getContent().stream().map(UserDtoRes.UserListAdmin::new);
+
+        pageEntity.setTotalCnt(page.getTotalElements());
+        pageEntity.setDtoList(stream.toList());
+        return pageEntity;
     }
 }
