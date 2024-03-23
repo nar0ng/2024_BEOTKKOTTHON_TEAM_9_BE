@@ -54,6 +54,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
     }
 
     @GetMapping("/like/{memberId}")
+    @Operation(summary = "유저 좋아요 공고 리스트", description = "유저가 좋아요 누른 공고 + bomInfo 리스트 조회")
     public ResponseEntity<BaseApiDto<?>> memberLikeList(@PathVariable Long memberId) throws Exception {
         try {
             List<PostModel.PostList> list = postService.findLikeList(memberId);
@@ -104,6 +105,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
     }
 
     @PostMapping("/like")
+    @Operation(summary = "공고 좋아요 등록/삭제", description = "")
     public ResponseEntity<BaseApiDto<?>> setLike(@RequestBody LikeModel likeModel) throws Exception {
         try {
             String flag = likeModel.getFlag();

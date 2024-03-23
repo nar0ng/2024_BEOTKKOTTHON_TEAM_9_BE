@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -30,10 +32,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/chat")
+@Tag(name = "Chat", description = "채팅 API")
 public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     private final ChatService chatService;
     private final UserRepository userRepository;
@@ -41,6 +44,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
 
 
     @PostMapping("/{postId}/{userId}")
+    @Operation(summary = "채팅하기", description = "input 으로 채팅을 요청하면 강아지의 답변으로 응답")
     ResponseEntity<BaseApiDto<?>> Chat(@RequestBody ChatDtoReq chatDtoReq,
                                     @PathVariable Long postId,
                                     @PathVariable Long userId ){
@@ -103,6 +107,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     }
 
     @GetMapping("/{postId}/{userId}")
+    @Operation(summary = "채팅 내역 상세 조회", description = "공고에 해당하는 채팅 내역 응답")
     ResponseEntity<BaseApiDto<?>> getChatRecords( @PathVariable Long postId, @PathVariable Long userId){
         List<Chat> chatRecords = chatService.getChatRecords(userId, postId);
 
@@ -115,6 +120,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     }
 
     @GetMapping("/{userId}")
+    @Operation(summary = "채팅방 리스트 조회", description = "유저의 전체 채팅 리스트 응답")
     public ResponseEntity<BaseApiDto<?>> getPostListByChat(@PathVariable Long userId){
         List<ChatPostListDtoRes> postList = chatService.getPostsByUserIds(userId);
 

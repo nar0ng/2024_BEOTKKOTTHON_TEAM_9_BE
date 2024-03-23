@@ -73,11 +73,13 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @Operation(summary = "토큰 리프레시", description = "리프레시 토큰으로 억세스 토큰 재발급")
     @GetMapping("/refresh")
     public ResponseEntity<UserDtoRes.TokenDto> refresh(@RequestBody UserDtoRes.TokenDto token) throws Exception {
         return new ResponseEntity<>(userService.refreshAccessToken(token), HttpStatus.OK);
     }
 
+    @Operation(summary = "유저 정보 수정", description = "")
     @PutMapping()
     public ResponseEntity<BaseApiDto<?>> updateUser(@RequestBody UserDtoReq.UpdateDto updateDto) throws Exception {
         try {
@@ -90,6 +92,7 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
 
     }
 
+    @Operation(summary = "유저 삭제", description = "반려인, 보호소 통합 회원가입")
     @DeleteMapping()
     public ResponseEntity<BaseApiDto<?>> deleteUser() throws Exception {
         try {
@@ -102,12 +105,14 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     }
 
     @GetMapping()
+    @Operation(summary = "유저 정보", description = "토큰값으로 유저 정보 가져오기")
     @ResponseStatus(HttpStatus.OK)
     public UserDtoRes.UserRes getUser() throws Exception {
         return userService.getUser();
     }
 
     @GetMapping("/info/{memberId}")
+    @Operation(summary = "마이페이지 정보", description = "앱 내 마이페이지 로딩에 필요한 유저 인포 & 입양 신청 정보")
     public ResponseEntity<BaseApiDto<?>> myPageData(@PathVariable Long memberId) throws Exception {
         try {
             UserDtoRes.MyPageDto myPageDto = userService.getMyPage(memberId);

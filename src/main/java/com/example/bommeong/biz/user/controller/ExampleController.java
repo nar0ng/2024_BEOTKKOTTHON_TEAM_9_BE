@@ -15,6 +15,7 @@ import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1/phone")
 @CrossOrigin(origins = "*")
 public class ExampleController {

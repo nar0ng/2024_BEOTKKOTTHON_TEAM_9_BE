@@ -4,6 +4,8 @@ import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.service.AdoptService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/adopt")
+@Tag(name = "Adopt", description = "입양 API")
 public class AdoptController extends BaseApiController<BaseApiDto<?>> {
 
     private final AdoptService adoptService;
@@ -26,6 +29,7 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
     private final String BASE_UPLOAD_DIR = "adopt";
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "입양 신청", description = "")
     public ResponseEntity<BaseApiDto<?>> addAdopt(@ModelAttribute AdoptModel model) {
         try {
             log.info("data = {}", model);
