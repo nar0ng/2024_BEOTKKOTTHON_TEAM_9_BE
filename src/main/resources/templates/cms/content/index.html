@@ -39,10 +39,7 @@
             <th>보호소 이름</th>
             <th>입양 공고 상태</th>
             <th>이름</th>
-            <th>나이</th>
             <th>견종</th>
-            <th>성별</th>
-            <th>성격</th>
           </tr>
           </thead>
           <tbody>
@@ -52,10 +49,7 @@
             <td th:text="${content.getShelterName()}"></td>
             <td th:text="${content.getStatus()}"></td>
             <td th:text="${content.getBomInfo().getName()}"></td>
-            <td th:text="${content.getBomInfo().getAge()}"></td>
             <td th:text="${content.getBomInfo().getBreed()}"></td>
-            <td th:text="${content.getBomInfo().getGender()}"></td>
-            <td th:text="${content.getBomInfo().getPersonality()}"></td>
           </tr>
           </tbody>
         </table>

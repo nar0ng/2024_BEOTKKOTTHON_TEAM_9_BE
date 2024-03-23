@@ -44,7 +44,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:unless="${contentList.totalCnt eq 0}" th:each="content : ${contentList.dtoList}" th:onclick="|location.href='@{/cms/content/{memberId}(memberId = ${content.memberId})}'|">
+          <tr th:unless="${contentList.totalCnt eq 0}" th:each="content : ${contentList.dtoList}">
             <td th:text="${content.getMemberId()}"></td>
             <td th:text="${content.getMemberType()}"></td>
             <td th:text="${content.getName()}"></td>

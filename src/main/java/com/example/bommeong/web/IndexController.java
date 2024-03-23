@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
@@ -57,6 +58,14 @@ public class IndexController extends BaseController {
         PageEntity<PostModel> pageEntity = postService.getListForAdmin(new PageEntity<>(pageable));
         model.addAttribute("contentList", pageEntity);
         return "cms/content/index";
+    }
+
+    @GetMapping("/content/{contentId}")
+    public String detail(@PathVariable("contentId") Long id, Model model) throws Exception {
+        PostModel.PostList contentModel = postService.findDetail(id);
+        log.info("# content detail page = {}", contentModel);
+        model.addAttribute("contentDetail", contentModel);
+        return "cms/content/detail";
     }
 
 //    @PostMapping("login-process")
