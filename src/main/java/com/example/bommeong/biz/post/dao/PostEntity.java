@@ -2,8 +2,10 @@ package com.example.bommeong.biz.post.dao;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.post.dto.PostModel;
+import com.example.bommeong.biz.user.domain.Shelter;
 import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.common.dto.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,14 +51,19 @@ public class PostEntity extends BaseEntity {
     @Column
     private String status;
 
-    @OneToOne(mappedBy = "postEntity", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private BomInfoEntity bomInfoEntity;
 
-    @OneToMany(mappedBy = "postEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<AdoptEntity> adoptEntity;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    @JsonIgnore
+    private Shelter shelter;
 
     public PostEntity(PostModel model) {
         this.postId = model.getPostId();
