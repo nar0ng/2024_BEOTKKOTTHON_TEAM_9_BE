@@ -2,7 +2,6 @@ package com.example.bommeong.biz.user.service;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
-import com.example.bommeong.biz.user.domain.RefreshEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.dto.CustomUserDetails;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
@@ -16,7 +15,6 @@ import com.example.bommeong.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
@@ -34,12 +32,15 @@ import java.util.stream.Stream;
 @Transactional
 @RequiredArgsConstructor //생성자 주입
 public class UserService extends BaseServiceImplWithJpa {
+    private static long thirtyDaysInMillis = 30L * 24 * 60 * 60 * 1000; // 30일을 밀리초로 변환
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationConfiguration configuration;
     private final RefreshRepository refreshRepository;
     private final JWTUtil jwtUtil;
     private final AdoptRepository adoptRepository;
+    private final TokenService tokenService;
 
 
     public Optional<UserEntity> test(){
@@ -67,11 +68,12 @@ public class UserService extends BaseServiceImplWithJpa {
     public UserDtoRes.TokenDto login(UserDtoReq.LoginDto loginDto) throws Exception {
         Optional<UserEntity> findUser = userRepository.findByEmail(loginDto.getEmail());
 
+        // 회원 존재 여부 체크
         if (findUser.isEmpty()) {
             throw new RuntimeException("가입되지 않은 회원입니다.");
         }
 
-        //
+        // 로그인 인증
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword(), null);
         Authentication authentication = configuration.getAuthenticationManager().authenticate(authToken);
         if (!authentication.isAuthenticated()) {
@@ -91,11 +93,11 @@ public class UserService extends BaseServiceImplWithJpa {
         String role = authority.getAuthority();
 
         //토큰 생성
-        String access = jwtUtil.createJwt("access", username, role, thirtyDaysInMillis);
-        String refresh = jwtUtil.createJwt("refresh", username, role, thirtyDaysInMillis);
+        String access = jwtUtil.createJwt("access", username, role, TokenService.REFRESH_TOKEN_VALIDITY);
+        String refresh = jwtUtil.createJwt("refresh", username, role, TokenService.REFRESH_TOKEN_VALIDITY);
 
         //Refresh 토큰 저장
-        addRefreshEntity(username, refresh);
+        tokenService.saveRefreshToken(username, refresh);
 
 
         UserEntity userEntity = findUser.get();
@@ -218,16 +220,5 @@ public class UserService extends BaseServiceImplWithJpa {
         return pageEntity;
     }
 
-    private static long thirtyDaysInMillis = 30L * 24 * 60 * 60 * 1000; // 30일을 밀리초로 변환
-    private void addRefreshEntity(String username, String refresh) {
 
-        Date date = new Date(System.currentTimeMillis() + thirtyDaysInMillis);
-
-        RefreshEntity refreshEntity = new RefreshEntity();
-        refreshEntity.setUsername(username);
-        refreshEntity.setRefresh(refresh);
-        refreshEntity.setExpiration(date.toString());
-
-        refreshRepository.save(refreshEntity);
-    }
 }

@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class TokenService {
+
+    public static long REFRESH_TOKEN_VALIDITY = 30L * 24 * 60 * 60 * 1000; // 30일을 밀리초로 변환
 
     private final JWTUtil jwtUtil;
     private final RefreshRepository refreshRepository;
@@ -51,30 +54,19 @@ public class TokenService {
         String role = jwtUtil.getRole(refresh);
 
         //make new JWT
-        String newAccess = jwtUtil.createJwt("access", username, role, thirtyDaysInMillis);
-        String newRefresh = jwtUtil.createJwt("refresh", username, role, thirtyDaysInMillis);
+        String newAccess = jwtUtil.createJwt("access", username, role, REFRESH_TOKEN_VALIDITY);
+        String newRefresh = jwtUtil.createJwt("refresh", username, role, REFRESH_TOKEN_VALIDITY);
 
         //Refresh 토큰 저장 DB에 기존의 Refresh 토큰 삭제 후 새 Refresh 토큰 저장
         refreshRepository.deleteByRefresh(refresh);
-        addRefreshEntity(username, newRefresh, thirtyDaysInMillis);
+        saveRefreshToken(username, newRefresh);
 
         TokenDto dto = new TokenDto();
         dto.setAccessToken(newAccess);
         dto.setRefreshToken(newRefresh);
         return dto;
     }
-    private static long thirtyDaysInMillis = 30L * 24 * 60 * 60 * 1000; // 30일을 밀리초로 변환
-    private void addRefreshEntity(String username, String refresh, Long expiredMs) {
 
-        Date date = new Date(System.currentTimeMillis() + expiredMs);
-
-        RefreshEntity refreshEntity = new RefreshEntity();
-        refreshEntity.setUsername(username);
-        refreshEntity.setRefresh(refresh);
-        refreshEntity.setExpiration(date.toString());
-
-        refreshRepository.save(refreshEntity);
-    }
 
     public void logout(TokenDto tokenDto) {
         String refresh = tokenDto.getRefreshToken();
@@ -105,5 +97,27 @@ public class TokenService {
         //로그아웃 진행
         //Refresh 토큰 DB에서 제거
         refreshRepository.deleteByRefresh(refresh);
+    }
+
+    // 리프레시 토큰 저장
+    public void saveRefreshToken(String username, String refresh) {
+
+        Date date = new Date(System.currentTimeMillis() + REFRESH_TOKEN_VALIDITY);
+
+        // 유저의 리프레시가 이미 존재한다면 업데이트
+        RefreshEntity existRefresh = refreshRepository.findByUsername(username);
+        if (existRefresh != null) {
+            existRefresh.setRefresh(refresh);
+            existRefresh.setExpiration(date.toString());
+            refreshRepository.save(existRefresh);
+            return;
+        }
+
+        RefreshEntity refreshEntity = new RefreshEntity();
+        refreshEntity.setUsername(username);
+        refreshEntity.setRefresh(refresh);
+        refreshEntity.setExpiration(date.toString());
+
+        refreshRepository.save(refreshEntity);
     }
 }
