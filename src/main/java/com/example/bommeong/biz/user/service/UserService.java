@@ -77,7 +77,7 @@ public class UserService extends BaseServiceImplWithJpa {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword(), null);
         Authentication authentication = configuration.getAuthenticationManager().authenticate(authToken);
         if (!authentication.isAuthenticated()) {
-            throw new IllegalArgumentException("로그인 실패");
+            throw new IllegalArgumentException("로그인 인증 실패");
         }
 
         // UserDetails 클래스에서 유저(principal)를 가져옴 + 타입 캐스트
@@ -103,8 +103,8 @@ public class UserService extends BaseServiceImplWithJpa {
         UserEntity userEntity = findUser.get();
 
         return UserDtoRes.TokenDto.builder()
-                .access_token(access)
-                .refresh_token(refresh)
+                .accessToken(access)
+                .refreshToken(refresh)
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
                 .memberId(userEntity.getId())

@@ -15,8 +15,8 @@ public class UserDtoRes {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class TokenDto {
-        private String access_token;
-        private String refresh_token;
+        private String accessToken;
+        private String refreshToken;
         private String name;
         private String email;
         private Long memberId;

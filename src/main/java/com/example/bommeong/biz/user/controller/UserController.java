@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -64,8 +63,8 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             UserDtoRes.TokenDto token = userService.login(loginDto);
-            String accesToken = token.getAccess_token().toString();
-            String refreshToken = token.getRefresh_token().toString();
+            String accesToken = token.getAccessToken().toString();
+            String refreshToken = token.getRefreshToken().toString();
 
             //httpHeaders.add("Authorization", "Bearer " + accesToken);
             httpHeaders.add("accessAuthorization", "Bearer " + accesToken);
@@ -79,7 +78,7 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
 
     @Operation(summary = "토큰 리프레시", description = "리프레시 토큰으로 억세스 토큰 재발급")
     @PostMapping("/reissue")
-    public ResponseEntity<BaseApiDto<?>> refresh(@RequestBody TokenDto token) throws Exception {
+    public ResponseEntity<BaseApiDto<?>> reissueToken(@RequestBody TokenDto token) throws Exception {
     try {
         TokenDto reissue = tokenService.reissue(token);
         return super.ok(new BaseApiDto<>(reissue));
