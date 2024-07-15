@@ -1,7 +1,9 @@
 package com.example.bommeong.biz.user.controller;
 
+import com.example.bommeong.biz.user.dto.TokenDto;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoRes;
+import com.example.bommeong.biz.user.service.TokenService;
 import com.example.bommeong.biz.user.service.UserService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
@@ -11,7 +13,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "User", description = "유저 API")
 public class UserController extends BaseApiController<BaseApiDto<?>> {
+
+    private final TokenService tokenService;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "반려인, 보호소 통합 회원가입")
@@ -60,11 +63,11 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             UserDtoRes.TokenDto token = userService.login(loginDto);
-            String accesToken = token.getAccess_token().toString();
-            String refreshToken = token.getRefresh_token().toString();
+            String accesToken = token.getAccessToken().toString();
+            String refreshToken = token.getRefreshToken().toString();
 
             //httpHeaders.add("Authorization", "Bearer " + accesToken);
-            httpHeaders.add("accssAuthorization", "Bearer " + accesToken);
+            httpHeaders.add("accessAuthorization", "Bearer " + accesToken);
             httpHeaders.add("refreshAuthorization", "Bearer " + refreshToken);
             return super.ok(new BaseApiDto<>(token));
         } catch (Exception e) {
@@ -74,9 +77,27 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     }
 
     @Operation(summary = "토큰 리프레시", description = "리프레시 토큰으로 억세스 토큰 재발급")
-    @GetMapping("/refresh")
-    public ResponseEntity<UserDtoRes.TokenDto> refresh(@RequestBody UserDtoRes.TokenDto token) throws Exception {
-        return new ResponseEntity<>(userService.refreshAccessToken(token), HttpStatus.OK);
+    @PostMapping("/reissue")
+    public ResponseEntity<BaseApiDto<?>> reissueToken(@RequestBody TokenDto token) throws Exception {
+        try {
+            TokenDto reissue = tokenService.reissue(token);
+            return super.ok(new BaseApiDto<>(reissue));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "토큰 리프레시 실패 : " + e.getMessage());
+        }
+
+    }
+
+    @Operation(summary = "로그아웃", description = "로그아웃")
+    @PostMapping("/logout")
+    public ResponseEntity<BaseApiDto<?>> logout(@RequestBody TokenDto token) throws Exception {
+        try {
+            tokenService.logout(token);
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "로그아웃 실패 : " + e.getMessage());
+        }
+
     }
 
     @Operation(summary = "유저 정보 수정", description = "")

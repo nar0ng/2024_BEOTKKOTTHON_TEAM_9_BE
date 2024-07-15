@@ -2,7 +2,7 @@ package com.example.bommeong.biz.user.dto;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,8 +15,8 @@ public class UserDtoRes {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class TokenDto {
-        private String access_token;
-        private String refresh_token;
+        private String accessToken;
+        private String refreshToken;
         private String name;
         private String email;
         private Long memberId;
@@ -35,11 +35,11 @@ public class UserDtoRes {
         private String memberType;
 
         @Builder
-        public UserRes(User user) {
-            this.email = user.getEmail();
-            this.name = user.getName();
-            this.phone = user.getPhone();
-            this.memberType = user.getMemberType();
+        public UserRes(UserEntity userEntity) {
+            this.email = userEntity.getEmail();
+            this.name = userEntity.getName();
+            this.phone = userEntity.getPhone();
+            this.memberType = userEntity.getMemberType();
         }
     }
 
@@ -52,11 +52,11 @@ public class UserDtoRes {
         private String memberType;
         private AdoptModel adoption;
 
-        public MyPageDto(User user, Optional<AdoptEntity> adoptEntity) {
-            this.memberId = user.getId();
-            this.name = user.getName();
-            this.email = user.getEmail();
-            this.memberType = user.getMemberType();
+        public MyPageDto(UserEntity userEntity, Optional<AdoptEntity> adoptEntity) {
+            this.memberId = userEntity.getId();
+            this.name = userEntity.getName();
+            this.email = userEntity.getEmail();
+            this.memberType = userEntity.getMemberType();
             adoptEntity.ifPresent(entity -> this.adoption = entity.toModel());
         }
     }
@@ -74,14 +74,14 @@ public class UserDtoRes {
         private LocalDateTime createdAt;
 
 
-        public UserListAdmin(User user) {
-            this.memberId = user.getId();
-            this.name = user.getName();
-            this.email = user.getEmail();
-            this.phone = user.getPhone();
-            this.memberType = user.getMemberType();
-            this.memberStatus = user.getMemberStatus();
-            this.createdAt = user.getCreatedAT();
+        public UserListAdmin(UserEntity userEntity) {
+            this.memberId = userEntity.getId();
+            this.name = userEntity.getName();
+            this.email = userEntity.getEmail();
+            this.phone = userEntity.getPhone();
+            this.memberType = userEntity.getMemberType();
+            this.memberStatus = userEntity.getMemberStatus();
+            this.createdAt = userEntity.getCreatedAT();
 //                adoptEntity.ifPresent(entity -> this.adoption = entity.toModel());
         }
 

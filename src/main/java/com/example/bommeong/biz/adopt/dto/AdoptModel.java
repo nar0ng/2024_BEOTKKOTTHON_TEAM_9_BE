@@ -26,7 +26,7 @@ public class AdoptModel{
     public AdoptModel(AdoptEntity entity) {
         this.adoptId = entity.getAdoptId();
         this.memberId = entity.getUser().getId();
-        this.postId = entity.getPostEntity().getPostId();
+        this.postId = entity.getPost().getPostId();
         this.imageUrl = entity.getImageUrl();
         this.status = entity.getStatus();
         this.imageName = entity.getImageName();

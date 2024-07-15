@@ -1,13 +1,11 @@
 package com.example.bommeong.biz.chat.domain;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -30,7 +28,7 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference

@@ -7,10 +7,8 @@ import com.example.bommeong.biz.chat.dto.ChatPostListDtoRes;
 import com.example.bommeong.biz.chat.service.ChatService;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.dto.BomInfoModel;
-import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.repository.PostRepository;
-import com.example.bommeong.biz.post.service.PostService;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
@@ -23,11 +21,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +45,7 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
                                     @PathVariable Long postId,
                                     @PathVariable Long userId ){
 
-        Optional<User> user = userRepository.findUserById(userId);
+        Optional<UserEntity> user = userRepository.findUserById(userId);
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

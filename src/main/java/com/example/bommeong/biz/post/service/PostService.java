@@ -10,7 +10,7 @@ import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.LikeRepository;
 import com.example.bommeong.biz.post.repository.PostRepository;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.common.code.ResultCode;
 import com.example.bommeong.common.dto.PageEntity;
@@ -84,7 +84,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
 
         // 매핑
         postEntity.setBomInfoEntity(bomInfoEntity);
-        bomInfoEntity.setPostEntity(postEntity);
+        bomInfoEntity.setPost(postEntity);
 
         repository.save(postEntity);
     }
@@ -102,11 +102,11 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
 
     @Transactional
     public void likePost(LikeModel likeModel) throws Exception {
-        User user = userRepository.findById(likeModel.getMemberId()).orElseThrow(() -> new RuntimeException("Member not found"));
+        UserEntity userEntity = userRepository.findById(likeModel.getMemberId()).orElseThrow(() -> new RuntimeException("Member not found"));
         PostEntity post = repository.findById(likeModel.getPostId()).orElseThrow(() -> new RuntimeException("Post not found"));
 
 
-        LikeEntity entity = new LikeEntity(user, post);
+        LikeEntity entity = new LikeEntity(userEntity, post);
 //        Optional<LikeEntity> likeEntity = likeRepository.findById(entity);
 //        if (likeEntity.isPresent()) System.out.println("있음");
 //        if (likeEntity.isEmpty()) System.out.println("없음");
@@ -116,10 +116,10 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
 
     @Transactional
     public void unLikePost(LikeModel likeModel) throws Exception {
-        User user = userRepository.findById(likeModel.getMemberId()).orElseThrow(() -> new RuntimeException("Member not found"));
+        UserEntity userEntity = userRepository.findById(likeModel.getMemberId()).orElseThrow(() -> new RuntimeException("Member not found"));
         PostEntity post = repository.findById(likeModel.getPostId()).orElseThrow(() -> new RuntimeException("Post not found"));
 
-        LikeEntity entity = new LikeEntity(user, post);
+        LikeEntity entity = new LikeEntity(userEntity, post);
 
 //        Optional<LikeEntity> like = likeRepository.findByUserAndPost(user, post);
 //        System.out.println("---- 좋아요 제거 ----");

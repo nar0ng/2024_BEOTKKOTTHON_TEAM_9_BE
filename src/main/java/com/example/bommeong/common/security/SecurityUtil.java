@@ -1,6 +1,7 @@
 package com.example.bommeong.common.security;
 
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
+import com.example.bommeong.biz.user.dto.CustomUserDetails;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class SecurityUtil {
         return Optional.ofNullable(username);
     }
 
-    public static Optional<User> getOptionalUser() {
+    public static Optional<UserEntity> getOptionalUser() {
         try {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return Optional.of(principal.getUser());

@@ -5,11 +5,10 @@ import com.example.bommeong.biz.chat.dto.ChatPostListDtoRes;
 import com.example.bommeong.biz.chat.repository.ChatRepository;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +49,7 @@ public class ChatService {
 
     public List<Chat> getChatRecords(Long userId, Long postId){
 
-        Optional<User> user = userRepository.findUserById(userId);
+        Optional<UserEntity> user = userRepository.findUserById(userId);
         if (user.isEmpty()) {
             return null;
         }
@@ -69,13 +68,13 @@ public class ChatService {
     }
 
     public List<ChatPostListDtoRes> getPostsByUserIds(Long userId) {
-        Optional<User> userOptional = userRepository.findUserById(userId);
+        Optional<UserEntity> userOptional = userRepository.findUserById(userId);
         if (userOptional.isEmpty()) {
             throw new IllegalArgumentException("User not found with ID: " + userId);
         }
 
-        User user = userOptional.get();
-        List<PostEntity> posts = chatRepository.findPostsByUser(user);
+        UserEntity userEntity = userOptional.get();
+        List<PostEntity> posts = chatRepository.findPostsByUser(userEntity);
 
         if (!posts.isEmpty()){
             return posts.stream()

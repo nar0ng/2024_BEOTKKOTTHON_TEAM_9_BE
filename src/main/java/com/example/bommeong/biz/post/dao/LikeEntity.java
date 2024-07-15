@@ -1,13 +1,11 @@
 package com.example.bommeong.biz.post.dao;
 
 import com.example.bommeong.biz.post.dto.LikeModel;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.common.dto.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "likes")
@@ -21,7 +19,7 @@ public class LikeEntity extends BaseEntity {
     @MapsId("memberId")
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private User user;
+    private UserEntity user;
 
     @MapsId("postId")
     @ManyToOne
@@ -33,7 +31,7 @@ public class LikeEntity extends BaseEntity {
     }
 
     // embeddedId 도 설정해줘야 entity 구성이 됨
-    public LikeEntity(User user, PostEntity post) {
+    public LikeEntity(UserEntity user, PostEntity post) {
         this.likeId = new LikeId(user.getId(), post.getPostId());
         this.user = user;
         this.post = post;

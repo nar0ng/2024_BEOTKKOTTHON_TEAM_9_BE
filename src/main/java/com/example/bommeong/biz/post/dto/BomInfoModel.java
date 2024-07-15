@@ -27,7 +27,7 @@ public class BomInfoModel extends BaseModel {
 
     public BomInfoModel(BomInfoEntity entity) {
         this.infoId = entity.getInfoId();
-        this.postId = entity.getPostEntity().getPostId();
+        this.postId = entity.getPost().getPostId();
         this.name = entity.getName();
         this.age = entity.getAge();
         this.breed = entity.getBreed();
