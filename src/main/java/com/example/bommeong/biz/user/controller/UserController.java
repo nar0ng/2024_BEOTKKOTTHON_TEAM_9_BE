@@ -79,14 +79,24 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     @Operation(summary = "토큰 리프레시", description = "리프레시 토큰으로 억세스 토큰 재발급")
     @PostMapping("/reissue")
     public ResponseEntity<BaseApiDto<?>> reissueToken(@RequestBody TokenDto token) throws Exception {
-    try {
-        TokenDto reissue = tokenService.reissue(token);
-        return super.ok(new BaseApiDto<>(reissue));
-    } catch (Exception e) {
-        return super.fail(BaseApiDto.newBaseApiDto(), "9999", "토큰 리프레시 실패 : " + e.getMessage());
+        try {
+            TokenDto reissue = tokenService.reissue(token);
+            return super.ok(new BaseApiDto<>(reissue));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "토큰 리프레시 실패 : " + e.getMessage());
+        }
+
     }
 
-        //        return new ResponseEntity<>(userService.refreshAccessToken(token), HttpStatus.OK);
+    @Operation(summary = "로그아웃", description = "로그아웃")
+    @PostMapping("/logout")
+    public ResponseEntity<BaseApiDto<?>> logout(@RequestBody TokenDto token) throws Exception {
+        try {
+            tokenService.logout(token);
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "로그아웃 실패 : " + e.getMessage());
+        }
 
     }
 
