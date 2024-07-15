@@ -1,8 +1,5 @@
 package com.example.bommeong.biz.adopt.dto;
 
-import com.example.bommeong.biz.post.dao.PostEntity;
-import com.example.bommeong.biz.user.domain.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

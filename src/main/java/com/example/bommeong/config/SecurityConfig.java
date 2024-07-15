@@ -1,5 +1,10 @@
 package com.example.bommeong.config;
 
+import com.example.bommeong.biz.user.repository.RefreshRepository;
+import com.example.bommeong.jwt.CustomLogoutFilter;
+import com.example.bommeong.jwt.JWTFilter;
+import com.example.bommeong.jwt.JWTUtil;
+import com.example.bommeong.jwt.LoginFilter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -91,7 +96,9 @@ public class SecurityConfig {
                                 "/api/v1/login",
                                 "/api/v1/",
                                 "/api/v1/join",
-                                "/api/v1/reissue",
+                                "/api/v1/user/signup",
+                                "/api/v1/user/login",
+                                "/api/v1/user/reissue",
                                 "/api/v1/push/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());

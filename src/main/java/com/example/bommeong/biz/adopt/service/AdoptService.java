@@ -8,7 +8,7 @@ import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class AdoptService {
         AdoptEntity adoptEntity = model.toEntity();
 
         // 유저 존재 확인
-        Optional<User> user = userRepository.findById(model.getMemberId());
+        Optional<UserEntity> user = userRepository.findById(model.getMemberId());
         if (user.isEmpty()) throw new RuntimeException("user not found");
 
         // post 존재 확인

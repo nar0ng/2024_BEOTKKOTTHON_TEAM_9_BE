@@ -1,7 +1,9 @@
 package com.example.bommeong.biz.user.controller;
 
+import com.example.bommeong.biz.user.dto.TokenDto;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoRes;
+import com.example.bommeong.biz.user.service.TokenService;
 import com.example.bommeong.biz.user.service.UserService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Tag(name = "User", description = "유저 API")
 public class UserController extends BaseApiController<BaseApiDto<?>> {
+
+    private final TokenService tokenService;
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "반려인, 보호소 통합 회원가입")
@@ -64,7 +68,7 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
             String refreshToken = token.getRefresh_token().toString();
 
             //httpHeaders.add("Authorization", "Bearer " + accesToken);
-            httpHeaders.add("accssAuthorization", "Bearer " + accesToken);
+            httpHeaders.add("accessAuthorization", "Bearer " + accesToken);
             httpHeaders.add("refreshAuthorization", "Bearer " + refreshToken);
             return super.ok(new BaseApiDto<>(token));
         } catch (Exception e) {
@@ -74,9 +78,17 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     }
 
     @Operation(summary = "토큰 리프레시", description = "리프레시 토큰으로 억세스 토큰 재발급")
-    @GetMapping("/refresh")
-    public ResponseEntity<UserDtoRes.TokenDto> refresh(@RequestBody UserDtoRes.TokenDto token) throws Exception {
-        return new ResponseEntity<>(userService.refreshAccessToken(token), HttpStatus.OK);
+    @PostMapping("/reissue")
+    public ResponseEntity<BaseApiDto<?>> refresh(@RequestBody TokenDto token) throws Exception {
+    try {
+        TokenDto reissue = tokenService.reissue(token);
+        return super.ok(new BaseApiDto<>(reissue));
+    } catch (Exception e) {
+        return super.fail(BaseApiDto.newBaseApiDto(), "9999", "토큰 리프레시 실패 : " + e.getMessage());
+    }
+
+        //        return new ResponseEntity<>(userService.refreshAccessToken(token), HttpStatus.OK);
+
     }
 
     @Operation(summary = "유저 정보 수정", description = "")

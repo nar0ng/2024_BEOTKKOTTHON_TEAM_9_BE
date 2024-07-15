@@ -1,7 +1,6 @@
 package com.example.bommeong.biz.post.repository;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
-import com.example.bommeong.biz.user.domain.User;
 import com.example.bommeong.common.dao.BaseRepository;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.Query;

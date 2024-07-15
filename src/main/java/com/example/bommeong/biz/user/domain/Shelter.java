@@ -78,11 +78,11 @@ public class Shelter {
     private LocalDateTime updatedAT;
 
 
-    @OneToMany(mappedBy = "shelter")
-    private List<PostEntity> posts = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AdoptEntity adoptEntity;
+//    @OneToMany(mappedBy = "shelter")
+//    private List<PostEntity> posts = new ArrayList<>();
+//
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private AdoptEntity adoptEntity;
 
 
 

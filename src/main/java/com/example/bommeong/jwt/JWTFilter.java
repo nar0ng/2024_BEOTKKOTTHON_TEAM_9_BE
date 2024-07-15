@@ -1,7 +1,8 @@
 package com.example.bommeong.jwt;
 
 
-import com.example.bommeong.biz.user.domain.User;
+import com.example.bommeong.biz.user.domain.UserEntity;
+import com.example.bommeong.biz.user.dto.CustomUserDetails;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,8 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import taba.team4.eut.biz.user.dto.CustomUserDetails;
-import taba.team4.eut.biz.user.entity.UserEntity;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +83,7 @@ public class JWTFilter extends OncePerRequestFilter {
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
 
-        User userEntity = User.builder()
+        UserEntity userEntity = UserEntity.builder()
                 .phone(username)
                 .build();
         userEntity.setPhone(username);

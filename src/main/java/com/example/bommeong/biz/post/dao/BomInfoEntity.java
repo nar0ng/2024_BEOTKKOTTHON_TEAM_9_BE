@@ -24,7 +24,7 @@ public class BomInfoEntity extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "post_id", unique = true, nullable = false)
-    private PostEntity postEntity;
+    private PostEntity post;
 
     @Column(name = "name")
     private String name;

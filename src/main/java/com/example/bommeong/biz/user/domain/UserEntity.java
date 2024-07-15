@@ -6,15 +6,11 @@ import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -23,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "user")
 @Builder
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -101,8 +97,8 @@ public class User {
         this.refreshToken = refreshToken;
     }
 
-    public static User createUser(UserDtoReq.SignUpDto signUpDto, String password) {
-        final User user = User.builder()
+    public static UserEntity createUser(UserDtoReq.SignUpDto signUpDto, String password) {
+        return UserEntity.builder()
                 .email(signUpDto.getEmail())
                 .password(password)
                 .name(signUpDto.getName())
@@ -110,7 +106,7 @@ public class User {
                 .refreshToken(null)
                 .memberStatus("Y")
                 .memberType(signUpDto.getMemberType())
+                .role("ROLE_USER")
                 .build();
-        return user;
     }
 }
