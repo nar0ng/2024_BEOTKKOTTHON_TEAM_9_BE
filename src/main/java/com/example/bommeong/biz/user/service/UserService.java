@@ -1,12 +1,8 @@
 package com.example.bommeong.biz.user.service;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
-import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
-import com.example.bommeong.biz.post.dao.PostEntity;
-import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
-import com.example.bommeong.biz.user.repository.AuthorityRepository;
 import com.example.bommeong.common.dto.PageEntity;
 import com.example.bommeong.common.security.JwtProvider;
 import com.example.bommeong.common.security.SecurityUtil;
