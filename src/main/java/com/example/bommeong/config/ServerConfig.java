@@ -15,19 +15,19 @@ public class ServerConfig {
     @Value("${server.port}")
     private int serverPort;
 
-    @Bean
-    public ServletWebServerFactory servletContainer() {
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-        tomcat.addAdditionalTomcatConnectors(createStandardConnector());
-        return tomcat;
-    }
-
-    private Connector createStandardConnector() {
-        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-        connector.setScheme("https");
-        connector.setSecure(true);
-//        connector.setPort(443);
-        connector.setRedirectPort(serverPort);
-        return connector;
-    }
+//    @Bean
+//    public ServletWebServerFactory servletContainer() {
+//        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+//        tomcat.addAdditionalTomcatConnectors(createStandardConnector());
+//        return tomcat;
+//    }
+//
+//    private Connector createStandardConnector() {
+//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        connector.setScheme("https");
+//        connector.setSecure(true);
+//        connector.setPort(8443);
+//        connector.setRedirectPort(serverPort);
+//        return connector;
+//    }
 }
