@@ -15,7 +15,7 @@ public class JWTUtil {
     // jwt 0.12.3 버전 구현
 
     // 객체 키 생성
-    private SecretKey secretKey;
+    private final SecretKey secretKey;
 
     public JWTUtil(@Value("${jwt.secret.key}") String secret) {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
