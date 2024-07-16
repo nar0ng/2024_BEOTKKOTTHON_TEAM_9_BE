@@ -26,7 +26,7 @@ public class ServerConfig {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("https");
         connector.setSecure(true);
-        connector.setPort(443);
+//        connector.setPort(443);
         connector.setRedirectPort(serverPort);
         return connector;
     }
