@@ -91,6 +91,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(
+                                "/healthcheck",
                                 "/cms/**",
                                 "/assets/**",
                                 "/vendors/**",
