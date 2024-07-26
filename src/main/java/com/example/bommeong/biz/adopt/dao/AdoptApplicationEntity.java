@@ -2,7 +2,6 @@ package com.example.bommeong.biz.adopt.dao;
 
 import com.example.bommeong.biz.adopt.dto.AdoptApplicationModel;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
-import com.example.bommeong.biz.post.dao.PostEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,34 +20,14 @@ public class AdoptApplicationEntity {
     @Column(name = "application_id")
     private Long applicationId;
 
+    @Column(name = "pet_history")
+    private String petHistory;
 
+    @Column(name = "current_pet")
+    private String currentPet;
 
-    @Column(name = "first_consent")
-    private String firstConsent;
-
-    @Column(name = "first_response")
-    private String firstResponse;
-
-    @Column(name = "second_response")
-    private String secondResponse;
-
-    @Column(name = "third_response")
-    private String thirdResponse;
-
-    @Column(name = "fourth_response")
-    private String fourthResponse;
-
-    @Column(name = "first_adoption_response")
-    private String firstAdoptionResponse;
-
-    @Column(name = "second_adoption_response")
-    private String secondAdoptionResponse;
-
-    @Column(name = "third_adoption_response")
-    private String thirdAdoptionResponse;
-
-    @Column(name = "fourth_adoption_response")
-    private String fourthAdoptionResponse;
+    @Column(name = "reason_for_adoption")
+    private String reasonForAdoption;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adopt_id", referencedColumnName = "adopt_id")
@@ -57,16 +36,9 @@ public class AdoptApplicationEntity {
     public AdoptApplicationEntity(AdoptApplicationModel model) {}
 
     public AdoptApplicationEntity(AdoptModel model) {
-//        this.applicationId=model.getAdoptApplication().get();
-        this.firstConsent=model.getAdoptApplication().getFirstConsent();
-        this.firstResponse=model.getAdoptApplication().getFirstResponse();
-        this.secondResponse=model.getAdoptApplication().getSecondResponse();
-        this.thirdResponse=model.getAdoptApplication().getThirdResponse();
-        this.fourthResponse=model.getAdoptApplication().getFourthResponse();
-        this.firstAdoptionResponse=model.getAdoptApplication().getFirstAdoptionResponse();
-        this.secondAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
-        this.thirdAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
-        this.fourthAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
+        this.petHistory = model.getAdoptApplication().getPetHistory();
+        this.reasonForAdoption = model.getAdoptApplication().getReasonForAdoption();
+        this.currentPet = model.getAdoptApplication().getCurrentPet();
     }
 
     public AdoptApplicationModel toModel() { return new AdoptApplicationModel(this);}
