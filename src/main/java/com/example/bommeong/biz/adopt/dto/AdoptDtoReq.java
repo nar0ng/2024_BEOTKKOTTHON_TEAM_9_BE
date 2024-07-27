@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.adopt.dto;
 
+import com.example.bommeong.biz.adopt.dao.AnswerType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,33 +19,27 @@ public class AdoptDtoReq {
     @JsonIgnore
     private Long id;
 
-    @Column(name = "first_consent")
-    private String firstConsent;
+    @Column(name = "pet_history_answer")
+    private AnswerType petHistoryAnswer;
 
-    @Transient
-    private MultipartFile uploadFile;
+    @Column(name = "pet_history")
+    private String petHistory;
 
-    @Column(name = "first_response")
-    private String firstResponse;
+    @Column(name = "current_pet_answer")
+    private AnswerType currentPetAnswer;
 
-    @Column(name="second_response")
-    private String secondResponse;
+    @Column(name = "current_pet")
+    private String currentPet;
 
-    @Column(name="third_response")
-    private String thirdResponse;
+    @Column(name = "family_answer")
+    private AnswerType familyAnswer;
 
-    @Column(name="fourth_response")
-    private String fourthResponse;
+    @Column(name = "family_agreement")
+    private AnswerType familyAgreement;
 
-    @Column(name="first_adoption_response")
-    private String firstAdoptionResponse;
+    @Column(name = "reason_for_adoption")
+    private String reasonForAdoption;
 
-    @Column(name="second_adoption_response")
-    private String secondAdoptionResponse;
-
-    @Column(name="third_adoption_response")
-    private String thirdAdoptionResponse;
-
-    @Column(name="fourth_adoption_response")
-    private String fourthAdoptionResponse;
+    @Column(name = "dog_news")
+    private AnswerType dogNews;
 }
