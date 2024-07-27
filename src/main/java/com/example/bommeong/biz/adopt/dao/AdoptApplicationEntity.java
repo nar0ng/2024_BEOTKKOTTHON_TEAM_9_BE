@@ -41,8 +41,8 @@ public class AdoptApplicationEntity {
     @Column(name = "reason_for_adoption")
     private String reasonForAdoption;
 
-    @Column(name = "dog_news")
-    private AnswerType dogNews;
+    @Column(name = "dog_news_answer")
+    private AnswerType dogNewsAnswer;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adopt_id", referencedColumnName = "adopt_id")
@@ -59,7 +59,7 @@ public class AdoptApplicationEntity {
         this.familyAnswer =  model.getAdoptApplication().getFamilyAnswer();
         this.familyAgreement = model.getAdoptApplication().getFamilyAgreement();
         this.reasonForAdoption = model.getAdoptApplication().getReasonForAdoption();
-        this.dogNews = model.getAdoptApplication().getDogNews();
+        this.dogNewsAnswer = model.getAdoptApplication().getDogNewsAnswer();
     }
 
     public AdoptApplicationModel toModel() { return new AdoptApplicationModel(this);}

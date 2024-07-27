@@ -40,6 +40,6 @@ public class AdoptDtoReq {
     @Column(name = "reason_for_adoption")
     private String reasonForAdoption;
 
-    @Column(name = "dog_news")
-    private AnswerType dogNews;
+    @Column(name = "dog_news_answer")
+    private AnswerType dogNewsAnswer;
 }

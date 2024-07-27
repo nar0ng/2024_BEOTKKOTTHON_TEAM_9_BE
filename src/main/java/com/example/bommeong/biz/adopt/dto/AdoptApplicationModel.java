@@ -21,7 +21,7 @@ public class AdoptApplicationModel {
     private AnswerType familyAnswer;
     private AnswerType familyAgreement;
     private String reasonForAdoption;
-    private AnswerType dogNews;
+    private AnswerType dogNewsAnswer;
 
     public AdoptApplicationModel(AdoptApplicationEntity entity) {
         this.petHistoryAnswer = entity.getPetHistoryAnswer();
@@ -31,7 +31,7 @@ public class AdoptApplicationModel {
         this.familyAnswer = entity.getFamilyAnswer();
         this.familyAgreement = entity.getFamilyAgreement();
         this.reasonForAdoption = entity.getReasonForAdoption();
-        this.dogNews = entity.getDogNews();
+        this.dogNewsAnswer = entity.getDogNewsAnswer();
     }
 
     public AdoptApplicationEntity toEntity() { return new AdoptApplicationEntity(this);}
