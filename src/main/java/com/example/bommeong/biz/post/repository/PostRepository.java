@@ -18,4 +18,6 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
 
     List<PostEntity> findByPostIdIn(List<Long> ids);
 
+    List<PostEntity> findByShelterId_Id(Long shelterId);
+
 }
