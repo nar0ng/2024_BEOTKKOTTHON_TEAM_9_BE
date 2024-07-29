@@ -25,4 +25,11 @@ public class ShelterDtoReq {
         private MultipartFile uploadFile;
 
     }
+
+    @Getter
+    @Setter
+    public static class LoginDto {
+        private String email;
+        private String password;
+    }
 }
