@@ -42,8 +42,6 @@ public class AdoptEntity {
     @OneToOne(mappedBy = "adoptEntity", cascade = CascadeType.ALL)
     private AdoptApplicationEntity AdoptApplicationEntity;
 
-
-
     public AdoptEntity(AdoptModel model) {
         this.adoptId = model.getAdoptId();
         this.user = UserEntity.builder().id(model.getMemberId()).build();
