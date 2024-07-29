@@ -36,7 +36,7 @@ public class ShelterEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "sub_email", nullable = false)

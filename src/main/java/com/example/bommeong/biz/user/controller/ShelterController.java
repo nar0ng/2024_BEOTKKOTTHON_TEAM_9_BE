@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.user.controller;
 
 import com.example.bommeong.biz.user.dto.ShelterDtoReq;
+import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.service.ShelterService;
 import com.example.bommeong.biz.user.service.UserService;
 import com.example.bommeong.common.controller.BaseApiController;
@@ -57,7 +58,7 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
             @Parameter(name = "password", description = "패스워드", example = "1234")
     })
     @PostMapping("/login")
-    public ResponseEntity<BaseApiDto<?>> login(@RequestBody ShelterDtoReq.LoginDto loginDto) {
+    public ResponseEntity<BaseApiDto<?>> login(@RequestBody UserDtoReq.LoginDto loginDto) {
         try {
             log.info("data = {}", loginDto);
             return super.ok(new BaseApiDto<>(shelterService.login(loginDto)));

@@ -41,6 +41,7 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     })
     public ResponseEntity<BaseApiDto<?>> signup(@RequestBody UserDtoReq.SignUpDto signUpDto) throws Exception {
         try {
+            signUpDto.setMemberType("ROLE_USER");
             userService.signUp(signUpDto);
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {

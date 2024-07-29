@@ -28,6 +28,7 @@ public class ShelterDtoReq {
 
     @Getter
     @Setter
+    @ToString
     public static class LoginDto {
         private String email;
         private String password;
