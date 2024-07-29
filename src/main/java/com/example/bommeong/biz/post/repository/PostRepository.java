@@ -23,5 +23,4 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
             " FROM post p " +
             "WHERE p.shelter_id IN (:shelterIds)")
     List<PostEntity> findAllByShelterIds(@Param("shelterIds") List<Long> shelterIds);
-
 }
