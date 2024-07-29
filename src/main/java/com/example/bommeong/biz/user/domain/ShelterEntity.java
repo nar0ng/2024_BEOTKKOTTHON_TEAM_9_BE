@@ -1,9 +1,11 @@
 package com.example.bommeong.biz.user.domain;
 
+import com.example.bommeong.biz.post.dao.PostEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -52,10 +54,10 @@ public class ShelterEntity {
     @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 
-    @Column(name = "latitude", nullable = false, precision = 10, scale = 8)
+    @Column(name = "latitude", nullable = false)
     private Double latitude;
 
-    @Column(name = "longitude", nullable = false, precision = 11, scale = 8)
+    @Column(name = "longitude", nullable = false)
     private Double longitude;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -63,6 +65,9 @@ public class ShelterEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "shelter", cascade = CascadeType.ALL)
+    private List<PostEntity> posts;
 
     @PrePersist
     protected void onCreate() {
