@@ -18,4 +18,10 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
 
     List<PostEntity> findByPostIdIn(List<Long> ids);
 
+    @Query(nativeQuery = true, value = "SELECT * " +
+            ", (SELECT s.name FROM shelter s WHERE s.shelter_id = p.shelter_id) as shelterName " +
+            " FROM post p " +
+            "WHERE p.shelter_id IN (:shelterIds)")
+    List<PostEntity> findAllByShelterIds(@Param("shelterIds") List<Long> shelterIds);
+
 }

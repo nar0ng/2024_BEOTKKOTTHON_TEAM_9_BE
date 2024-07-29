@@ -10,7 +10,9 @@ import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.LikeRepository;
 import com.example.bommeong.biz.post.repository.PostRepository;
+import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
+import com.example.bommeong.biz.user.repository.ShelterRepository;
 import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.common.code.ResultCode;
 import com.example.bommeong.common.dto.PageEntity;
@@ -33,7 +35,9 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     private final AwsS3Service awsS3Service;
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
-    public PostService(PostRepository postRepository, AwsS3Service awsS3Service, LikeRepository likeRepository, UserRepository userRepository) {
+    private final ShelterRepository shelterRepository;
+    public PostService(PostRepository postRepository, AwsS3Service awsS3Service, LikeRepository likeRepository, UserRepository userRepository, ShelterRepository shelterRepository) {
+        this.shelterRepository = shelterRepository;
         this.repository = postRepository;
         this.awsS3Service = awsS3Service;
         this.likeRepository = likeRepository;
@@ -43,6 +47,14 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     public List<PostModel.PostList> findAll() throws Exception {
         return repository.findAll().stream().map(PostModel.PostList::new).collect(Collectors.toList());
 
+    }
+
+    public List<PostModel.PostList> findPostsWithinDistance(Double latitude, Double longitude, Double maxDistance) throws Exception {
+        List<ShelterEntity> allWithLocation = shelterRepository.findAllWithLocation(latitude, longitude, maxDistance);
+        if (allWithLocation.isEmpty()) return new ArrayList<>();
+        List<Long> shelterIds = allWithLocation.stream().map(ShelterEntity::getShelterId).toList();
+        List<PostEntity> postEntities = repository.findAllByShelterIds(shelterIds);
+        return postEntities.stream().map(PostModel.PostList::new).collect(Collectors.toList());
     }
 
     public PostModel.PostList findDetail(Long postId) throws Exception {
