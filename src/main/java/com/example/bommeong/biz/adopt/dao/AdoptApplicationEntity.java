@@ -2,7 +2,6 @@ package com.example.bommeong.biz.adopt.dao;
 
 import com.example.bommeong.biz.adopt.dto.AdoptApplicationModel;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
-import com.example.bommeong.biz.post.dao.PostEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,34 +20,34 @@ public class AdoptApplicationEntity {
     @Column(name = "application_id")
     private Long applicationId;
 
+    @Column(name = "pet_history_answer")
+    @Enumerated(value = EnumType.STRING)
+    private AnswerType petHistoryAnswer;
 
+    @Column(name = "pet_history")
+    private String petHistory;
 
-    @Column(name = "first_consent")
-    private String firstConsent;
+    @Column(name = "current_pet_answer")
+    @Enumerated(value = EnumType.STRING)
+    private AnswerType currentPetAnswer;
 
-    @Column(name = "first_response")
-    private String firstResponse;
+    @Column(name = "current_pet")
+    private String currentPet;
 
-    @Column(name = "second_response")
-    private String secondResponse;
+    @Column(name = "family_answer")
+    @Enumerated(value = EnumType.STRING)
+    private AnswerType familyAnswer;
 
-    @Column(name = "third_response")
-    private String thirdResponse;
+    @Column(name = "family_agreement")
+    @Enumerated(value = EnumType.STRING)
+    private AnswerType familyAgreement;
 
-    @Column(name = "fourth_response")
-    private String fourthResponse;
+    @Column(name = "reason_for_adoption")
+    private String reasonForAdoption;
 
-    @Column(name = "first_adoption_response")
-    private String firstAdoptionResponse;
-
-    @Column(name = "second_adoption_response")
-    private String secondAdoptionResponse;
-
-    @Column(name = "third_adoption_response")
-    private String thirdAdoptionResponse;
-
-    @Column(name = "fourth_adoption_response")
-    private String fourthAdoptionResponse;
+    @Column(name = "dog_news_answer")
+    @Enumerated(value = EnumType.STRING)
+    private AnswerType dogNewsAnswer;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adopt_id", referencedColumnName = "adopt_id")
@@ -57,16 +56,15 @@ public class AdoptApplicationEntity {
     public AdoptApplicationEntity(AdoptApplicationModel model) {}
 
     public AdoptApplicationEntity(AdoptModel model) {
-//        this.applicationId=model.getAdoptApplication().get();
-        this.firstConsent=model.getAdoptApplication().getFirstConsent();
-        this.firstResponse=model.getAdoptApplication().getFirstResponse();
-        this.secondResponse=model.getAdoptApplication().getSecondResponse();
-        this.thirdResponse=model.getAdoptApplication().getThirdResponse();
-        this.fourthResponse=model.getAdoptApplication().getFourthResponse();
-        this.firstAdoptionResponse=model.getAdoptApplication().getFirstAdoptionResponse();
-        this.secondAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
-        this.thirdAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
-        this.fourthAdoptionResponse=model.getAdoptApplication().getSecondAdoptionResponse();
+        //        this.applicationId=model.getAdoptApplication().get();
+        this.petHistoryAnswer = model.getAdoptApplication().getPetHistoryAnswer();
+        this.petHistory = model.getAdoptApplication().getPetHistory();
+        this.currentPetAnswer = model.getAdoptApplication().getCurrentPetAnswer();
+        this.currentPet = model.getAdoptApplication().getCurrentPet();
+        this.familyAnswer =  model.getAdoptApplication().getFamilyAnswer();
+        this.familyAgreement = model.getAdoptApplication().getFamilyAgreement();
+        this.reasonForAdoption = model.getAdoptApplication().getReasonForAdoption();
+        this.dogNewsAnswer = model.getAdoptApplication().getDogNewsAnswer();
     }
 
     public AdoptApplicationModel toModel() { return new AdoptApplicationModel(this);}

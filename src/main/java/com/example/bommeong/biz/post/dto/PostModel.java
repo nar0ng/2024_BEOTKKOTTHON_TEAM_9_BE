@@ -41,7 +41,7 @@ public class PostModel extends BaseModel {
 
         public PostList(PostEntity entity) {
             this.postId = entity.getPostId();
-            this.shelterId = entity.getShelterId().getId();
+            this.shelterId = entity.getShelter().getShelterId();
             this.shelterName = entity.getShelterName();
             this.imageUrl = entity.getImageUrl();
             this.status = entity.getStatus();
@@ -54,7 +54,7 @@ public class PostModel extends BaseModel {
     public PostModel(PostEntity entity) {
         this.postId = entity.getPostId();
         this.imageUrl = entity.getImageUrl();
-        this.shelterId = entity.getShelterId().getId();
+        this.shelterId = entity.getShelter().getShelterId();
         this.shelterName = entity.getShelterName();
         this.createdAt = entity.getCreatedAt();
         this.status = entity.getStatus();

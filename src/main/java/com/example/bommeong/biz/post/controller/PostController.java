@@ -43,6 +43,18 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @GetMapping("/by-location")
+    @Operation(summary = "위치 기반 공고 리스트", description = "위도, 경도, 검색 최대거리 값을 통해 위치 기반 공고 + bomInfo 리스트 조회")
+    public ResponseEntity<BaseApiDto<?>> findByLocation(@RequestParam double latitude,
+                                                        @RequestParam double longitude,
+                                                        @RequestParam double maxDistance) {
+        try {
+            return super.ok(new BaseApiDto<>(postService.findPostsWithinDistance(latitude, longitude, maxDistance)));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "위치 기반 공고 리스트 조회 실패 : " + e.getMessage());
+        }
+    }
+
     @GetMapping("/{postId}")
     public ResponseEntity<BaseApiDto<?>> postDetail(@PathVariable Long postId) throws Exception {
         try {
