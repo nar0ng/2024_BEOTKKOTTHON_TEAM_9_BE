@@ -102,9 +102,12 @@ public class SecurityConfig {
                                 "/api/v1/login",
                                 "/api/v1/",
                                 "/api/v1/join",
-                                "/api/v1/user/signup",
+                                "/api/v1/user/signup", // 유저 auth
                                 "/api/v1/user/login",
                                 "/api/v1/user/reissue",
+                                "/api/v1/shelter/signup", // 보호소 auth
+                                "/api/v1/shelter/login",
+                                "/api/v1/shelter/reissue",
                                 "/api/v1/push/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());

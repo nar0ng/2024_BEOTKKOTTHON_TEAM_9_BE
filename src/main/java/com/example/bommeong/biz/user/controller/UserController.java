@@ -30,17 +30,18 @@ public class UserController extends BaseApiController<BaseApiDto<?>> {
     private final TokenService tokenService;
 
     @PostMapping("/signup")
-    @Operation(summary = "회원가입", description = "반려인, 보호소 통합 회원가입")
+    @Operation(summary = "회원가입", description = "반려인 회원가입")
     @ApiResponse(responseCode = "0000", description = "가입 성공", content = @Content(mediaType = "application/json"))
     @Parameters({
             @Parameter(name = "email", description = "이메일", example = "test@naver.com"),
             @Parameter(name = "password", description = "패스워드", example = "1234"),
             @Parameter(name = "name", description = "표기 이름", example = "@@보호소"),
             @Parameter(name = "phone", description = "연락처", example = "01012345678"),
-            @Parameter(name = "memberType", description = "S: 보호소, B: 반려인, A: 어드민", example = "B")
+            @Parameter(name = "memberType", description = "B: 반려인", example = "B")
     })
     public ResponseEntity<BaseApiDto<?>> signup(@RequestBody UserDtoReq.SignUpDto signUpDto) throws Exception {
         try {
+            signUpDto.setMemberType("ROLE_USER");
             userService.signUp(signUpDto);
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {

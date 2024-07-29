@@ -106,7 +106,7 @@ public class UserEntity {
                 .refreshToken(null)
                 .memberStatus("Y")
                 .memberType(signUpDto.getMemberType())
-                .role("ROLE_USER")
+                .role(signUpDto.getMemberType())
                 .build();
     }
 }

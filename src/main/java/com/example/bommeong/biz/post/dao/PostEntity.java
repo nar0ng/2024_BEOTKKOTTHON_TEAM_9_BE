@@ -2,10 +2,8 @@ package com.example.bommeong.biz.post.dao;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.post.dto.PostModel;
-import com.example.bommeong.biz.user.domain.Shelter;
-import com.example.bommeong.biz.user.domain.UserEntity;
+import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.common.dto.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,8 +30,8 @@ public class PostEntity extends BaseEntity {
     private Long postId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shelter_id", referencedColumnName = "id")
-    private UserEntity shelterId;
+    @JoinColumn(name = "shelter_id", referencedColumnName = "shelter_id")
+    private ShelterEntity shelter;
 
 
     @Formula("(SELECT u.name FROM user u WHERE u.id = shelter_id)")
@@ -58,16 +56,12 @@ public class PostEntity extends BaseEntity {
     private List<AdoptEntity> adoptEntity;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<LikeEntity> likes = new HashSet<>();
+    private Set<LikeEntity> likes;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "shelter_id")
-//    @JsonIgnore
-//    private Shelter shelter;
 
     public PostEntity(PostModel model) {
         this.postId = model.getPostId();
-        this.shelterId = UserEntity.builder().id(model.getShelterId()).build();
+        this.shelter = ShelterEntity.builder().shelterId(model.getShelterId()).build();
         this.shelterName = model.getShelterName();
         this.imageName = model.getImageName();
         this.imageUrl = model.getImageUrl();
