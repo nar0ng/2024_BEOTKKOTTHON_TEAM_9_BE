@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.user.controller;
 
+import com.example.bommeong.biz.adopt.dto.AdoptApplicantDto;
 import com.example.bommeong.biz.user.dto.AdoptionStatusDto;
 import com.example.bommeong.biz.user.dto.BomListDto;
 import com.example.bommeong.biz.user.dto.ShelterDtoReq;
@@ -88,6 +89,16 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
             return super.ok(new BaseApiDto<>(stats));
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 통계 조회 실패 : " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{postId}/applicants")
+    public ResponseEntity<BaseApiDto<?>> findAdoptionApplicationsByPostId(@PathVariable Long postId) {
+        try {
+            List<AdoptApplicantDto> applications = shelterService.findAdoptionApplicationsByPostId(postId);
+            return super.ok(new BaseApiDto<>(applications));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청자 조회 실패 : " + e.getMessage());
         }
     }
 
