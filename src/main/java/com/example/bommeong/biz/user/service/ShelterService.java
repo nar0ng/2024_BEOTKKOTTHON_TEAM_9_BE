@@ -2,6 +2,8 @@ package com.example.bommeong.biz.user.service;
 
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
+import com.example.bommeong.biz.adopt.dao.AdoptApplicationEntity;
+import com.example.bommeong.biz.adopt.dto.AdoptApplicantDto;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.PostEntity;
@@ -15,6 +17,7 @@ import com.example.bommeong.biz.user.dto.ShelterDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoRes;
 import com.example.bommeong.biz.user.repository.ShelterRepository;
+import com.example.bommeong.biz.user.repository.UserRepository;
 import com.example.bommeong.jwt.JWTUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,6 +47,7 @@ public class ShelterService {
     private final ShelterRepository shelterRepository;
     private final PostRepository postRepository;
     private final AdoptRepository adoptRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AwsS3Service awsS3Service;
     private final AuthenticationConfiguration configuration;
@@ -152,4 +156,23 @@ public class ShelterService {
                 .pendingAdoptions(pendingAdoptions)
                 .build();
     }
+
+    public List<AdoptApplicantDto> findAdoptionApplicationsByPostId(Long postId) {
+        return adoptRepository.findByPostPostId(postId)
+                .stream()
+                .map(adoptEntity -> {
+                    UserEntity user = adoptEntity.getUser();
+                    AdoptApplicationEntity application = adoptEntity.getAdoptApplicationEntity();
+                    return new AdoptApplicantDto(
+                            user.getId(),
+                            user.getEmail(),
+                            user.getName(),
+                            application.getReasonForAdoption()
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
+
+
 }
