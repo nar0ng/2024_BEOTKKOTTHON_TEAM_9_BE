@@ -1,9 +1,9 @@
 package com.example.bommeong.biz.user.controller;
 
+import com.example.bommeong.biz.user.dto.BomListDto;
 import com.example.bommeong.biz.user.dto.ShelterDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.service.ShelterService;
-import com.example.bommeong.biz.user.service.UserService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,10 +12,12 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -64,6 +66,17 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
             return super.ok(new BaseApiDto<>(shelterService.login(loginDto)));
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "보호소 로그인 실패 : " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/bom-lists/{shelterId}")
+    public ResponseEntity<BaseApiDto<?>> findAllBomLists(@PathVariable Long shelterId) {
+        try {
+            List<BomListDto> bomList = shelterService.findAllBomListByShelterId(shelterId);
+
+            return super.ok(new BaseApiDto<>(bomList));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "보호견 리스트 조회 실패 : " + e.getMessage());
         }
     }
 }
