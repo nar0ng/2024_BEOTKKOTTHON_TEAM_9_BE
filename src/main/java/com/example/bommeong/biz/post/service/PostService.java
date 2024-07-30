@@ -52,7 +52,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     public List<PostModel.PostList> findPostsWithinDistance(Double latitude, Double longitude, Double maxDistance) throws Exception {
         List<ShelterEntity> allWithLocation = shelterRepository.findAllWithLocation(latitude, longitude, maxDistance);
         if (allWithLocation.isEmpty()) return new ArrayList<>();
-        List<Long> shelterIds = allWithLocation.stream().map(ShelterEntity::getShelterId).toList();
+        List<Long> shelterIds = allWithLocation.stream().map(ShelterEntity::getId).toList();
         List<PostEntity> postEntities = repository.findAllByShelterIds(shelterIds);
         return postEntities.stream().map(PostModel.PostList::new).collect(Collectors.toList());
     }

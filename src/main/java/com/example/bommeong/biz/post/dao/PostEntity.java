@@ -33,7 +33,6 @@ public class PostEntity extends BaseEntity {
     @JoinColumn(name = "shelter_id", referencedColumnName = "shelter_id")
     private ShelterEntity shelter;
 
-
     @Formula("(SELECT u.name FROM user u WHERE u.id = shelter_id)")
     private String shelterName;
 
@@ -49,7 +48,7 @@ public class PostEntity extends BaseEntity {
     @Column
     private String status;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BomInfoEntity bomInfoEntity;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -61,7 +60,7 @@ public class PostEntity extends BaseEntity {
 
     public PostEntity(PostModel model) {
         this.postId = model.getPostId();
-        this.shelter = ShelterEntity.builder().shelterId(model.getShelterId()).build();
+        this.shelter = ShelterEntity.builder().id(model.getShelterId()).build();
         this.shelterName = model.getShelterName();
         this.imageName = model.getImageName();
         this.imageUrl = model.getImageUrl();

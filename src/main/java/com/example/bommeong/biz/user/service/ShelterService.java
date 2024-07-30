@@ -2,15 +2,23 @@ package com.example.bommeong.biz.user.service;
 
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
+import com.example.bommeong.biz.post.dao.BomInfoEntity;
+import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
+import com.example.bommeong.biz.user.dto.BomListDto;
 import com.example.bommeong.biz.user.dto.CustomUserDetails;
 import com.example.bommeong.biz.user.dto.ShelterDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoRes;
 import com.example.bommeong.biz.user.repository.ShelterRepository;
 import com.example.bommeong.jwt.JWTUtil;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
@@ -26,10 +34,12 @@ import java.util.Iterator;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ShelterService {
 
     private final ShelterRepository shelterRepository;
+    private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
     private final AwsS3Service awsS3Service;
     private final AuthenticationConfiguration configuration;
@@ -91,5 +101,36 @@ public class ShelterService {
         return userService.login(loginDto);
     }
 
+    public List<BomListDto> findAllBomListByShelterId(Long shelterId){
+        List<PostEntity> posts = postRepository.findAllByShelterId(shelterId);
 
+        return posts.stream()
+                .map(post -> {
+                    BomInfoEntity bomInfo = post.getBomInfoEntity();
+                    int adoptStatusCount = post.getAdoptEntity().size();
+                    if (bomInfo == null) {
+                        log.warn("BomInfoEntity is null for PostEntity with ID: {}", post.getPostId());
+                        return BomListDto.builder()
+                                .postId(post.getPostId())
+                                .name("Unknown")
+                                .breed("Unknown")
+                                .gender("Unknown")
+                                .extra("No info available")
+                                .createdAt(LocalDateTime.now())
+                                .adoptStatusCount(1)
+                                .build();
+                    }
+                    log.debug("Post ID: {}, BomInfoEntity: {}", post.getPostId(), bomInfo);
+                    return BomListDto.builder()
+                            .postId(post.getPostId())
+                            .name(bomInfo.getName())
+                            .breed(bomInfo.getBreed())
+                            .gender(bomInfo.getGender())
+                            .extra(bomInfo.getExtra())
+                            .createdAt(post.getCreatedAt())
+                            .adoptStatusCount(adoptStatusCount)
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
 }
