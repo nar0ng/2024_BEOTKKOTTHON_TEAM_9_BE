@@ -26,4 +26,6 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
     List<PostEntity> findAllByShelterIds(@Param("shelterIds") List<Long> shelterIds);
 
     List<PostEntity> findAllByShelterId(Long shelterId);
+
+    int countByShelterId(Long shelterId);
 }

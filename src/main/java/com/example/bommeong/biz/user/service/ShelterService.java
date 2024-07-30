@@ -2,11 +2,13 @@ package com.example.bommeong.biz.user.service;
 
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
+import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
+import com.example.bommeong.biz.user.dto.AdoptionStatusDto;
 import com.example.bommeong.biz.user.dto.BomListDto;
 import com.example.bommeong.biz.user.dto.CustomUserDetails;
 import com.example.bommeong.biz.user.dto.ShelterDtoReq;
@@ -14,6 +16,7 @@ import com.example.bommeong.biz.user.dto.UserDtoReq;
 import com.example.bommeong.biz.user.dto.UserDtoRes;
 import com.example.bommeong.biz.user.repository.ShelterRepository;
 import com.example.bommeong.jwt.JWTUtil;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +43,7 @@ public class ShelterService {
 
     private final ShelterRepository shelterRepository;
     private final PostRepository postRepository;
+    private final AdoptRepository adoptRepository;
     private final PasswordEncoder passwordEncoder;
     private final AwsS3Service awsS3Service;
     private final AuthenticationConfiguration configuration;
@@ -132,5 +136,20 @@ public class ShelterService {
                             .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    public AdoptionStatusDto getAdoptionStatsByShelterId(Long shelterId) {
+        int totalDogsCount = postRepository.countByShelterId(shelterId);
+        LocalDate today = LocalDate.now();
+        int todayAdoptionRequests = adoptRepository.countByPostShelterIdAndCreatedAtAfter(shelterId, today.atStartOfDay());
+        int completedAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "completed");
+        int pendingAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "before");
+
+        return AdoptionStatusDto.builder()
+                .totalDogsCount(totalDogsCount)
+                .todayAdoptionRequests(todayAdoptionRequests)
+                .completedAdoptions(completedAdoptions)
+                .pendingAdoptions(pendingAdoptions)
+                .build();
     }
 }
