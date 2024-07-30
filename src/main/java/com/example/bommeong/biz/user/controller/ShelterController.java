@@ -72,7 +72,7 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
-    @GetMapping("/bom-lists/{shelterId}")
+    @GetMapping("/{shelterId}/bom-lists")
     public ResponseEntity<BaseApiDto<?>> findAllBomLists(@PathVariable Long shelterId) {
         try {
             List<BomListDto> bomList = shelterService.findAllBomListByShelterId(shelterId);
@@ -83,17 +83,27 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
-    @GetMapping("/adopt-lists/{shelterId}")
+    @GetMapping("/{shelterId}/adoptions")
     public ResponseEntity<BaseApiDto<?>> findAdoptionStatsByShelterId(@PathVariable Long shelterId) {
         try {
             AdoptionStatusDto stats = shelterService.getAdoptionStatsByShelterId(shelterId);
             return super.ok(new BaseApiDto<>(stats));
         } catch (Exception e) {
-            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 통계 조회 실패 : " + e.getMessage());
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 현황 조회 실패 : " + e.getMessage());
         }
     }
 
-    @GetMapping("/{postId}/applicant/{adoptId}")
+    @GetMapping("/{postId}/applicants")
+    public ResponseEntity<BaseApiDto<?>> findAdoptionApplicationsByPostId(@PathVariable Long postId) {
+        try {
+            List<AdoptApplicantDto> applications = shelterService.findAdoptionApplicationsByPostId(postId);
+            return super.ok(new BaseApiDto<>(applications));
+        } catch (Exception e) {
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청자 조회 실패 : " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{postId}/applicants/{adoptId}")
     public ResponseEntity<BaseApiDto<?>> getAdoptApplicantDetails(@PathVariable Long postId, @PathVariable Long adoptId) {
         try {
             AdoptApplicantDetailsDto applicantDetails = shelterService.getAdoptApplicantDetails(postId, adoptId);
