@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.user.controller;
 
+import com.example.bommeong.biz.adopt.dto.AdoptApplicantDetailsDto;
 import com.example.bommeong.biz.adopt.dto.AdoptApplicantDto;
 import com.example.bommeong.biz.user.dto.AdoptionStatusDto;
 import com.example.bommeong.biz.user.dto.BomListDto;
@@ -92,13 +93,13 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
-    @GetMapping("/{postId}/applicants")
-    public ResponseEntity<BaseApiDto<?>> findAdoptionApplicationsByPostId(@PathVariable Long postId) {
+    @GetMapping("/{postId}/applicant/{adoptId}")
+    public ResponseEntity<BaseApiDto<?>> getAdoptApplicantDetails(@PathVariable Long postId, @PathVariable Long adoptId) {
         try {
-            List<AdoptApplicantDto> applications = shelterService.findAdoptionApplicationsByPostId(postId);
-            return super.ok(new BaseApiDto<>(applications));
+            AdoptApplicantDetailsDto applicantDetails = shelterService.getAdoptApplicantDetails(postId, adoptId);
+            return super.ok(new BaseApiDto<>(applicantDetails));
         } catch (Exception e) {
-            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청자 조회 실패 : " + e.getMessage());
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청자 상세 정보 조회 실패 : " + e.getMessage());
         }
     }
 

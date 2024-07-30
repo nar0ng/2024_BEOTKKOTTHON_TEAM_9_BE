@@ -23,4 +23,7 @@ public interface AdoptRepository extends JpaRepository<AdoptEntity, Long> {
     int countByPostShelterIdAndStatus(Long shelterId, String status);
 
     List<AdoptEntity> findByPostPostId(Long postId);
+
+    AdoptEntity findByPostPostIdAndAdoptId(Long postId, Long adoptId);
+
 }

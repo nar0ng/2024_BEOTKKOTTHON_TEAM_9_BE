@@ -3,7 +3,10 @@ package com.example.bommeong.biz.user.service;
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.adopt.dao.AdoptApplicationEntity;
+import com.example.bommeong.biz.adopt.dao.AdoptEntity;
+import com.example.bommeong.biz.adopt.dto.AdoptApplicantDetailsDto;
 import com.example.bommeong.biz.adopt.dto.AdoptApplicantDto;
+import com.example.bommeong.biz.adopt.dto.AdoptApplicationModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.PostEntity;
@@ -173,6 +176,22 @@ public class ShelterService {
                 .collect(Collectors.toList());
     }
 
+
+    public AdoptApplicantDetailsDto getAdoptApplicantDetails(Long postId, Long adoptId) {
+        AdoptEntity adoptEntity = adoptRepository.findByPostPostIdAndAdoptId(postId, adoptId);
+        if (adoptEntity == null) {
+            throw new RuntimeException("Adopt entity not found for postId: " + postId + " and adoptId: " + adoptId);
+        }
+        UserEntity user = adoptEntity.getUser();
+        AdoptApplicationEntity application = adoptEntity.getAdoptApplicationEntity();
+        AdoptApplicationModel applicationModel = new AdoptApplicationModel(application);
+        return new AdoptApplicantDetailsDto(
+                user.getId(),
+                user.getEmail(),
+                user.getName(),
+                applicationModel
+        );
+    }
 
 
 }
