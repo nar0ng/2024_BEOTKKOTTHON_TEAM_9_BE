@@ -50,7 +50,6 @@ public class ShelterService {
     private final ShelterRepository shelterRepository;
     private final PostRepository postRepository;
     private final AdoptRepository adoptRepository;
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AwsS3Service awsS3Service;
     private final AuthenticationConfiguration configuration;
@@ -128,7 +127,7 @@ public class ShelterService {
                                 .gender("Unknown")
                                 .extra("No info available")
                                 .createdAt(LocalDateTime.now())
-                                .adoptStatusCount(1)
+                                .adoptStatusCount(0)
                                 .build();
                     }
                     log.debug("Post ID: {}, BomInfoEntity: {}", post.getPostId(), bomInfo);
