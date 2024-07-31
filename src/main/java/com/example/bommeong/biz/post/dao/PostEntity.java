@@ -46,9 +46,9 @@ public class PostEntity extends BaseEntity {
     @Transient
     private MultipartFile uploadFile;
 
-    @Enumerated(EnumType.STRING)
+    // @Enumerated(EnumType.STRING)
     @Column
-    private PostStatus status;
+    private String status;
 
     @Column(name = "expected_euthanasia_date")
     private Date expectedEuthanasiaDate;

@@ -148,8 +148,8 @@ public class ShelterService {
         int totalDogsCount = postRepository.countByShelterId(shelterId);
         LocalDate today = LocalDate.now();
         int todayAdoptionRequests = adoptRepository.countByPostShelterIdAndCreatedAtAfter(shelterId, today.atStartOfDay());
-        int completedAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "COMPLETED");
-        int pendingAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "BEFORE");
+        int completedAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "completed");
+        int pendingAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "before");
 
         return AdoptionStatusDto.builder()
                 .totalDogsCount(totalDogsCount)
