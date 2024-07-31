@@ -108,6 +108,9 @@ public class SecurityConfig {
                                 "/api/v1/shelter/signup", // 보호소 auth
                                 "/api/v1/shelter/login",
                                 "/api/v1/shelter/reissue",
+                                "/api/v1/shelter/bom-lists/**",
+                                "/api/v1/shelter/adopt-lists/**",
+                                "/api/v1/shelter/**",
                                 "/api/v1/push/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());

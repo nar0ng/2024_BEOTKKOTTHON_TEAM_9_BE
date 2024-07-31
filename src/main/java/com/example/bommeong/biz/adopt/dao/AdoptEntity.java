@@ -4,6 +4,7 @@ import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +40,8 @@ public class AdoptEntity {
     @Column(name = "status")
     private String status;
 
+    protected LocalDateTime createdAt;
+
     @OneToOne(mappedBy = "adoptEntity", cascade = CascadeType.ALL)
     private AdoptApplicationEntity AdoptApplicationEntity;
 
@@ -49,6 +52,7 @@ public class AdoptEntity {
         post.setPostId(model.getPostId());
         this.post = post;
         this.status = model.getStatus();
+        this.createdAt = model.getCreatedAt();
     }
 
     public AdoptModel toModel() { return new AdoptModel(this); }

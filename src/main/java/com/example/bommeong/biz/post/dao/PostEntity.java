@@ -5,6 +5,7 @@ import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.common.dto.BaseEntity;
 import jakarta.persistence.*;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +34,6 @@ public class PostEntity extends BaseEntity {
     @JoinColumn(name = "shelter_id", referencedColumnName = "shelter_id")
     private ShelterEntity shelter;
 
-
     @Formula("(SELECT u.name FROM user u WHERE u.id = shelter_id)")
     private String shelterName;
 
@@ -46,10 +46,14 @@ public class PostEntity extends BaseEntity {
     @Transient
     private MultipartFile uploadFile;
 
+    // @Enumerated(EnumType.STRING)
     @Column
     private String status;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
+    @Column(name = "expected_euthanasia_date")
+    private Date expectedEuthanasiaDate;
+
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BomInfoEntity bomInfoEntity;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -61,11 +65,12 @@ public class PostEntity extends BaseEntity {
 
     public PostEntity(PostModel model) {
         this.postId = model.getPostId();
-        this.shelter = ShelterEntity.builder().shelterId(model.getShelterId()).build();
+        this.shelter = ShelterEntity.builder().id(model.getShelterId()).build();
         this.shelterName = model.getShelterName();
         this.imageName = model.getImageName();
         this.imageUrl = model.getImageUrl();
         this.status = model.getStatus();
+        this.expectedEuthanasiaDate = model.getExpectedEuthanasiaDate();
     }
 
     public PostEntity(LikeEntity entity) {

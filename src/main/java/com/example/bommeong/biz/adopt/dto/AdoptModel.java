@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.adopt.dto;
 
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
+import java.time.LocalDateTime;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ public class AdoptModel{
     private String imageName;
     private MultipartFile uploadFile;
     private String status;
+    protected LocalDateTime createdAt;
 
     public AdoptApplicationModel adoptApplication;
 
@@ -31,6 +33,7 @@ public class AdoptModel{
         this.status = entity.getStatus();
         this.imageName = entity.getImageName();
         this.adoptApplication = entity.getAdoptApplicationEntity().toModel();
+        this.createdAt = entity.getCreatedAt();
     }
 
     public AdoptEntity toEntity() { return new AdoptEntity(this); }

@@ -2,6 +2,7 @@ package com.example.bommeong.biz.post.repository;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.common.dao.BaseRepository;
+import java.util.Collection;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,7 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
             "WHERE p.shelter_id IN (:shelterIds)")
     List<PostEntity> findAllByShelterIds(@Param("shelterIds") List<Long> shelterIds);
 
+    List<PostEntity> findAllByShelterId(Long shelterId);
+
+    int countByShelterId(Long shelterId);
 }

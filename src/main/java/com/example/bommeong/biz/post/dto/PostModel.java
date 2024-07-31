@@ -1,7 +1,9 @@
 package com.example.bommeong.biz.post.dto;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.common.dto.BaseModel;
+import java.util.Date;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +27,7 @@ public class PostModel extends BaseModel {
     private String status;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
-
+    private Date expectedEuthanasiaDate;
     public BomInfoModel bomInfo;
 
     @Data
@@ -37,27 +39,29 @@ public class PostModel extends BaseModel {
         private String imageUrl;
         private String status;
         protected LocalDateTime createdAt;
+        protected Date expectedEuthanasiaDate;
         public BomInfoModel bomInfo;
 
         public PostList(PostEntity entity) {
             this.postId = entity.getPostId();
-            this.shelterId = entity.getShelter().getShelterId();
+            this.shelterId = entity.getShelter().getId();
             this.shelterName = entity.getShelterName();
             this.imageUrl = entity.getImageUrl();
             this.status = entity.getStatus();
             this.createdAt = entity.getCreatedAt();
+            this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate();
             this.bomInfo = entity.getBomInfoEntity().toModel();
-
         }
     }
 
     public PostModel(PostEntity entity) {
         this.postId = entity.getPostId();
         this.imageUrl = entity.getImageUrl();
-        this.shelterId = entity.getShelter().getShelterId();
+        this.shelterId = entity.getShelter().getId();
         this.shelterName = entity.getShelterName();
         this.createdAt = entity.getCreatedAt();
         this.status = entity.getStatus();
+        this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate();
         this.bomInfo = entity.getBomInfoEntity().toModel();
     }
 

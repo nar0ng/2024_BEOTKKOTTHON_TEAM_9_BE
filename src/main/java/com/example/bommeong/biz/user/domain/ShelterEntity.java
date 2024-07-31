@@ -26,7 +26,7 @@ public class ShelterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shelter_id")
-    private Long shelterId;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;

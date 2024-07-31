@@ -5,6 +5,7 @@ import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.LikeEntity;
 import com.example.bommeong.biz.post.dao.LikeId;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
@@ -52,7 +53,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     public List<PostModel.PostList> findPostsWithinDistance(Double latitude, Double longitude, Double maxDistance) throws Exception {
         List<ShelterEntity> allWithLocation = shelterRepository.findAllWithLocation(latitude, longitude, maxDistance);
         if (allWithLocation.isEmpty()) return new ArrayList<>();
-        List<Long> shelterIds = allWithLocation.stream().map(ShelterEntity::getShelterId).toList();
+        List<Long> shelterIds = allWithLocation.stream().map(ShelterEntity::getId).toList();
         List<PostEntity> postEntities = repository.findAllByShelterIds(shelterIds);
         return postEntities.stream().map(PostModel.PostList::new).collect(Collectors.toList());
     }
