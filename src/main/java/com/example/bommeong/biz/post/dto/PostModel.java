@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.post.dto;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.common.dto.BaseModel;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ public class PostModel extends BaseModel {
     private String imageUrl;
     private String imageName;
     private MultipartFile uploadFile;
-    private String status;
+    private PostStatus status;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
 
@@ -35,7 +36,7 @@ public class PostModel extends BaseModel {
         private Long shelterId;
         private String shelterName;
         private String imageUrl;
-        private String status;
+        private PostStatus status;
         protected LocalDateTime createdAt;
         public BomInfoModel bomInfo;
 

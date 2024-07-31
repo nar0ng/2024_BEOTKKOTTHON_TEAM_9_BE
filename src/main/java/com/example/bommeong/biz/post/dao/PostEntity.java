@@ -5,6 +5,7 @@ import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.common.dto.BaseEntity;
 import jakarta.persistence.*;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,8 +46,9 @@ public class PostEntity extends BaseEntity {
     @Transient
     private MultipartFile uploadFile;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private String status;
+    private PostStatus status;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BomInfoEntity bomInfoEntity;
