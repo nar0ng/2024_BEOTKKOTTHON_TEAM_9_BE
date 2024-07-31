@@ -3,6 +3,7 @@ package com.example.bommeong.biz.post.dto;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.common.dto.BaseModel;
+import java.util.Date;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +27,7 @@ public class PostModel extends BaseModel {
     private PostStatus status;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
-
+    private Date expectedEuthanasiaDate;
     public BomInfoModel bomInfo;
 
     @Data
@@ -38,6 +39,7 @@ public class PostModel extends BaseModel {
         private String imageUrl;
         private PostStatus status;
         protected LocalDateTime createdAt;
+        protected Date expectedEuthanasiaDate;
         public BomInfoModel bomInfo;
 
         public PostList(PostEntity entity) {
@@ -47,6 +49,7 @@ public class PostModel extends BaseModel {
             this.imageUrl = entity.getImageUrl();
             this.status = entity.getStatus();
             this.createdAt = entity.getCreatedAt();
+            this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate();
             this.bomInfo = entity.getBomInfoEntity().toModel();
         }
     }
@@ -58,6 +61,7 @@ public class PostModel extends BaseModel {
         this.shelterName = entity.getShelterName();
         this.createdAt = entity.getCreatedAt();
         this.status = entity.getStatus();
+        this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate();
         this.bomInfo = entity.getBomInfoEntity().toModel();
     }
 

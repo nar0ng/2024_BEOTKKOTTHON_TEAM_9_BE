@@ -50,6 +50,9 @@ public class PostEntity extends BaseEntity {
     @Column
     private PostStatus status;
 
+    @Column(name = "expected_euthanasia_date")
+    private Date expectedEuthanasiaDate;
+
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BomInfoEntity bomInfoEntity;
 
@@ -67,6 +70,7 @@ public class PostEntity extends BaseEntity {
         this.imageName = model.getImageName();
         this.imageUrl = model.getImageUrl();
         this.status = model.getStatus();
+        this.expectedEuthanasiaDate = model.getExpectedEuthanasiaDate();
     }
 
     public PostEntity(LikeEntity entity) {
