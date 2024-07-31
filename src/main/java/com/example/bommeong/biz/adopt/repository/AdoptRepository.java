@@ -24,6 +24,6 @@ public interface AdoptRepository extends JpaRepository<AdoptEntity, Long> {
 
     List<AdoptEntity> findByPostPostId(Long postId);
 
-    AdoptEntity findByPostPostIdAndAdoptId(Long postId, Long adoptId);
+    Optional<AdoptEntity> findByPostPostIdAndUserId(Long postId, Long memberId);
 
 }

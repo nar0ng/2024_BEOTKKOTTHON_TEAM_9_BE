@@ -107,10 +107,10 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
     }
 
     @Operation(summary = "입양 신청자 상세 정보", description = "공고에 대한 입양 신청자의 상세 정보 및 입양 신청서 조회")
-    @GetMapping("/{postId}/applicants/{adoptId}")
-    public ResponseEntity<BaseApiDto<?>> getAdoptApplicantDetails(@PathVariable Long postId, @PathVariable Long adoptId) {
+    @GetMapping("/{postId}/applicants/{memberId}")
+    public ResponseEntity<BaseApiDto<?>> getAdoptApplicantDetails(@PathVariable Long postId, @PathVariable Long memberId) {
         try {
-            AdoptApplicantDetailsDto applicantDetails = shelterService.getAdoptApplicantDetails(postId, adoptId);
+            AdoptApplicantDetailsDto applicantDetails = shelterService.getAdoptApplicantDetails(postId, memberId);
             return super.ok(new BaseApiDto<>(applicantDetails));
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청자 상세 정보 조회 실패 : " + e.getMessage());
