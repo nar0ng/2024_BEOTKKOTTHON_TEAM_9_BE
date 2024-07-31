@@ -72,6 +72,7 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @Operation(summary = "보호소 보호견 리스트", description = "보호소 보호견 리스트 조회")
     @GetMapping("/{shelterId}/bom-lists")
     public ResponseEntity<BaseApiDto<?>> findAllBomLists(@PathVariable Long shelterId) {
         try {
@@ -83,6 +84,7 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @Operation(summary = "보호소 입양 현황", description = "보호소 입양 현황")
     @GetMapping("/{shelterId}/adoptions")
     public ResponseEntity<BaseApiDto<?>> findAdoptionStatsByShelterId(@PathVariable Long shelterId) {
         try {
@@ -93,6 +95,7 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @Operation(summary = "입양 신청자 리스트", description = "보호소 공고에 대한 입양 신청자 리스트")
     @GetMapping("/{postId}/applicants")
     public ResponseEntity<BaseApiDto<?>> findAdoptionApplicationsByPostId(@PathVariable Long postId) {
         try {
@@ -103,6 +106,7 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @Operation(summary = "입양 신청자 상세 정보", description = "공고에 대한 입양 신청자의 상세 정보 및 입양 신청서 조회")
     @GetMapping("/{postId}/applicants/{adoptId}")
     public ResponseEntity<BaseApiDto<?>> getAdoptApplicantDetails(@PathVariable Long postId, @PathVariable Long adoptId) {
         try {
