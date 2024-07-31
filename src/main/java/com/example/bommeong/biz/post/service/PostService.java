@@ -5,6 +5,7 @@ import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.LikeEntity;
 import com.example.bommeong.biz.post.dao.LikeId;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
@@ -89,7 +90,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
         postEntity.setImageName(awsS3Dto.getKey());
 //        postEntity.setImageUrl("awsS3Dto.getPath()");
 //        postEntity.setImageName("awsS3Dto.getKey()");
-        postEntity.setStatus("before");
+        postEntity.setStatus(PostStatus.valueOf("BEFORE"));
         
         // BomInfo entity 설정
         BomInfoEntity bomInfoEntity = new BomInfoEntity(model);
