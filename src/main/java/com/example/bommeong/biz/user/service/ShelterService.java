@@ -176,14 +176,17 @@ public class ShelterService {
     }
 
 
-    public AdoptApplicantDetailsDto getAdoptApplicantDetails(Long postId, Long adoptId) {
-        AdoptEntity adoptEntity = adoptRepository.findByPostPostIdAndAdoptId(postId, adoptId);
-        if (adoptEntity == null) {
-            throw new RuntimeException("Adopt entity not found for postId: " + postId + " and adoptId: " + adoptId);
+    public AdoptApplicantDetailsDto getAdoptApplicantDetails(Long postId, Long memberId) {
+        Optional<AdoptEntity> adoptEntityOptional = adoptRepository.findByPostPostIdAndUserId(postId, memberId);
+        if (adoptEntityOptional.isEmpty()) {
+            throw new RuntimeException("Adopt entity not found for postId: " + postId + " and memberId: " + memberId);
         }
+
+        AdoptEntity adoptEntity = adoptEntityOptional.get();
         UserEntity user = adoptEntity.getUser();
         AdoptApplicationEntity application = adoptEntity.getAdoptApplicationEntity();
         AdoptApplicationModel applicationModel = new AdoptApplicationModel(application);
+
         return new AdoptApplicantDetailsDto(
                 user.getId(),
                 user.getEmail(),
@@ -191,6 +194,7 @@ public class ShelterService {
                 applicationModel
         );
     }
+
 
 
 }
