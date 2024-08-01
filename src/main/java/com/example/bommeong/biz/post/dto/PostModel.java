@@ -24,7 +24,7 @@ public class PostModel extends BaseModel {
     private String imageUrl;
     private String imageName;
     private MultipartFile uploadFile;
-    private String status;
+    private PostStatus status;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
     private Date expectedEuthanasiaDate;
@@ -37,7 +37,7 @@ public class PostModel extends BaseModel {
         private Long shelterId;
         private String shelterName;
         private String imageUrl;
-        private String status;
+        private PostStatus status;
         protected LocalDateTime createdAt;
         protected Date expectedEuthanasiaDate;
         public BomInfoModel bomInfo;

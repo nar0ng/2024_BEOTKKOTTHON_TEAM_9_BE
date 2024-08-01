@@ -90,7 +90,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
         postEntity.setImageName(awsS3Dto.getKey());
 //        postEntity.setImageUrl("awsS3Dto.getPath()");
 //        postEntity.setImageName("awsS3Dto.getKey()");
-        postEntity.setStatus("before");
+        postEntity.setStatus(PostStatus.BEFORE);
         
         // BomInfo entity 설정
         BomInfoEntity bomInfoEntity = new BomInfoEntity(model);

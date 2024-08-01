@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.adopt.controller;
 
+import com.example.bommeong.biz.adopt.dto.AdoptApplicationModel;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.service.AdoptService;
 import com.example.bommeong.common.controller.BaseApiController;

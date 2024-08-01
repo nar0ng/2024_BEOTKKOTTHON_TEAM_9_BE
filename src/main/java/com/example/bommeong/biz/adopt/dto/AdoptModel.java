@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.adopt.dto;
 
+import com.example.bommeong.biz.adopt.dao.AdoptApplicationStatus;
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import java.time.LocalDateTime;
 import lombok.*;
@@ -20,7 +21,7 @@ public class AdoptModel{
     private String imageUrl;
     private String imageName;
     private MultipartFile uploadFile;
-    private String status;
+    private AdoptApplicationStatus status;
     protected LocalDateTime createdAt;
 
     public AdoptApplicationModel adoptApplication;
