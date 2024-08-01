@@ -56,7 +56,7 @@ public class UserEntity {
     private String memberType;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<LikeEntity> likes = new HashSet<>();
+    private Set<LikeEntity> likes;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private AdoptEntity adoptEntity;

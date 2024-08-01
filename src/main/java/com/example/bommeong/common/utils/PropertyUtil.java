@@ -26,7 +26,7 @@ public class PropertyUtil {
         this.serverNodeNum = env.getProperty("nodeNum", Integer.class, 1);
 
         log.info("[ PROFILES ] ==================================================== ");
-        log.info("# activeProfile = {}", activeProfile);
+        log.info("# activeProfile = {}", (Object) activeProfile);
         log.info("# serverNodeNum = {}", serverNodeNum);
         log.info("[ PROFILES ] ==================================================== ");
     }
