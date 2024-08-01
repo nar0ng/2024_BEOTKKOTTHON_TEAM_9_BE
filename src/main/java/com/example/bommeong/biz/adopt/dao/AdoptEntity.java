@@ -52,6 +52,7 @@ public class AdoptEntity {
         post.setPostId(model.getPostId());
         this.post = post;
         this.status = model.getStatus();
+        this.AdoptApplicationEntity = model.getAdoptApplication().toEntity();
         this.createdAt = model.getCreatedAt();
     }
 
