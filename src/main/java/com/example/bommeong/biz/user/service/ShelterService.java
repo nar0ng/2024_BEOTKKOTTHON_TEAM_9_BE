@@ -67,7 +67,7 @@ public class ShelterService {
                 signUpDto.getPhone(),
                 "ROLE_SHELTER"
         );
-        userService.signUp(signUpDto1);
+        UserEntity userEntity = userService.signUp(signUpDto1);
 
         // 이미 가입된 보호소면 가입 취소
         if (shelterRepository.findByEmail(signUpDto.getEmail()).isPresent()) {
@@ -83,6 +83,7 @@ public class ShelterService {
         signUpDto.setPassword((encodedPw));
 
         ShelterEntity shelterEntity = ShelterEntity.builder()
+                .id(userEntity.getId())
                 .email(signUpDto.getEmail())
                 .password(signUpDto.getPassword())
                 .name(signUpDto.getName())

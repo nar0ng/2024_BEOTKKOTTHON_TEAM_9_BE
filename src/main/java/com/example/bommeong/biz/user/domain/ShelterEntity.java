@@ -24,7 +24,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 public class ShelterEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shelter_id")
     private Long id;
 
