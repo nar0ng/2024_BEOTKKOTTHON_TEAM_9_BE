@@ -4,10 +4,13 @@ import com.example.bommeong.biz.post.dto.BomInfoModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.common.dto.BaseEntity;
 import jakarta.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "bomInfo")
@@ -47,11 +50,11 @@ public class BomInfoEntity extends BaseEntity {
     @Column(name = "hates")
     private String hates;
 
-    @Column(name = "finding_location")
-    private String findingLocation;
-
     @Column(name = "extra")
     private String extra;
+
+    @Column(name = "hashtags")
+    private String hashtags;
 
     public BomInfoEntity(BomInfoModel model) {}
 
@@ -63,10 +66,11 @@ public class BomInfoEntity extends BaseEntity {
         this.personality = model.getBomInfo().getPersonality();
         this.likes = model.getBomInfo().getLikes();
         this.hates = model.getBomInfo().getHates();
-        this.findingLocation = model.getBomInfo().getFindingLocation();
         this.extra = model.getBomInfo().getExtra();
+        this.hashtags = model.getBomInfo().getHashtags();
     }
 
     @Override
     public BomInfoModel toModel() { return new BomInfoModel(this);}
+
 }

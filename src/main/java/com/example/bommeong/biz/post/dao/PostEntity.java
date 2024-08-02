@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Formula;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
@@ -50,6 +51,7 @@ public class PostEntity extends BaseEntity {
     @Column
     private String status;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expected_euthanasia_date")
     private Date expectedEuthanasiaDate;
 
