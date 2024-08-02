@@ -3,7 +3,6 @@ package com.example.bommeong.biz.user.service;
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.adopt.dao.AdoptApplicationEntity;
-import com.example.bommeong.biz.adopt.dao.AdoptApplicationStatus;
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.adopt.dto.AdoptApplicantDetailsDto;
 import com.example.bommeong.biz.adopt.dto.AdoptApplicantDto;
@@ -18,7 +17,6 @@ import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.dto.*;
 import com.example.bommeong.biz.user.dto.ShelterDtoReq.UpdateShelterInfoDto;
 import com.example.bommeong.biz.user.repository.ShelterRepository;
-import com.example.bommeong.common.security.SecurityUtil;
 import com.example.bommeong.jwt.JWTUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -136,6 +134,7 @@ public class ShelterService {
                 .collect(Collectors.toList());
     }
 
+    // 보호소의 입양 현황을 조회
     public AdoptionStatusDto getAdoptionStatsByShelterId(Long shelterId) {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1);

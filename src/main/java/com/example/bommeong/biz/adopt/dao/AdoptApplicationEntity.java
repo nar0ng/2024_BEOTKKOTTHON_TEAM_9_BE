@@ -53,7 +53,16 @@ public class AdoptApplicationEntity {
     @JoinColumn(name = "adopt_id", referencedColumnName = "adopt_id")
     private AdoptEntity adoptEntity;
 
-    public AdoptApplicationEntity(AdoptApplicationModel model) {}
+    public AdoptApplicationEntity(AdoptApplicationModel model) {
+        this.petHistoryAnswer = model.getPetHistoryAnswer();
+        this.petHistory = model.getPetHistory();
+        this.currentPetAnswer = model.getCurrentPetAnswer();
+        this.currentPet = model.getCurrentPet();
+        this.familyAnswer = model.getFamilyAnswer();
+        this.familyAgreement = model.getFamilyAgreement();
+        this.reasonForAdoption = model.getReasonForAdoption();
+        this.dogNewsAnswer = model.getDogNewsAnswer();
+    }
 
     public AdoptApplicationEntity(AdoptModel model) {
         //        this.applicationId=model.getAdoptApplication().get();
