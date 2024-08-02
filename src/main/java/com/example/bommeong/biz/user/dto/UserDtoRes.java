@@ -50,14 +50,19 @@ public class UserDtoRes {
         private String name;
         private String email;
         private String memberType;
+
         private AdoptModel adoption;
+
 
         public MyPageDto(UserEntity userEntity, Optional<AdoptEntity> adoptEntity) {
             this.memberId = userEntity.getId();
             this.name = userEntity.getName();
             this.email = userEntity.getEmail();
             this.memberType = userEntity.getMemberType();
-            adoptEntity.ifPresent(entity -> this.adoption = entity.toModel());
+            adoptEntity.ifPresent(entity -> {
+                entity.setImageUrl(entity.getPost().getImageUrl());
+                this.adoption = entity.toModel();
+            });
         }
     }
 
