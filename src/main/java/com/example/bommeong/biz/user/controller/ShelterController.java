@@ -117,4 +117,15 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
         }
     }
 
+    @Operation(summary = "보호소 정보 조회", description = "보호소 정보 조회")
+    @GetMapping("/info/{shelterId}")
+    public ResponseEntity<BaseApiDto<?>> getShelterInfo(@PathVariable Long shelterId) {
+        try {
+            log.info("# getShelterInfo");
+            return super.ok(new BaseApiDto<>(shelterService.getShelterInfo(shelterId)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "보호소 정보 조회 실패 : " + e.getMessage());
+        }
+    }
 }
