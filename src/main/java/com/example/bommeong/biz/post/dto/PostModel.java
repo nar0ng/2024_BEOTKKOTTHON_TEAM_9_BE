@@ -6,6 +6,7 @@ import com.example.bommeong.common.dto.BaseModel;
 import java.util.Date;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class PostModel extends BaseModel {
     private String status;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expectedEuthanasiaDate;
     public BomInfoModel bomInfo;
 

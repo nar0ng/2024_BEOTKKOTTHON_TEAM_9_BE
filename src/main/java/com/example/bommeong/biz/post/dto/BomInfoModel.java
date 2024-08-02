@@ -2,6 +2,7 @@ package com.example.bommeong.biz.post.dto;
 
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.common.dto.BaseModel;
+import java.util.List;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,8 +23,8 @@ public class BomInfoModel extends BaseModel {
     private String personality;
     private String likes;
     private String hates;
-    private String findingLocation;
     private String extra;
+    private String hashtags;
 
     public BomInfoModel(BomInfoEntity entity) {
         this.infoId = entity.getInfoId();
@@ -35,8 +36,8 @@ public class BomInfoModel extends BaseModel {
         this.personality = entity.getPersonality();
         this.likes = entity.getLikes();
         this.hates = entity.getHates();
-        this.findingLocation = entity.getFindingLocation();
         this.extra = entity.getExtra();
+        this.hashtags = entity.getHashtags();
     }
 
     @Override
