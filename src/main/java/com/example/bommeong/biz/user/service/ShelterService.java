@@ -136,16 +136,13 @@ public class ShelterService {
     }
 
     public AdoptionStatusDto getAdoptionStatsByShelterId(Long shelterId) {
-        System.out.println("---------1---------");
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1);
+
         int totalDogsCount = postRepository.countByShelterId(shelterId);
-        log.info("---------2---------");
-        LocalDate today = LocalDate.now();
-        int todayAdoptionRequests = adoptRepository.countByPostShelterIdAndCreatedAtAfter(shelterId, today.atStartOfDay());
-        log.info("---------3---------");
+        int todayAdoptionRequests = adoptRepository.countTodayAdoptionRequests(shelterId, startOfDay, endOfDay);
         int completedAdoptions = postRepository.countByShelterIdAndStatus(shelterId, PostStatus.COMPLETED);
-        log.info("---------4---------");
         int pendingAdoptions = postRepository.countByShelterIdAndStatus(shelterId, PostStatus.BEFORE);
-        log.info("---------5---------");
         return AdoptionStatusDto.builder()
                 .totalDogsCount(totalDogsCount)
                 .todayAdoptionRequests(todayAdoptionRequests)
