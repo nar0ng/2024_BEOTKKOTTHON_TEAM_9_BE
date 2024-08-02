@@ -13,14 +13,9 @@ import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
-import com.example.bommeong.biz.user.dto.AdoptionStatusDto;
-import com.example.bommeong.biz.user.dto.BomListDto;
-import com.example.bommeong.biz.user.dto.CustomUserDetails;
-import com.example.bommeong.biz.user.dto.ShelterDtoReq;
-import com.example.bommeong.biz.user.dto.UserDtoReq;
-import com.example.bommeong.biz.user.dto.UserDtoRes;
+import com.example.bommeong.biz.user.dto.*;
 import com.example.bommeong.biz.user.repository.ShelterRepository;
-import com.example.bommeong.biz.user.repository.UserRepository;
+import com.example.bommeong.common.security.SecurityUtil;
 import com.example.bommeong.jwt.JWTUtil;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,18 +23,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -197,5 +185,17 @@ public class ShelterService {
     }
 
 
+    public ShelterDtoRes.ShelterInfo getShelterInfo(Long shelterId) {
+        ShelterEntity shelterEntity = shelterRepository.findById(shelterId).orElseThrow(() -> new RuntimeException("보호소를 찾을 수 없습니다. "));
+        return new ShelterDtoRes.ShelterInfo(shelterEntity);
 
+    }
+
+    public void updateShelterInfo(ShelterDtoReq.UpdateShelterInfoDto updateShelterInfoDto) {
+        ShelterEntity shelterEntity = shelterRepository.findById(updateShelterInfoDto.getShelterId()).orElseThrow(() -> new RuntimeException("보호소를 찾을 수 없습니다. "));
+
+        shelterEntity.updateInfo(updateShelterInfoDto);
+        shelterRepository.save(shelterEntity);
+
+    }
 }

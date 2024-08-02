@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.user.domain;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.user.dto.ShelterDtoReq;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -79,4 +80,11 @@ public class ShelterEntity {
         updatedAt = LocalDateTime.now();
     }
 
+
+    public void updateInfo(ShelterDtoReq.UpdateShelterInfoDto dto) {
+        this.email = dto.getEmail();
+        this.phone = dto.getPhone();
+        this.managerName = dto.getManagerName();
+        this.subEmail = dto.getSubEmail();
+    }
 }
