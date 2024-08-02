@@ -53,4 +53,17 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseApiDto<?>> deleteAdopt(@PathVariable Long id) {
+        try {
+            log.info("delete adopt id = {}", id);
+            adoptService.deleteAdopt(id);
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청 삭제 실패 : " + e.getMessage());
+        }
+
+    }
+
 }

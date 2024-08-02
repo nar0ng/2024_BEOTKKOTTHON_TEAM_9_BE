@@ -69,4 +69,11 @@ public class AdoptService {
         adoptRepository.save(adoptEntity);
 
     }
+
+    public void deleteAdopt(Long adoptId) {
+        AdoptEntity adoptEntity = adoptRepository.findById(adoptId)
+                .orElseThrow(() -> new RuntimeException("입양 신청을 찾을 수 없습니다."));
+
+        adoptRepository.delete(adoptEntity);
+    }
 }

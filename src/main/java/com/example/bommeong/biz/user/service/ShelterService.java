@@ -135,6 +135,7 @@ public class ShelterService {
                 .collect(Collectors.toList());
     }
 
+    // 보호소의 입양 현황을 조회
     public AdoptionStatusDto getAdoptionStatsByShelterId(Long shelterId) {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1);
