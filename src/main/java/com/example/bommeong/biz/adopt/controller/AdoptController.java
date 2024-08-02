@@ -30,7 +30,7 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "입양 신청", description = "")
-    public ResponseEntity<BaseApiDto<?>> addAdopt(@ModelAttribute AdoptModel model) {
+    public ResponseEntity<BaseApiDto<?>> addAdopt(AdoptModel model) {
         try {
             log.info("data = {}", model);
             LocalDate now = LocalDate.now();
