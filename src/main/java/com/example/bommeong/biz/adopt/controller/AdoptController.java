@@ -50,7 +50,7 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
     @PutMapping("/status")
     public ResponseEntity<BaseApiDto<?>> updateAdoptApplicationStatus(@RequestBody AdoptApplicationStatusDto statusDto){
         adoptService.updateAdoptApplicationStatus(statusDto);
-        return ResponseEntity.ok().build();
+        return super.ok(BaseApiDto.newBaseApiDto());
     }
 
 }

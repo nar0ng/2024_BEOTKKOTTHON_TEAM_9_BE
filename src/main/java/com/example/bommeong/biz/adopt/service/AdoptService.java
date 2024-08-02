@@ -67,6 +67,5 @@ public class AdoptService {
 
         adoptEntity.setStatus(statusDto.adoptApplicationStatus());
         adoptRepository.save(adoptEntity);
-
     }
 }
