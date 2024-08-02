@@ -10,6 +10,7 @@ import com.example.bommeong.biz.adopt.dto.AdoptApplicationModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.biz.user.domain.UserEntity;
@@ -137,8 +138,8 @@ public class ShelterService {
         int totalDogsCount = postRepository.countByShelterId(shelterId);
         LocalDate today = LocalDate.now();
         int todayAdoptionRequests = adoptRepository.countByPostShelterIdAndCreatedAtAfter(shelterId, today.atStartOfDay());
-        int completedAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "completed");
-        int pendingAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, "before");
+        int completedAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, PostStatus.COMPLETED);
+        int pendingAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, PostStatus.BEFORE);
 
         return AdoptionStatusDto.builder()
                 .totalDogsCount(totalDogsCount)

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: bommeong-local
+    name: application-local
 
   jpa:
     hibernate:
@@ -11,9 +11,9 @@ spring:
         format_sql: true
 
   datasource:
-    url: ${RDS_URL}
+    url: jdbc:mariadb://localhost:3306/bomMeong
     username: root
-    password: ${RDS_PWD}
+    password: 1234
     driver-class-name: org.mariadb.jdbc.Driver
 
 cloud:
