@@ -25,11 +25,10 @@ public class PostModel extends BaseModel {
     private String imageUrl;
     private String imageName;
     private MultipartFile uploadFile;
-    private String status;
+    private PostStatus status;
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date expectedEuthanasiaDate;
+    private String expectedEuthanasiaDate;
     public BomInfoModel bomInfo;
 
     @Data
@@ -39,9 +38,9 @@ public class PostModel extends BaseModel {
         private Long shelterId;
         private String shelterName;
         private String imageUrl;
-        private String status;
+        private PostStatus status;
         protected LocalDateTime createdAt;
-        protected Date expectedEuthanasiaDate;
+        protected String expectedEuthanasiaDate;
         public BomInfoModel bomInfo;
 
         public PostList(PostEntity entity) {
@@ -51,7 +50,7 @@ public class PostModel extends BaseModel {
             this.imageUrl = entity.getImageUrl();
             this.status = entity.getStatus();
             this.createdAt = entity.getCreatedAt();
-            this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate();
+            this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate().toString();
             this.bomInfo = entity.getBomInfoEntity().toModel();
         }
     }
@@ -63,7 +62,7 @@ public class PostModel extends BaseModel {
         this.shelterName = entity.getShelterName();
         this.createdAt = entity.getCreatedAt();
         this.status = entity.getStatus();
-        this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate();
+        this.expectedEuthanasiaDate = entity.getExpectedEuthanasiaDate().toString();
         this.bomInfo = entity.getBomInfoEntity().toModel();
     }
 

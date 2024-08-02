@@ -37,8 +37,9 @@ public class AdoptEntity {
     @Column(name = "image_name")
     private String imageName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private AdoptApplicationStatus status;
 
     protected LocalDateTime createdAt;
 
