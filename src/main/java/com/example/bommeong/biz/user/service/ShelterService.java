@@ -3,6 +3,7 @@ package com.example.bommeong.biz.user.service;
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.adopt.dao.AdoptApplicationEntity;
+import com.example.bommeong.biz.adopt.dao.AdoptApplicationStatus;
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.adopt.dto.AdoptApplicantDetailsDto;
 import com.example.bommeong.biz.adopt.dto.AdoptApplicantDto;
@@ -135,12 +136,13 @@ public class ShelterService {
     }
 
     public AdoptionStatusDto getAdoptionStatsByShelterId(Long shelterId) {
-        int totalDogsCount = postRepository.countByShelterId(shelterId);
-        LocalDate today = LocalDate.now();
-        int todayAdoptionRequests = adoptRepository.countByPostShelterIdAndCreatedAtAfter(shelterId, today.atStartOfDay());
-        int completedAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, PostStatus.COMPLETED);
-        int pendingAdoptions = adoptRepository.countByPostShelterIdAndStatus(shelterId, PostStatus.BEFORE);
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1);
 
+        int totalDogsCount = postRepository.countByShelterId(shelterId);
+        int todayAdoptionRequests = adoptRepository.countTodayAdoptionRequests(shelterId, startOfDay, endOfDay);
+        int completedAdoptions = postRepository.countByShelterIdAndStatus(shelterId, PostStatus.COMPLETED);
+        int pendingAdoptions = postRepository.countByShelterIdAndStatus(shelterId, PostStatus.BEFORE);
         return AdoptionStatusDto.builder()
                 .totalDogsCount(totalDogsCount)
                 .todayAdoptionRequests(todayAdoptionRequests)

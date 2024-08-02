@@ -43,6 +43,11 @@ public class AdoptEntity {
 
     protected LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
     @OneToOne(mappedBy = "adoptEntity", cascade = CascadeType.ALL)
     private AdoptApplicationEntity AdoptApplicationEntity;
 

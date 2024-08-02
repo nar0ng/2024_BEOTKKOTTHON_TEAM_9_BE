@@ -1,6 +1,7 @@
 package com.example.bommeong.biz.post.repository;
 
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.common.dao.BaseRepository;
 import java.util.Collection;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,6 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
     List<PostEntity> findAllByShelterId(Long shelterId);
 
     int countByShelterId(Long shelterId);
+
+    int countByShelterIdAndStatus(Long ShelterId, PostStatus status);
 }
