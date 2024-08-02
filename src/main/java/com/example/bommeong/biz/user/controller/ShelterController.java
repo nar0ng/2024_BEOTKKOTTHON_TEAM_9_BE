@@ -86,8 +86,9 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
 
     @Operation(summary = "보호소 입양 현황", description = "보호소 입양 현황")
     @GetMapping("/{shelterId}/adoptions")
-    public ResponseEntity<BaseApiDto<?>> findAdoptionStatsByShelterId(@PathVariable Long shelterId) {
+    public ResponseEntity<BaseApiDto<?>> findAdoptionStatsByShelterId(@PathVariable(name = "shelterId") Long shelterId) {
         try {
+            log.info("# findAdoptionStatsByShelterId : shelterId = {}", shelterId);
             AdoptionStatusDto stats = shelterService.getAdoptionStatsByShelterId(shelterId);
             return super.ok(new BaseApiDto<>(stats));
         } catch (Exception e) {

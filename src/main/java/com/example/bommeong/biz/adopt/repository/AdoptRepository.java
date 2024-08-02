@@ -1,5 +1,6 @@
 package com.example.bommeong.biz.adopt.repository;
 
+import com.example.bommeong.biz.adopt.dao.AdoptApplicationStatus;
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
 import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.dao.PostStatus;
@@ -21,7 +22,7 @@ public interface AdoptRepository extends JpaRepository<AdoptEntity, Long> {
     Optional<AdoptEntity> findByUser(UserEntity userEntity);
 
     int countByPostShelterIdAndCreatedAtAfter(Long shelterId, LocalDateTime dateTime);
-    int countByPostShelterIdAndStatus(Long shelterId, PostStatus status);
+    int countByPostShelterIdAndStatus(Long shelterId, AdoptApplicationStatus status);
 
     List<AdoptEntity> findByPostPostId(Long postId);
 
