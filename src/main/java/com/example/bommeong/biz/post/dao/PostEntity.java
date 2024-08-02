@@ -5,7 +5,9 @@ import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
 import com.example.bommeong.common.dto.BaseEntity;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +16,6 @@ import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -47,13 +48,13 @@ public class PostEntity extends BaseEntity {
     @Transient
     private MultipartFile uploadFile;
 
-    // @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column
-    private String status;
+    private PostStatus status;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expected_euthanasia_date")
-    private Date expectedEuthanasiaDate;
+    private LocalDateTime expectedEuthanasiaDate;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BomInfoEntity bomInfoEntity;
@@ -64,6 +65,7 @@ public class PostEntity extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<LikeEntity> likes;
 
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public PostEntity(PostModel model) {
         this.postId = model.getPostId();
@@ -72,7 +74,7 @@ public class PostEntity extends BaseEntity {
         this.imageName = model.getImageName();
         this.imageUrl = model.getImageUrl();
         this.status = model.getStatus();
-        this.expectedEuthanasiaDate = model.getExpectedEuthanasiaDate();
+        this.expectedEuthanasiaDate = LocalDate.parse(model.getExpectedEuthanasiaDate(), DATE_FORMATTER).atStartOfDay();
     }
 
     public PostEntity(LikeEntity entity) {

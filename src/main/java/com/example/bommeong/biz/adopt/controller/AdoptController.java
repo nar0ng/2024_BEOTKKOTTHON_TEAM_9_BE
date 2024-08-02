@@ -1,5 +1,7 @@
 package com.example.bommeong.biz.adopt.controller;
 
+import com.example.bommeong.biz.adopt.dto.AdoptApplicationModel;
+import com.example.bommeong.biz.adopt.dto.AdoptApplicationStatusDto;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.service.AdoptService;
 import com.example.bommeong.common.controller.BaseApiController;
@@ -43,6 +45,12 @@ public class AdoptController extends BaseApiController<BaseApiDto<?>> {
             e.printStackTrace();
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "입양 신청 실패 : " + e.getMessage());
         }
+    }
+
+    @PostMapping("/status")
+    public ResponseEntity<BaseApiDto<?>> updateAdoptApplicationStatus(@RequestBody AdoptApplicationStatusDto statusDto){
+        adoptService.updateAdoptApplicationStatus(statusDto);
+        return ResponseEntity.ok().build();
     }
 
 }
