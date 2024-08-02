@@ -48,7 +48,7 @@ public class UserService extends BaseServiceImplWithJpa {
     }
 
 
-    public void signUp(UserDtoReq.SignUpDto signUpDto) throws Exception {
+    public UserEntity signUp(UserDtoReq.SignUpDto signUpDto) throws Exception {
         // 이미 회원이면 가입 취소
         if (userRepository.findByEmail(signUpDto.getEmail()).isPresent()) {
             throw new RuntimeException("이미 존재하는 회원입니다.");
@@ -60,7 +60,7 @@ public class UserService extends BaseServiceImplWithJpa {
 
         UserEntity userEntity = UserEntity.createUser(signUpDto, encodedPw);
 
-        userRepository.save(userEntity);
+        return userRepository.save(userEntity);
 
 
     }

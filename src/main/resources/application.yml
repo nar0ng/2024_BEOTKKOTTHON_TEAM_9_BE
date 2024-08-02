@@ -36,8 +36,13 @@ logging:
   level:
     root: INFO
     org:
-      springframework.web: DEBUG
+      springframework:
+        web:
+          servlet:
+            handler:
+              SimpleUrlHandlerMapping: WARN
       springframework.security: DEBUG
+
     com:
       fasterxml.jackson: DEBUG
 

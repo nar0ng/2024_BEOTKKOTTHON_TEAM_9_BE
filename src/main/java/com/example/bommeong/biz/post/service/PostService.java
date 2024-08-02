@@ -89,6 +89,11 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     public void add(PostModel model, String dirName) throws Exception {
         PostEntity postEntity = model.toEntity();
 
+        // ShelterEntity 설정
+        ShelterEntity shelter = shelterRepository.findById(model.getShelterId())
+                .orElseThrow(() -> new RuntimeException("Shelter not found with id: " + model.getShelterId()));
+        postEntity.setShelter(shelter);
+
         // S3 업로드 후 Post entity 설정
         AwsS3Dto awsS3Dto = awsS3Service.upload(model.getUploadFile(), dirName);
         postEntity.setImageUrl(awsS3Dto.getPath());
@@ -103,6 +108,9 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
         // 매핑
         postEntity.setBomInfoEntity(bomInfoEntity);
         bomInfoEntity.setPost(postEntity);
+
+        log.debug("BomInfoEntity: {}", bomInfoEntity);
+
 
         repository.save(postEntity);
     }
