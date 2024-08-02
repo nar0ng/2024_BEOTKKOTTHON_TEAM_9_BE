@@ -118,9 +118,10 @@ public class ChatController  extends BaseApiController<BaseApiDto<?>> {
     @GetMapping("/{userId}")
     @Operation(summary = "채팅방 리스트 조회", description = "유저의 전체 채팅 리스트 응답")
     public ResponseEntity<BaseApiDto<?>> getPostListByChat(@PathVariable Long userId){
+        log.info("# chatController.getPostListByChat - userId: {}", userId);
         List<ChatPostListDtoRes> postList = chatService.getPostsByUserIds(userId);
 
-        if (!postList.isEmpty()){
+        if (postList != null && !postList.isEmpty()){
             return super.ok(new BaseApiDto<>(postList));
         }
         else {

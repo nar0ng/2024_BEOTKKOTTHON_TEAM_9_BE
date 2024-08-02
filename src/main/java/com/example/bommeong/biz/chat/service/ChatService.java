@@ -76,7 +76,7 @@ public class ChatService {
         UserEntity userEntity = userOptional.get();
         List<PostEntity> posts = chatRepository.findPostsByUser(userEntity);
 
-        if (!posts.isEmpty()){
+        if (posts != null && !posts.isEmpty()){
             return posts.stream()
                     .map(this::mapToDto)
                     .collect(Collectors.toList());
