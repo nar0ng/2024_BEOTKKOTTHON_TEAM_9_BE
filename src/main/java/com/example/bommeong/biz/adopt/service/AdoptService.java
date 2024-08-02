@@ -5,6 +5,7 @@ import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.adopt.dao.AdoptApplicationEntity;
 import com.example.bommeong.biz.adopt.dao.AdoptApplicationStatus;
 import com.example.bommeong.biz.adopt.dao.AdoptEntity;
+import com.example.bommeong.biz.adopt.dto.AdoptApplicationStatusDto;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.PostEntity;
@@ -58,5 +59,14 @@ public class AdoptService {
         adoptApplicationEntity.setAdoptEntity(adoptEntity);
 
         adoptRepository.save(adoptEntity);
+    }
+
+    public void updateAdoptApplicationStatus(AdoptApplicationStatusDto statusDto){
+        AdoptEntity adoptEntity = adoptRepository.findByUserId(statusDto.memberId())
+                .orElseThrow(() -> new RuntimeException("입양 신청을 찾을 수 없습니다."));
+
+        adoptEntity.setStatus(statusDto.adoptApplicationStatus());
+        adoptRepository.save(adoptEntity);
+
     }
 }

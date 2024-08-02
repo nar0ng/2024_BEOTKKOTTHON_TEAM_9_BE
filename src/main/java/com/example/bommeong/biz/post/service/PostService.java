@@ -1,5 +1,7 @@
 package com.example.bommeong.biz.post.service;
 
+import static org.hibernate.type.descriptor.java.JdbcDateJavaType.DATE_FORMAT;
+
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
@@ -19,6 +21,8 @@ import com.example.bommeong.common.code.ResultCode;
 import com.example.bommeong.common.dto.PageEntity;
 import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.service.BaseServiceImplWithJpa;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final ShelterRepository shelterRepository;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     public PostService(PostRepository postRepository, AwsS3Service awsS3Service, LikeRepository likeRepository, UserRepository userRepository, ShelterRepository shelterRepository) {
         this.shelterRepository = shelterRepository;
         this.repository = postRepository;
@@ -83,7 +88,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     @Transactional
     public void add(PostModel model, String dirName) throws Exception {
         PostEntity postEntity = model.toEntity();
-        
+
         // S3 업로드 후 Post entity 설정
         AwsS3Dto awsS3Dto = awsS3Service.upload(model.getUploadFile(), dirName);
         postEntity.setImageUrl(awsS3Dto.getPath());
@@ -91,7 +96,7 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
 //        postEntity.setImageUrl("awsS3Dto.getPath()");
 //        postEntity.setImageName("awsS3Dto.getKey()");
         postEntity.setStatus(PostStatus.BEFORE);
-        
+
         // BomInfo entity 설정
         BomInfoEntity bomInfoEntity = new BomInfoEntity(model);
 
