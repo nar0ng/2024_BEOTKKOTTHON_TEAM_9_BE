@@ -9,9 +9,11 @@ import com.example.bommeong.biz.adopt.dto.AdoptApplicationStatusDto;
 import com.example.bommeong.biz.adopt.dto.AdoptModel;
 import com.example.bommeong.biz.adopt.repository.AdoptRepository;
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dao.PostStatus;
 import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.UserEntity;
 import com.example.bommeong.biz.user.repository.UserRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -67,5 +69,20 @@ public class AdoptService {
 
         adoptEntity.setStatus(statusDto.adoptApplicationStatus());
         adoptRepository.save(adoptEntity);
+
+        List<AdoptEntity> adoptEntities = adoptRepository.findAll();
+
+        PostEntity post =  postRepository.findById(adoptEntity.getPost().getPostId())
+                .orElseThrow(() -> new RuntimeException("공고를 찾을 수 없습니다."));
+
+
+        boolean hasPassedAdoptApplication = adoptEntities.stream()
+                .anyMatch(entity -> AdoptApplicationStatus.PASSED.equals(entity.getStatus()));
+
+        if (hasPassedAdoptApplication) {
+            post.setStatus(PostStatus.COMPLETED);
+            postRepository.save(post);
+        }
+
     }
 }

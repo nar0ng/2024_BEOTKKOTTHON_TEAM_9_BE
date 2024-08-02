@@ -31,4 +31,6 @@ public interface PostRepository extends BaseRepository<PostEntity, Long> {
     int countByShelterId(Long shelterId);
 
     int countByShelterIdAndStatus(Long ShelterId, PostStatus status);
+
+    Optional<PostEntity> findByStatus(PostStatus status);
 }
