@@ -23,9 +23,6 @@ public interface AdoptRepository extends JpaRepository<AdoptEntity, Long> {
 
     Optional<AdoptEntity> findByUser(UserEntity userEntity);
 
-    int countAdoptByDateTime(Long shelterId, LocalDateTime dateTime);
-    int countByPostShelterIdAndStatus(Long shelterId, AdoptApplicationStatus status);
-
     List<AdoptEntity> findByPostPostId(Long postId);
 
     Optional<AdoptEntity> findByPostPostIdAndUserId(Long postId, Long memberId);
