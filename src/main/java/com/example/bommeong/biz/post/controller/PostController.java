@@ -1,9 +1,12 @@
 package com.example.bommeong.biz.post.controller;
 
 
+import com.example.bommeong.biz.post.dao.PostEntity;
 import com.example.bommeong.biz.post.dto.BomInfoModel;
 import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
+import com.example.bommeong.biz.post.dto.PostUpdateDto;
+import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.post.service.PostService;
 import com.example.bommeong.common.controller.BaseApiController;
 import com.example.bommeong.common.controller.BaseApiDto;
@@ -13,6 +16,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +34,10 @@ import java.util.List;
 public class PostController extends BaseApiController<BaseApiDto<?>> {
 
     private final PostService postService;
+    private final PostRepository postRepository;
 
     private final String BASE_UPLOAD_DIR = "post";
+
     @GetMapping
     @Operation(summary = "공고 리스트", description = "공고 + bomInfo 리스트 조회")
     public ResponseEntity<BaseApiDto<?>> findAll() throws Exception {
@@ -96,7 +102,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             LocalDate now = LocalDate.now();
             String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-            String dirName = BASE_UPLOAD_DIR + "/" +  model.getShelterId() +  "/" + today;
+            String dirName = BASE_UPLOAD_DIR + "/" + model.getShelterId() + "/" + today;
             postService.add(model, dirName);
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
@@ -109,7 +115,7 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
     @Operation(summary = "공고 삭제", description = "공고 id 값으로 해당 공고 삭제")
     public ResponseEntity<BaseApiDto<?>> remove(@PathVariable Long postId) {
         try {
-             postService.remove(postId);
+            postService.remove(postId);
             return super.ok(BaseApiDto.newBaseApiDto());
         } catch (Exception e) {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "공고 삭제 실패 : " + e.getMessage());
@@ -131,4 +137,12 @@ public class PostController extends BaseApiController<BaseApiDto<?>> {
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "좋아요 등록/삭제 실패 : " + e.getMessage());
         }
     }
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<BaseApiDto<?>> updatePost(@PathVariable Long postId,
+                                                    @RequestBody PostUpdateDto postUpdateDto) {
+        postService.updateBomList(postId, postUpdateDto);
+        return super.ok(BaseApiDto.newBaseApiDto());
+    }
 }
+

@@ -111,6 +111,7 @@ public class SecurityConfig {
                                 "/api/v1/shelter/adopt-lists/**",
                                 "/api/v1/shelter/**",
                                 "/api/v1/adopt/status",
+                                "/api/v1/post/**",
                                 "/api/v1/push/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());

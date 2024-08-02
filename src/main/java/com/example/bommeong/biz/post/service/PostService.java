@@ -1,16 +1,16 @@
 package com.example.bommeong.biz.post.service;
 
-import static org.hibernate.type.descriptor.java.JdbcDateJavaType.DATE_FORMAT;
-
 import com.example.bommeong.aws.s3.AwsS3Dto;
 import com.example.bommeong.aws.s3.AwsS3Service;
 import com.example.bommeong.biz.post.dao.BomInfoEntity;
 import com.example.bommeong.biz.post.dao.LikeEntity;
 import com.example.bommeong.biz.post.dao.LikeId;
 import com.example.bommeong.biz.post.dao.PostStatus;
+import com.example.bommeong.biz.post.dto.BomInfoModel;
 import com.example.bommeong.biz.post.dto.LikeModel;
 import com.example.bommeong.biz.post.dto.PostModel;
 import com.example.bommeong.biz.post.dao.PostEntity;
+import com.example.bommeong.biz.post.dto.PostUpdateDto;
 import com.example.bommeong.biz.post.repository.LikeRepository;
 import com.example.bommeong.biz.post.repository.PostRepository;
 import com.example.bommeong.biz.user.domain.ShelterEntity;
@@ -21,8 +21,6 @@ import com.example.bommeong.common.code.ResultCode;
 import com.example.bommeong.common.dto.PageEntity;
 import com.example.bommeong.common.exception.BizException;
 import com.example.bommeong.common.service.BaseServiceImplWithJpa;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -41,9 +39,13 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final ShelterRepository shelterRepository;
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-    public PostService(PostRepository postRepository, AwsS3Service awsS3Service, LikeRepository likeRepository, UserRepository userRepository, ShelterRepository shelterRepository) {
+
+    private final PostRepository postRepository;
+
+    public PostService(PostRepository postRepository, AwsS3Service awsS3Service, LikeRepository likeRepository, UserRepository userRepository, ShelterRepository shelterRepository,
+                       PostRepository postRepository1) {
         this.shelterRepository = shelterRepository;
+        this.postRepository = postRepository1;
         this.repository = postRepository;
         this.awsS3Service = awsS3Service;
         this.likeRepository = likeRepository;
@@ -169,4 +171,21 @@ public class PostService extends BaseServiceImplWithJpa<PostModel, PostEntity, L
         return pageEntity;
     }
 
+    public void updateBomList(Long postId, PostUpdateDto postUpdateDto){
+        PostEntity post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("공고를 찾을 수 없습니다."));
+
+        post.getBomInfoEntity().setName(postUpdateDto.bomInfoModel().getName());
+        post.getBomInfoEntity().setAge(postUpdateDto.bomInfoModel().getAge());
+        post.getBomInfoEntity().setGender(postUpdateDto.bomInfoModel().getGender());
+        post.getBomInfoEntity().setBreed(postUpdateDto.bomInfoModel().getBreed());
+        post.getBomInfoEntity().setPersonality(postUpdateDto.bomInfoModel().getPersonality());
+        post.getBomInfoEntity().setExtra(postUpdateDto.bomInfoModel().getExtra());
+        post.getBomInfoEntity().setLikes(postUpdateDto.bomInfoModel().getLikes());
+        post.getBomInfoEntity().setHates(postUpdateDto.bomInfoModel().getHates());
+        post.getBomInfoEntity().setHashtags(postUpdateDto.bomInfoModel().getHashtags());
+
+        postRepository.save(post);
+
+    }
 }
