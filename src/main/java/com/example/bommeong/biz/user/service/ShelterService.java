@@ -190,4 +190,12 @@ public class ShelterService {
         return new ShelterDtoRes.ShelterInfo(shelterEntity);
 
     }
+
+    public void updateShelterInfo(ShelterDtoReq.UpdateShelterInfoDto updateShelterInfoDto) {
+        ShelterEntity shelterEntity = shelterRepository.findById(updateShelterInfoDto.getShelterId()).orElseThrow(() -> new RuntimeException("보호소를 찾을 수 없습니다. "));
+
+        shelterEntity.updateInfo(updateShelterInfoDto);
+        shelterRepository.save(shelterEntity);
+
+    }
 }

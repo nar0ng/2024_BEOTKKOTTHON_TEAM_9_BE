@@ -33,4 +33,15 @@ public class ShelterDtoReq {
         private String email;
         private String password;
     }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UpdateShelterInfoDto {
+        private Long shelterId;
+        private String email;
+        private String phone;
+        private String managerName;
+        private String subEmail;
+    }
 }

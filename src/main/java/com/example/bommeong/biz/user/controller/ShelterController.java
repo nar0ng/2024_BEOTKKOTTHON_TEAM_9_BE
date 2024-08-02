@@ -121,11 +121,25 @@ public class ShelterController extends BaseApiController<BaseApiDto<?>> {
     @GetMapping("/info/{shelterId}")
     public ResponseEntity<BaseApiDto<?>> getShelterInfo(@PathVariable Long shelterId) {
         try {
-            log.info("# getShelterInfo");
+            log.info("# getShelterInfo: shelterId = {}", shelterId);
             return super.ok(new BaseApiDto<>(shelterService.getShelterInfo(shelterId)));
         } catch (Exception e) {
             e.printStackTrace();
             return super.fail(BaseApiDto.newBaseApiDto(), "9999", "보호소 정보 조회 실패 : " + e.getMessage());
+        }
+    }
+
+    // 보호소 정보 수정 api
+    @Operation(summary = "보호소 정보 수정", description = "보호소 정보 수정")
+    @PutMapping("/info")
+    public ResponseEntity<BaseApiDto<?>> updateShelterInfo(@RequestBody ShelterDtoReq.UpdateShelterInfoDto updateShelterInfoDto) {
+        try {
+            log.info("# updateShelterInfo: updateShelterInfoDto = {}", updateShelterInfoDto);
+            shelterService.updateShelterInfo(updateShelterInfoDto);
+            return super.ok(BaseApiDto.newBaseApiDto());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.fail(BaseApiDto.newBaseApiDto(), "9999", "보호소 정보 수정 실패 : " + e.getMessage());
         }
     }
 }
